@@ -2,518 +2,630 @@
 <html lang="sw">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#05040f">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#060414">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Zakayo Chat">
-<meta name="description" content="Zakayo Chat – Mazungumzo Ya Kweli, Salama na Ya Haraka">
-<meta property="og:title" content="Zakayo Chat">
-<meta property="og:description" content="Jiunge na Zakayo Chat – App ya mazungumzo ya kweli kwa marafiki na wadau.">
-<meta property="og:type" content="website">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237c3aed'/><text y='.9em' font-size='75' x='12'>💬</text></svg>">
-<title>Zakayo Chat – Mazungumzo Ya Kweli</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+<meta name="description" content="Zakayo Chat — Mazungumzo Ya Kweli, Salama na Ya Haraka">
+<meta property="og:title" content="Zakayo Chat 💬">
+<meta property="og:description" content="Jiunge na Zakayo Chat — App ya kweli ya mazungumzo kwa marafiki na wadau.">
+<meta property="og:image" content="https://zakayo.github.io/chat/og.png">
+<link rel="manifest" href="./manifest.json">
+<title>Zakayo Chat 💬</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-/* ════════════════════════════════
-   ZAKAYO CHAT — DESIGN TOKENS
-════════════════════════════════ */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DESIGN SYSTEM — ZAKAYO CHAT v3.0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 :root{
-  --bg:#05040f;
-  --panel:#0e0c1f;
-  --panel2:#131128;
-  --glass:rgba(255,255,255,0.04);
-  --glass2:rgba(255,255,255,0.07);
-  --glass3:rgba(255,255,255,0.11);
-  --border:rgba(255,215,100,0.12);
-  --border2:rgba(255,255,255,0.08);
-  --gold:#f0c040;
-  --gold2:#ffda6a;
-  --accent:#a855f7;
-  --accent2:#7c3aed;
-  --green:#22d3a0;
-  --red:#f87171;
-  --blue:#60a5fa;
-  --orange:#fb923c;
-  --text:#f0edf9;
-  --text2:#b8b3d4;
-  --muted:#6b678e;
-  --bubble-me:linear-gradient(140deg,#7c3aed 0%,#a855f7 100%);
-  --bubble-them:rgba(255,255,255,0.06);
-  --shadow:0 20px 60px rgba(0,0,0,0.7);
-  --shadow2:0 4px 20px rgba(0,0,0,0.4);
-  --radius:18px;
-  --sidebar-w:300px;
+  --ink:#060414;
+  --ink2:#0d0b22;
+  --ink3:#141230;
+  --glass:rgba(255,255,255,0.035);
+  --glass2:rgba(255,255,255,0.065);
+  --glass3:rgba(255,255,255,0.10);
+  --rim:rgba(255,255,255,0.08);
+  --rim2:rgba(255,215,80,0.14);
+  --gold:#f5c842;
+  --gold2:#ffe480;
+  --plum:#8b5cf6;
+  --plum2:#a78bfa;
+  --rose:#f472b6;
+  --teal:#2dd4bf;
+  --sky:#38bdf8;
+  --ember:#fb923c;
+  --lime:#a3e635;
+  --err:#f87171;
+  --ok:#34d399;
+  --fg:#ede9f8;
+  --fg2:#a09ac0;
+  --fg3:#5a5480;
+  --me-bub:linear-gradient(145deg,#6d28d9,#8b5cf6,#7c3aed);
+  --them-bub:rgba(255,255,255,0.058);
+  --sb:260px;
+  --hdr:60px;
+  --inp:56px;
+  --rad:20px;
+  --shad:0 24px 80px rgba(0,0,0,.75);
+  --shad2:0 8px 32px rgba(0,0,0,.5);
 }
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
-html{height:100%;height:-webkit-fill-available}
-body{height:100%;height:-webkit-fill-available;background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);overflow:hidden;position:fixed;inset:0}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html{height:100%;height:-webkit-fill-available;overflow:hidden}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--ink);color:var(--fg);height:100%;height:-webkit-fill-available;overflow:hidden;position:fixed;inset:0;cursor:default}
 
-/* ── GRAIN TEXTURE ── */
-body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
+/* ── ANIMATED BG ── */
+.bg-orbs{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.18;animation:drift 18s ease-in-out infinite}
+.orb1{width:500px;height:500px;background:radial-gradient(circle,#6d28d9,transparent);top:-10%;left:-10%;animation-duration:20s}
+.orb2{width:400px;height:400px;background:radial-gradient(circle,#be185d,transparent);bottom:-10%;right:-10%;animation-duration:25s;animation-delay:-8s}
+.orb3{width:300px;height:300px;background:radial-gradient(circle,#0891b2,transparent);top:40%;left:50%;animation-duration:30s;animation-delay:-15s}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.1)}66%{transform:translate(-20px,50px) scale(.95)}}
 
-/* ── AMBIENT GLOW ── */
-body::before{content:'';position:fixed;top:-20%;left:-10%;width:60%;height:60%;background:radial-gradient(ellipse,rgba(124,58,237,.18) 0%,transparent 65%);pointer-events:none;z-index:0}
+/* noise */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23f)' opacity='.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;mix-blend-mode:overlay}
 
-/* ════════════════════════════════
-   SCREENS
-════════════════════════════════ */
-.screen{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
-.screen.active{display:flex}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   LAYOUT UTILITIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.screen{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center}
+.screen.on{display:flex}
+.flex{display:flex}.flex-col{flex-direction:column}.flex1{flex:1;min-width:0;min-height:0}.gap4{gap:4px}.gap8{gap:8px}.gap12{gap:12px}.ac{align-items:center}.jc{justify-content:center}
+.scrolly{overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--glass2) transparent}
+.scrolly::-webkit-scrollbar{width:3px}
+.scrolly::-webkit-scrollbar-thumb{background:var(--glass2);border-radius:3px}
 
-/* ════════════════════════════════
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    AUTH SCREEN
-════════════════════════════════ */
-#authScreen{background:radial-gradient(ellipse 90% 60% at 50% -5%,rgba(124,58,237,.28) 0%,transparent 70%),var(--bg)}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#sAuth{background:var(--ink);overflow:auto}
+.auth-center{position:relative;z-index:1;width:100%;min-height:100%;display:flex;align-items:center;justify-content:center;padding:20px}
+.auth-box{width:min(430px,100%);background:rgba(13,11,34,.92);border:1px solid var(--rim);border-radius:28px;padding:36px 30px 30px;box-shadow:var(--shad),0 0 0 1px rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(40px);animation:slideUp .45s cubic-bezier(.22,.68,0,1.1)}
+@keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 
-.auth-wrap{position:relative;z-index:1;width:100%;display:flex;align-items:center;justify-content:center;padding:16px;min-height:100%}
-.auth-card{background:var(--panel);border:1px solid var(--border);border-radius:28px;padding:36px 32px 32px;width:min(420px,100%);box-shadow:var(--shadow),0 0 100px rgba(124,58,237,.12),inset 0 1px 0 rgba(255,255,255,.06);position:relative;overflow:hidden;animation:cardIn .5s cubic-bezier(.22,.68,0,1.2)}
-@keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
-.auth-card::before{content:'';position:absolute;top:-80px;right:-80px;width:220px;height:220px;background:radial-gradient(circle,rgba(240,192,64,.12),transparent 70%);pointer-events:none}
-.auth-card::after{content:'';position:absolute;bottom:-60px;left:-60px;width:180px;height:180px;background:radial-gradient(circle,rgba(124,58,237,.1),transparent 70%);pointer-events:none}
+.brand{text-align:center;margin-bottom:28px}
+.brand-ico{width:76px;height:76px;margin:0 auto 14px;background:conic-gradient(from 135deg,#6d28d9,#be185d,#f5c842,#6d28d9);border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:0 8px 40px rgba(109,40,217,.5),0 0 0 1px rgba(255,255,255,.12);position:relative;animation:spin-glow 6s linear infinite}
+@keyframes spin-glow{0%{box-shadow:0 8px 40px rgba(109,40,217,.5),0 0 0 1px rgba(255,255,255,.12)}50%{box-shadow:0 8px 40px rgba(190,24,93,.5),0 0 0 1px rgba(255,255,255,.12)}100%{box-shadow:0 8px 40px rgba(109,40,217,.5),0 0 0 1px rgba(255,255,255,.12)}}
+.brand h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--gold2),var(--gold),var(--plum2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.3px}
+.brand p{color:var(--fg3);font-size:13px;margin-top:5px;font-weight:500}
 
-.logo{text-align:center;margin-bottom:28px}
-.logo-ring{width:72px;height:72px;background:linear-gradient(135deg,#7c3aed,#f0c040);border-radius:22px;display:inline-flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:14px;box-shadow:0 8px 32px rgba(124,58,237,.5),0 0 0 1px rgba(240,192,64,.2);position:relative}
-.logo-ring::after{content:'';position:absolute;inset:-3px;border-radius:25px;border:1px solid rgba(240,192,64,.2);pointer-events:none}
-.logo h1{font-family:'Cinzel',serif;font-size:26px;font-weight:700;background:linear-gradient(135deg,var(--gold2),var(--gold),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:.5px}
-.logo p{color:var(--muted);font-size:12.5px;margin-top:5px;letter-spacing:.3px}
+.seg{display:flex;background:rgba(0,0,0,.4);border-radius:14px;padding:3px;margin-bottom:22px;border:1px solid var(--rim)}
+.seg-btn{flex:1;padding:9px;border:none;background:none;color:var(--fg3);border-radius:12px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:13.5px;font-weight:700;transition:all .28s;letter-spacing:.1px}
+.seg-btn.on{background:linear-gradient(135deg,#6d28d9,#8b5cf6);color:#fff;box-shadow:0 4px 16px rgba(109,40,217,.45)}
 
-.tabs{display:flex;background:rgba(0,0,0,.3);border-radius:13px;padding:4px;margin-bottom:22px;border:1px solid var(--border2)}
-.tab-btn{flex:1;padding:9px 0;border:none;background:none;color:var(--muted);border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;transition:all .3s;letter-spacing:.2px}
-.tab-btn.active{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;box-shadow:0 3px 14px rgba(124,58,237,.5)}
+.fg{margin-bottom:13px}
+.fg label{display:block;font-size:11px;font-weight:800;color:var(--fg3);margin-bottom:5px;text-transform:uppercase;letter-spacing:.9px}
+.fi-wrap{position:relative}
+.fi-wrap .fic{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none;z-index:1}
+.fi-wrap input{width:100%;padding:11px 14px 11px 40px;background:rgba(0,0,0,.35);border:1px solid var(--rim);border-radius:13px;color:var(--fg);font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:all .22s}
+.fi-wrap input:focus{border-color:var(--plum2);background:rgba(109,40,217,.08);box-shadow:0 0 0 3px rgba(139,92,246,.15)}
+.fi-wrap input::placeholder{color:var(--fg3)}
 
-.form-group{margin-bottom:14px;position:relative}
-.form-group label{display:block;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.8px}
-.input-icon-wrap{position:relative}
-.input-icon-wrap .fi{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none}
-.form-group input{width:100%;padding:11px 14px 11px 38px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s}
-.form-group input:focus{border-color:var(--accent);background:rgba(168,85,247,.06);box-shadow:0 0 0 3px rgba(168,85,247,.12)}
-.form-group input::placeholder{color:var(--muted)}
+.abtn{width:100%;padding:13px;border:none;border-radius:14px;font-size:15px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;letter-spacing:.1px;transition:all .22s;position:relative;overflow:hidden}
+.abtn::before{content:'';position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.1),transparent);pointer-events:none}
+.abtn-p{background:linear-gradient(135deg,#6d28d9,#8b5cf6);color:#fff;box-shadow:0 6px 28px rgba(109,40,217,.5)}
+.abtn-p:hover{transform:translateY(-1px);box-shadow:0 10px 36px rgba(109,40,217,.6)}
+.abtn-p:active{transform:scale(.99)}
 
-.btn{width:100%;padding:13px;border:none;border-radius:13px;font-size:14.5px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .25s;letter-spacing:.2px;position:relative;overflow:hidden}
-.btn::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.07),transparent);pointer-events:none}
-.btn-primary{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;box-shadow:0 6px 24px rgba(124,58,237,.45)}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 30px rgba(124,58,237,.55)}
-.btn-primary:active{transform:translateY(0) scale(.99)}
-.btn-gold{background:linear-gradient(135deg,#92400e,#d97706,#f0c040);color:#fff;box-shadow:0 4px 20px rgba(217,119,6,.35)}
-.btn-gold:hover{transform:translateY(-1px)}
-.btn-danger{background:linear-gradient(135deg,#991b1b,#f87171);color:#fff;box-shadow:0 4px 16px rgba(239,68,68,.3)}
-.btn-green{background:linear-gradient(135deg,#065f46,#22d3a0);color:#fff}
-.btn-sm{padding:7px 14px;font-size:12.5px;width:auto;border-radius:9px;font-weight:700}
-.btn-outline{background:transparent;border:1px solid var(--border2);color:var(--text2)}
-.btn-outline:hover{background:var(--glass2);border-color:var(--border)}
+.amsg{min-height:20px;margin-top:10px;text-align:center;font-size:12.5px;font-weight:600}
+.amsg.err{color:var(--err)}.amsg.ok{color:var(--ok)}
 
-.auth-err{font-size:12.5px;color:var(--red);text-align:center;margin-top:10px;min-height:18px;font-weight:500}
-.auth-ok{font-size:12.5px;color:var(--green);text-align:center;margin-top:10px;font-weight:500}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   WAIT SCREEN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#sWait{background:var(--ink)}
+.wait-box{text-align:center;max-width:340px;padding:32px 24px;z-index:1}
+.wait-ico{font-size:80px;display:block;animation:levitate 3s ease-in-out infinite;margin-bottom:20px}
+@keyframes levitate{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+.wait-box h2{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--gold);margin-bottom:10px}
+.wait-box p{color:var(--fg2);font-size:13.5px;line-height:1.7;margin-bottom:22px}
+.wait-box strong{color:var(--gold2)}
+.wait-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.22);border-radius:50px;padding:9px 20px;font-size:13px;color:var(--gold);font-weight:700}
+.w-dot{width:9px;height:9px;border-radius:50%;background:var(--gold);animation:blink 1.6s ease infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.2;transform:scale(.6)}}
+.wait-btns{display:flex;gap:8px;justify-content:center;margin-top:22px}
 
-/* ════════════════════════════════
-   WAITING SCREEN
-════════════════════════════════ */
-#waitScreen{background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(240,192,64,.07),transparent),var(--bg)}
-.wait-card{text-align:center;padding:48px 32px;max-width:360px;z-index:1}
-.wait-anim{font-size:72px;margin-bottom:20px;display:block;animation:floatY 3s ease-in-out infinite}
-@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-.wait-card h2{font-family:'Cinzel',serif;color:var(--gold);font-size:22px;margin-bottom:12px}
-.wait-card p{color:var(--text2);line-height:1.7;font-size:14px;margin-bottom:22px}
-.wait-card strong{color:var(--gold2)}
-.status-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(240,192,64,.08);border:1px solid rgba(240,192,64,.25);border-radius:50px;padding:8px 20px;font-size:13px;color:var(--gold);font-weight:600}
-.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulseD 1.4s ease infinite}
-@keyframes pulseD{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   APP SCREEN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#sApp{flex-direction:row;align-items:stretch;display:none;position:fixed;inset:0;background:var(--ink)}
+#sApp.on{display:flex}
 
-/* ════════════════════════════════
-   MAIN APP LAYOUT
-════════════════════════════════ */
-#appScreen{background:var(--bg);flex-direction:row;align-items:stretch;display:none;position:fixed;inset:0}
-#appScreen.active{display:flex}
+/* ━━━ SIDEBAR ━━━ */
+.sb{width:var(--sb);background:rgba(13,11,34,.97);border-right:1px solid var(--rim);display:flex;flex-direction:column;flex-shrink:0;z-index:20;transition:transform .3s cubic-bezier(.4,0,.2,1)}
 
-/* ── SIDEBAR ── */
-.sidebar{width:var(--sidebar-w);background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;z-index:20;transition:transform .32s cubic-bezier(.4,0,.2,1)}
-.sb-header{padding:18px 14px 12px;border-bottom:1px solid var(--border)}
-.sb-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.sb-logo{width:36px;height:36px;background:linear-gradient(135deg,#7c3aed,#f0c040);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 3px 12px rgba(124,58,237,.4);flex-shrink:0}
-.sb-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;background:linear-gradient(135deg,var(--gold2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sb-version{font-size:10px;color:var(--muted);margin-top:1px}
-.user-card{display:flex;align-items:center;gap:10px;background:var(--glass);border-radius:13px;padding:9px 10px;border:1px solid var(--border2)}
-.ava{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;position:relative;border:2px solid rgba(255,255,255,.1)}
-.ava .sdot{position:absolute;bottom:0;right:0;width:11px;height:11px;border-radius:50%;border:2px solid var(--panel);background:var(--green)}
-.ava .sdot.off{background:var(--muted)}
-.uc-name{font-size:13px;font-weight:700;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.uc-role{font-size:10px;padding:2px 8px;border-radius:50px;font-weight:700;flex-shrink:0}
-.role-admin{background:rgba(240,192,64,.15);color:var(--gold);border:1px solid rgba(240,192,64,.3)}
-.role-member{background:rgba(168,85,247,.1);color:var(--accent);border:1px solid rgba(168,85,247,.2)}
+.sb-top{padding:14px 12px 10px;border-bottom:1px solid var(--rim)}
+.sb-logo{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sb-logo-ico{width:38px;height:38px;background:conic-gradient(from 120deg,#6d28d9,#f5c842,#6d28d9);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 4px 16px rgba(109,40,217,.4)}
+.sb-logo-txt h2{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--plum2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sb-logo-txt span{font-size:10px;color:var(--fg3);font-weight:600}
 
-.sb-search{margin:10px 10px 2px;position:relative}
-.sb-search input{width:100%;padding:8px 12px 8px 34px;background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:12.5px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
-.sb-search input:focus{border-color:var(--accent)}
-.sb-search input::placeholder{color:var(--muted)}
-.sb-search .si{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none}
+.me-card{display:flex;align-items:center;gap:9px;background:var(--glass);border:1px solid var(--rim);border-radius:14px;padding:9px 11px;cursor:pointer;transition:background .2s}
+.me-card:hover{background:var(--glass2)}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;position:relative;border:2px solid rgba(255,255,255,.12)}
+.av .sd{position:absolute;bottom:0;right:0;border-radius:50%;border:2px solid var(--ink2);background:var(--ok)}
+.av .sd.off{background:var(--fg3)}
+.me-name{font-size:13px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.me-tag{font-size:10px;padding:2px 8px;border-radius:50px;font-weight:800;flex-shrink:0}
+.tag-admin{background:rgba(245,200,66,.12);color:var(--gold);border:1px solid rgba(245,200,66,.25)}
+.tag-member{background:rgba(139,92,246,.1);color:var(--plum2);border:1px solid rgba(139,92,246,.2)}
 
-.sec-label{padding:10px 14px 3px;font-size:10px;font-weight:800;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase}
+.sb-search{margin:8px 10px 2px;position:relative}
+.sb-search input{width:100%;padding:8px 12px 8px 34px;background:rgba(0,0,0,.4);border:1px solid var(--rim);border-radius:11px;color:var(--fg);font-size:12.5px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s}
+.sb-search input:focus{border-color:var(--plum2)}
+.sb-search input::placeholder{color:var(--fg3)}
+.sb-search::before{content:'🔍';position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none}
 
-.room-list{flex:1;overflow-y:auto;padding:2px 8px 8px;scrollbar-width:thin;scrollbar-color:var(--glass2) transparent}
+.sb-sec{padding:10px 13px 3px;font-size:10px;font-weight:900;letter-spacing:1.4px;color:var(--fg3);text-transform:uppercase}
+
+.room-list{flex:1;padding:2px 8px 8px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--glass2) transparent}
 .room-list::-webkit-scrollbar{width:3px}
-.room-list::-webkit-scrollbar-thumb{background:var(--glass2);border-radius:4px}
+.room-list::-webkit-scrollbar-thumb{background:var(--glass2);border-radius:3px}
 
-.ri{display:flex;align-items:center;gap:10px;padding:9px 10px;cursor:pointer;border-radius:12px;margin:1px 0;transition:all .15s;position:relative;border:1px solid transparent}
-.ri:hover{background:var(--glass);border-color:var(--border2)}
-.ri.active{background:linear-gradient(135deg,rgba(124,58,237,.22),rgba(168,85,247,.12));border-color:rgba(168,85,247,.3)}
-.ri.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;background:var(--accent);border-radius:0 3px 3px 0}
-.ri-icon{font-size:20px;width:38px;height:38px;background:var(--glass);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border2)}
-.ri.active .ri-icon{background:rgba(168,85,247,.15);border-color:rgba(168,85,247,.3)}
+.ri{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:13px;cursor:pointer;border:1px solid transparent;transition:all .15s;margin-bottom:1px;position:relative}
+.ri:hover{background:var(--glass);border-color:var(--rim)}
+.ri.on{background:linear-gradient(135deg,rgba(109,40,217,.2),rgba(139,92,246,.12));border-color:rgba(139,92,246,.28)}
+.ri.on::before{content:'';position:absolute;left:0;top:22%;bottom:22%;width:3px;background:linear-gradient(var(--plum),var(--plum2));border-radius:0 3px 3px 0}
+.ri-ico{width:40px;height:40px;background:var(--glass);border:1px solid var(--rim);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;transition:all .15s}
+.ri.on .ri-ico{background:rgba(109,40,217,.18);border-color:rgba(139,92,246,.3)}
 .ri-info{flex:1;min-width:0}
 .ri-name{font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ri-prev{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
-.unread{background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:50px;min-width:18px;text-align:center;animation:popIn .2s ease}
-@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+.ri-prev{font-size:11px;color:var(--fg3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+.ri-meta{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0}
+.ri-time{font-size:10px;color:var(--fg3)}
+.unread{background:var(--plum);color:#fff;font-size:10px;font-weight:900;padding:2px 7px;border-radius:50px;min-width:18px;text-align:center;animation:pop .2s ease}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
 
-.sb-footer{padding:10px 10px;border-top:1px solid var(--border);display:flex;gap:6px}
-.fb{flex:1;padding:9px 0;background:var(--glass);border:1px solid var(--border2);border-radius:10px;color:var(--muted);cursor:pointer;font-size:18px;transition:all .2s;display:flex;align-items:center;justify-content:center;position:relative}
-.fb:hover{background:var(--glass2);color:var(--text);transform:translateY(-1px)}
-.fb.fb-admin{border-color:rgba(240,192,64,.3);color:var(--gold)}
-.fb.fb-admin:hover{background:rgba(240,192,64,.1)}
-.fb.fb-dl{color:var(--green)}
-.fb.fb-dl:hover{background:rgba(34,211,160,.08)}
-.fb-tip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--border2);border-radius:7px;padding:4px 8px;font-size:10px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;font-family:'DM Sans',sans-serif;color:var(--text2)}
-.fb:hover .fb-tip{opacity:1}
+.sb-foot{padding:10px;border-top:1px solid var(--rim);display:flex;gap:6px}
+.fbt{flex:1;height:40px;background:var(--glass);border:1px solid var(--rim);border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:19px;transition:all .2s;position:relative}
+.fbt:hover{background:var(--glass2);transform:translateY(-1px)}
+.fbt.gold{border-color:rgba(245,200,66,.28);color:var(--gold)}
+.fbt.gold:hover{background:rgba(245,200,66,.08)}
+.fbt.green{color:var(--ok)}
+.fbt.green:hover{background:rgba(52,211,153,.07)}
+.fbt-tip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--ink3);border:1px solid var(--rim);border-radius:8px;padding:4px 10px;font-size:10.5px;white-space:nowrap;color:var(--fg2);opacity:0;pointer-events:none;transition:opacity .18s;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600}
+.fbt:hover .fbt-tip{opacity:1}
 
-/* ── CHAT AREA ── */
-.chat-area{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+/* ━━━ CHAT AREA ━━━ */
+.ca{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
 
-.chat-header{padding:0 18px;height:62px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:rgba(14,12,31,.85);backdrop-filter:blur(20px);flex-shrink:0;position:relative;z-index:5}
-.back-btn{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:background .15s;margin-right:-4px}
+/* header */
+.ch{height:var(--hdr);padding:0 16px;border-bottom:1px solid var(--rim);display:flex;align-items:center;gap:12px;background:rgba(13,11,34,.88);backdrop-filter:blur(24px);flex-shrink:0;position:relative;z-index:5}
+.back-btn{display:none;background:none;border:none;color:var(--fg);font-size:22px;cursor:pointer;padding:4px 8px;border-radius:9px;transition:background .15s;margin-right:-4px;line-height:1}
 .back-btn:hover{background:var(--glass2)}
-.ch-icon{font-size:26px;flex-shrink:0}
+.ch-ico{font-size:26px;flex-shrink:0}
 .ch-info{flex:1;min-width:0}
-.ch-name{font-weight:700;font-size:15.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ch-sub{font-size:11.5px;color:var(--muted);margin-top:1px}
-.ch-actions{display:flex;gap:6px;flex-shrink:0}
-.ia{width:34px;height:34px;background:var(--glass);border:1px solid var(--border2);border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:all .2s}
-.ia:hover{background:var(--glass2);transform:scale(1.05)}
+.ch-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ch-sub{font-size:11.5px;color:var(--fg3);margin-top:1px}
+.ch-acts{display:flex;gap:5px}
+.ico-btn{width:34px;height:34px;background:var(--glass);border:1px solid var(--rim);border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:all .18s;user-select:none}
+.ico-btn:hover{background:var(--glass2);transform:scale(1.05)}
+.ico-btn:active{transform:scale(.95)}
+
+/* ONLINE STRIP */
+.online-strip{height:40px;border-bottom:1px solid var(--rim);display:flex;align-items:center;gap:8px;padding:0 16px;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
+.online-strip::-webkit-scrollbar{display:none}
+.online-strip-lbl{font-size:10px;font-weight:800;color:var(--fg3);text-transform:uppercase;letter-spacing:.8px;white-space:nowrap}
+.online-av{position:relative;flex-shrink:0;cursor:pointer}
+.online-av .av{font-size:11px}
+.online-av .sd{width:9px;height:9px}
+.online-av-name{position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:var(--ink3);border:1px solid var(--rim);border-radius:7px;padding:3px 8px;font-size:10px;white-space:nowrap;color:var(--fg2);opacity:0;pointer-events:none;transition:opacity .18s;font-weight:700;z-index:99}
+.online-av:hover .online-av-name{opacity:1}
 
 /* MESSAGES */
-.msgs{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:4px;scrollbar-width:thin;scrollbar-color:var(--glass2) transparent}
+.msgs{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:3px;scrollbar-width:thin;scrollbar-color:var(--glass2) transparent}
 .msgs::-webkit-scrollbar{width:4px}
 .msgs::-webkit-scrollbar-thumb{background:var(--glass2);border-radius:4px}
 
-.day-div{text-align:center;margin:12px 0;display:flex;align-items:center;gap:10px}
-.day-div::before,.day-div::after{content:'';flex:1;height:1px;background:var(--border)}
-.day-div span{font-size:11px;color:var(--muted);white-space:nowrap;background:var(--bg);padding:0 8px}
+.day-sep{text-align:center;display:flex;align-items:center;gap:10px;margin:10px 0}
+.day-sep::before,.day-sep::after{content:'';flex:1;height:1px;background:var(--rim)}
+.day-sep span{font-size:11px;color:var(--fg3);font-weight:700;white-space:nowrap;background:transparent;padding:0 8px}
 
-.mrow{display:flex;gap:8px;align-items:flex-end;animation:msgIn .22s ease;max-width:78%}
-@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.mrow{display:flex;gap:7px;align-items:flex-end;max-width:80%;animation:msgIn .2s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
 .mrow.me{flex-direction:row-reverse;align-self:flex-end}
 .mrow.them{align-self:flex-start}
 .mrow.sys{max-width:100%;align-self:center}
-.sys-bubble{background:var(--glass);border:1px solid var(--border2);border-radius:20px;padding:6px 16px;font-size:12px;color:var(--muted);text-align:center}
 
-.mava{width:28px;height:28px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px}
-.bubble-wrap{display:flex;flex-direction:column}
-.sname{font-size:10.5px;font-weight:800;margin-bottom:3px;padding-left:2px}
-.mrow.me .sname{text-align:right;padding-left:0;padding-right:2px}
-.bubble{padding:9px 13px;border-radius:18px;word-break:break-word;position:relative;max-width:340px;line-height:1.45}
-.mrow.me .bubble{background:var(--bubble-me);border-bottom-right-radius:5px;color:#fff;box-shadow:0 4px 16px rgba(124,58,237,.4)}
-.mrow.them .bubble{background:var(--bubble-them);border:1px solid var(--border2);border-bottom-left-radius:5px}
-.bm{display:flex;align-items:center;gap:5px;margin-top:4px;justify-content:flex-end}
+.sys-pill{background:var(--glass);border:1px solid var(--rim);border-radius:50px;padding:5px 14px;font-size:11.5px;color:var(--fg3);font-weight:600}
+
+.m-av{width:28px;height:28px;border-radius:50%;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:18px}
+.bw{display:flex;flex-direction:column}
+.sname{font-size:10.5px;font-weight:800;margin-bottom:3px;padding:0 2px}
+.mrow.me .sname{text-align:right;padding:0 4px}
+
+.bub{padding:9px 13px;border-radius:18px;word-break:break-word;position:relative;line-height:1.5;font-size:14px}
+.mrow.me .bub{background:var(--me-bub);border-bottom-right-radius:5px;color:#fff;box-shadow:0 6px 20px rgba(109,40,217,.4)}
+.mrow.them .bub{background:var(--them-bub);border:1px solid var(--rim);border-bottom-left-radius:5px}
+.mrow.me .bub a{color:rgba(255,255,255,.8)}
+.mrow.them .bub a{color:var(--sky)}
+
+.bm{display:flex;align-items:center;gap:5px;margin-top:4px}
+.mrow.me .bm{justify-content:flex-end}
 .mrow.them .bm{justify-content:flex-start}
-.btime{font-size:10px;opacity:.55}
-.bcheck{font-size:11px;opacity:.6}
-.bcheck.seen{opacity:1;color:#60efb0}
-.mrow.me .bcheck.seen{color:rgba(180,255,210,.9)}
+.btime{font-size:10px;opacity:.5;font-weight:600}
+.mrow.me .btime{opacity:.7}
+.btick{font-size:11px;color:rgba(255,255,255,.5);line-height:1}
+.btick.read{color:#6ee7b7}
 
-.react-bar{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
-.react{background:var(--glass);border:1px solid var(--border2);border-radius:50px;padding:2px 8px;font-size:12px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:3px}
-.react:hover{background:var(--glass2);transform:scale(1.05)}
-.react-count{font-size:10px;color:var(--muted)}
-.react-add{background:none;border:1px dashed rgba(255,255,255,.15);border-radius:50px;padding:2px 8px;font-size:10.5px;cursor:pointer;color:var(--muted);transition:all .15s}
-.react-add:hover{border-color:var(--accent);color:var(--accent)}
+.rbar{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
+.mrow.me .rbar{justify-content:flex-end}
+.rc{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:50px;padding:2px 8px;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:3px;transition:all .15s;user-select:none}
+.rc:hover{background:rgba(255,255,255,.12);transform:scale(1.06)}
+.rc-n{font-size:10px;color:var(--fg3);font-weight:700}
+.rc-add{background:none;border:1px dashed rgba(255,255,255,.12);border-radius:50px;padding:2px 8px;font-size:11px;cursor:pointer;color:var(--fg3);transition:all .15s}
+.rc-add:hover{border-color:var(--plum2);color:var(--plum2)}
+
+/* reply */
+.reply-preview{background:rgba(109,40,217,.12);border-left:3px solid var(--plum);border-radius:8px;padding:6px 10px;margin-bottom:6px;font-size:12px;color:var(--fg2);cursor:pointer}
+.reply-preview .rp-sender{color:var(--plum2);font-weight:700;font-size:11px;margin-bottom:2px}
 
 /* TYPING */
-.typing-row{align-self:flex-start;display:flex;gap:8px;align-items:flex-end}
-.typing-bubble{display:flex;gap:4px;padding:10px 14px;background:var(--bubble-them);border:1px solid var(--border2);border-radius:18px;border-bottom-left-radius:5px}
-.td{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:td .9s ease infinite}
-.td:nth-child(2){animation-delay:.15s}
-.td:nth-child(3){animation-delay:.3s}
-@keyframes td{0%,80%,100%{transform:scale(1);opacity:.4}40%{transform:scale(1.3);opacity:1}}
+.typing-row{align-self:flex-start;display:flex;gap:7px;align-items:flex-end;animation:msgIn .2s ease}
+.typing-bub{background:var(--them-bub);border:1px solid var(--rim);border-radius:18px;border-bottom-left-radius:5px;padding:10px 14px;display:flex;gap:5px}
+.td{width:7px;height:7px;border-radius:50%;background:var(--fg3);animation:tdot .9s ease infinite}
+.td:nth-child(2){animation-delay:.15s}.td:nth-child(3){animation-delay:.3s}
+@keyframes tdot{0%,80%,100%{transform:scale(1);opacity:.4}40%{transform:scale(1.4);opacity:1}}
+
+/* REPLY BAR */
+.reply-bar{background:rgba(109,40,217,.1);border-top:1px solid rgba(109,40,217,.25);padding:8px 14px;display:none;align-items:center;gap:10px;flex-shrink:0}
+.reply-bar.on{display:flex}
+.rb-txt{flex:1;font-size:12.5px;color:var(--fg2)}
+.rb-sender{color:var(--plum2);font-weight:700;font-size:11px}
+.rb-close{background:none;border:none;color:var(--fg3);cursor:pointer;font-size:18px;padding:2px;transition:color .15s}
+.rb-close:hover{color:var(--fg)}
 
 /* INPUT */
-.input-area{padding:10px 14px 14px;border-top:1px solid var(--border);background:rgba(14,12,31,.92);backdrop-filter:blur(20px);flex-shrink:0}
-.ir{display:flex;gap:8px;align-items:flex-end}
-.ia-small{width:36px;height:36px;background:var(--glass);border:1px solid var(--border2);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;flex-shrink:0;transition:all .2s}
-.ia-small:hover{background:var(--glass2)}
-.input-wrap{flex:1;background:rgba(0,0,0,.25);border:1px solid var(--border2);border-radius:16px;display:flex;align-items:flex-end;padding:2px 12px;transition:border-color .2s}
-.input-wrap:focus-within{border-color:var(--accent);background:rgba(168,85,247,.05)}
-.mi{width:100%;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;padding:9px 0;resize:none;max-height:120px;line-height:1.45}
-.mi::placeholder{color:var(--muted)}
-.send-btn{width:40px;height:40px;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .2s;font-size:17px;color:#fff;box-shadow:0 4px 16px rgba(124,58,237,.45)}
-.send-btn:hover{transform:scale(1.06);box-shadow:0 6px 22px rgba(124,58,237,.6)}
-.send-btn:active{transform:scale(.95)}
+.inp-area{padding:8px 12px 12px;border-top:1px solid var(--rim);background:rgba(13,11,34,.95);backdrop-filter:blur(20px);flex-shrink:0}
+.inp-row{display:flex;gap:7px;align-items:flex-end;position:relative}
+.ia-ico{width:38px;height:38px;background:var(--glass);border:1px solid var(--rim);border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;transition:all .18s;user-select:none}
+.ia-ico:hover{background:var(--glass2)}
+.ia-ico:active{transform:scale(.93)}
+.inp-wrap{flex:1;background:rgba(0,0,0,.35);border:1px solid var(--rim);border-radius:16px;display:flex;align-items:flex-end;padding:2px 12px;transition:border-color .2s;min-height:40px}
+.inp-wrap:focus-within{border-color:var(--plum2);background:rgba(109,40,217,.06)}
+.mi{width:100%;background:none;border:none;outline:none;color:var(--fg);font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;padding:9px 0;resize:none;max-height:130px;line-height:1.45}
+.mi::placeholder{color:var(--fg3)}
+.send-btn{width:40px;height:40px;background:linear-gradient(135deg,#6d28d9,#8b5cf6);border:none;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:18px;color:#fff;box-shadow:0 4px 18px rgba(109,40,217,.5);transition:all .2s;user-select:none}
+.send-btn:hover{transform:scale(1.06);box-shadow:0 6px 24px rgba(109,40,217,.65)}
+.send-btn:active{transform:scale(.94)}
 
-/* EMOJI PICKER */
-.ep{position:absolute;bottom:68px;left:14px;background:var(--panel2);border:1px solid var(--border2);border-radius:18px;padding:12px;display:none;flex-wrap:wrap;gap:5px;width:min(300px,calc(100vw - 28px));box-shadow:var(--shadow);z-index:50;max-height:200px;overflow-y:auto}
-.ep.open{display:flex}
-.ep-btn{background:none;border:none;font-size:22px;cursor:pointer;padding:4px;border-radius:8px;transition:background .15s;line-height:1}
+/* EMOJI PANEL */
+.ep{position:absolute;bottom:60px;left:46px;background:var(--ink3);border:1px solid var(--rim);border-radius:18px;padding:12px;display:none;flex-wrap:wrap;gap:4px;width:min(310px,calc(100vw - 24px));max-height:220px;overflow-y:auto;box-shadow:var(--shad);z-index:80}
+.ep.on{display:flex}
+.ep-cat{width:100%;display:flex;gap:4px;padding-bottom:8px;border-bottom:1px solid var(--rim);margin-bottom:6px}
+.ep-cat-btn{flex:1;padding:5px;background:none;border:1px solid var(--rim);border-radius:8px;font-size:16px;cursor:pointer;transition:background .15s}
+.ep-cat-btn.on{background:rgba(139,92,246,.2);border-color:rgba(139,92,246,.3)}
+.ep-btn{background:none;border:none;font-size:22px;cursor:pointer;padding:3px;border-radius:8px;transition:background .15s;line-height:1}
 .ep-btn:hover{background:var(--glass2)}
 
 /* WELCOME */
-.welcome{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);text-align:center;padding:40px;gap:16px}
-.welcome .wi{font-size:72px;animation:floatY 4s ease-in-out infinite}
-.welcome h3{font-family:'Cinzel',serif;color:var(--text2);font-size:20px}
-.welcome p{font-size:13.5px;max-width:280px;line-height:1.6}
+.welcome{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:40px;text-align:center}
+.wl-ico{font-size:80px;animation:levitate 4s ease-in-out infinite}
+.wl-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--fg2)}
+.wl-sub{font-size:13.5px;color:var(--fg3);max-width:260px;line-height:1.6}
 
-/* ════════════════════════════════
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    ADMIN PANEL
-════════════════════════════════ */
-#adminPanel{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.82);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:16px}
-#adminPanel.open{display:flex}
-.admin-card{background:var(--panel);border:1px solid rgba(240,192,64,.25);border-radius:24px;width:min(740px,100%);max-height:min(88vh,700px);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow),0 0 80px rgba(240,192,64,.07);animation:cardIn .3s ease}
-.admin-top{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(146,64,14,.12),rgba(240,192,64,.04))}
-.admin-top h2{font-family:'Cinzel',serif;color:var(--gold);font-size:17px;flex:1}
-.admin-tabs{display:flex;border-bottom:1px solid var(--border);background:rgba(0,0,0,.2);overflow-x:auto;scrollbar-width:none}
-.admin-tabs::-webkit-scrollbar{display:none}
-.atab{padding:12px 16px;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--muted);border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
-.atab.active{color:var(--gold);border-bottom-color:var(--gold)}
-.atab:hover:not(.active){color:var(--text2)}
-.admin-body{flex:1;overflow-y:auto;padding:20px 22px;scrollbar-width:thin;scrollbar-color:var(--glass2) transparent}
-.asec{display:none}
-.asec.active{display:block}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:16px}
+.overlay.on{display:flex}
 
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:20px}
-.sc{background:var(--glass);border:1px solid var(--border2);border-radius:14px;padding:14px 16px;transition:transform .2s}
+.admin-card{background:var(--ink2);border:1px solid rgba(245,200,66,.22);border-radius:24px;width:min(760px,100%);max-height:min(90vh,680px);display:flex;flex-direction:column;overflow:hidden;box-shadow:var(--shad),0 0 100px rgba(245,200,66,.06);animation:slideUp .3s ease}
+.adm-hdr{padding:16px 22px;border-bottom:1px solid var(--rim);display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(120,53,9,.15),rgba(245,200,66,.04))}
+.adm-hdr h2{font-family:'Syne',sans-serif;color:var(--gold);font-size:17px;font-weight:800;flex:1}
+.adm-tabs{display:flex;border-bottom:1px solid var(--rim);background:rgba(0,0,0,.25);overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+.adm-tabs::-webkit-scrollbar{display:none}
+.atb{padding:11px 16px;cursor:pointer;font-size:12.5px;font-weight:800;color:var(--fg3);border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.atb.on{color:var(--gold);border-bottom-color:var(--gold)}
+.adm-body{flex:1;overflow-y:auto;padding:20px 22px;scrollbar-width:thin;scrollbar-color:var(--glass2) transparent}
+.as{display:none}.as.on{display:block}
+
+.stat-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:20px}
+.sc{background:var(--glass);border:1px solid var(--rim);border-radius:14px;padding:14px;transition:transform .2s;cursor:default}
 .sc:hover{transform:translateY(-2px)}
-.sc-num{font-family:'Cinzel',serif;font-size:30px;font-weight:700;line-height:1}
-.sc-lbl{font-size:11px;color:var(--muted);margin-top:5px;font-weight:500}
+.sc-n{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;line-height:1}
+.sc-l{font-size:11px;color:var(--fg3);margin-top:5px;font-weight:600}
 
 .utbl{width:100%;border-collapse:collapse;font-size:12.5px}
-.utbl th{text-align:left;font-size:10px;font-weight:800;letter-spacing:.9px;color:var(--muted);text-transform:uppercase;padding:8px 10px;border-bottom:1px solid var(--border)}
+.utbl th{text-align:left;font-size:10px;font-weight:900;letter-spacing:.9px;color:var(--fg3);text-transform:uppercase;padding:8px 10px;border-bottom:1px solid var(--rim)}
 .utbl td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:middle}
 .utbl tr:hover td{background:var(--glass)}
-.spill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:50px;font-size:10.5px;font-weight:700}
-.sp-g{background:rgba(34,211,160,.1);color:var(--green);border:1px solid rgba(34,211,160,.2)}
-.sp-y{background:rgba(240,192,64,.1);color:var(--gold);border:1px solid rgba(240,192,64,.2)}
-.sp-r{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.2)}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:50px;font-size:10.5px;font-weight:800}
+.p-g{background:rgba(52,211,153,.1);color:var(--ok);border:1px solid rgba(52,211,153,.2)}
+.p-y{background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.2)}
+.p-r{background:rgba(248,113,113,.1);color:var(--err);border:1px solid rgba(248,113,113,.2)}
+.p-b{background:rgba(56,189,248,.1);color:var(--sky);border:1px solid rgba(56,189,248,.2)}
 
-.pcard{background:var(--glass);border:1px solid rgba(240,192,64,.18);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;transition:border-color .2s}
-.pcard:hover{border-color:rgba(240,192,64,.35)}
-
-.rm-row{background:var(--glass);border:1px solid var(--border2);border-radius:13px;padding:13px 15px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:border-color .2s}
-.rm-row:hover{border-color:var(--border)}
-
-.add-room-box{background:var(--glass);border:1px dashed rgba(240,192,64,.25);border-radius:14px;padding:16px;margin-top:12px}
-.add-room-box h4{font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px}
-.af{display:flex;gap:8px;flex-wrap:wrap}
-.af input{flex:1;min-width:110px;padding:8px 12px;background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:12.5px;font-family:'DM Sans',sans-serif;outline:none}
+.pcard{background:var(--glass);border:1px solid rgba(245,200,66,.18);border-radius:14px;padding:13px 15px;margin-bottom:10px;display:flex;align-items:center;gap:12px;transition:border-color .2s}
+.pcard:hover{border-color:rgba(245,200,66,.32)}
+.rm-row{background:var(--glass);border:1px solid var(--rim);border-radius:13px;padding:12px 15px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:border-color .2s}
+.rm-row:hover{border-color:rgba(255,255,255,.14)}
+.add-box{background:var(--glass);border:1px dashed rgba(245,200,66,.22);border-radius:14px;padding:15px;margin-top:12px}
+.add-box h4{font-size:13px;font-weight:800;color:var(--gold);margin-bottom:11px}
+.af{display:flex;gap:7px;flex-wrap:wrap}
+.af input{flex:1;min-width:110px;padding:8px 12px;background:rgba(0,0,0,.35);border:1px solid var(--rim);border-radius:10px;color:var(--fg);font-size:12.5px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s}
 .af input:focus{border-color:var(--gold)}
 
-/* ════════════════════════════════
+/* smol btn */
+.sb2{padding:7px 14px;font-size:12.5px;width:auto;border-radius:9px;font-weight:800;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .18s}
+.sb2:hover{transform:translateY(-1px)}
+.sb2-p{background:linear-gradient(135deg,#6d28d9,#8b5cf6);color:#fff;box-shadow:0 3px 12px rgba(109,40,217,.4)}
+.sb2-g{background:linear-gradient(135deg,#065f46,#34d399);color:#fff}
+.sb2-r{background:linear-gradient(135deg,#991b1b,#f87171);color:#fff}
+.sb2-y{background:linear-gradient(135deg,#78350f,#f5c842);color:#fff}
+.sb2-o{background:var(--glass);border:1px solid var(--rim)!important;color:var(--fg2)}
+
+/* textarea in admin */
+.a-ta{width:100%;padding:12px;background:rgba(0,0,0,.3);border:1px solid var(--rim);border-radius:12px;color:var(--fg);font-size:13.5px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;resize:vertical;transition:border-color .2s}
+.a-ta:focus{border-color:var(--gold)}
+
+/* chart bar */
+.chart-bar{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+.cb-row{display:flex;align-items:center;gap:10px}
+.cb-lbl{font-size:12px;color:var(--fg2);width:100px;flex-shrink:0;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cb-track{flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
+.cb-fill{height:100%;border-radius:4px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.cb-val{font-size:11px;color:var(--fg3);width:30px;text-align:right;font-weight:700}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    PROFILE MODAL
-════════════════════════════════ */
-#profileModal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px}
-#profileModal.open{display:flex}
-.prof-card{background:var(--panel);border:1px solid var(--border);border-radius:24px;width:min(380px,100%);padding:28px 24px;box-shadow:var(--shadow);animation:cardIn .3s ease;max-height:90vh;overflow-y:auto}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.prof-card{background:var(--ink2);border:1px solid var(--rim);border-radius:24px;width:min(400px,100%);padding:28px 24px;box-shadow:var(--shad);animation:slideUp .3s ease;max-height:90vh;overflow-y:auto}
 .prof-top{text-align:center;margin-bottom:20px}
-.prof-ava{width:74px;height:74px;border-radius:50%;font-size:30px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;border:3px solid var(--accent);box-shadow:0 0 0 6px rgba(168,85,247,.1)}
-.prof-name{font-family:'Cinzel',serif;font-size:19px}
-.prof-email{font-size:12.5px;color:var(--muted);margin-top:4px}
-.prof-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(240,192,64,.1);border:1px solid rgba(240,192,64,.3);border-radius:50px;padding:4px 14px;font-size:11.5px;color:var(--gold);margin-top:10px;font-weight:700}
+.prof-av{width:76px;height:76px;border-radius:50%;font-size:30px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;border:3px solid var(--plum);box-shadow:0 0 0 6px rgba(139,92,246,.12);margin-bottom:12px}
+.prof-name{font-family:'Syne',sans-serif;font-size:20px;font-weight:800}
+.prof-email{font-size:13px;color:var(--fg3);margin-top:4px}
+.prof-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.28);border-radius:50px;padding:5px 14px;font-size:12px;color:var(--gold);margin-top:10px;font-weight:800}
+.av-pick{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.av-opt{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;border:2px solid transparent;transition:all .18s}
+.av-opt:hover,.av-opt.picked{border-color:var(--plum2);background:rgba(139,92,246,.15);transform:scale(1.08)}
 
-.inv-box{background:linear-gradient(135deg,rgba(34,211,160,.08),rgba(34,197,94,.04));border:1px solid rgba(34,211,160,.2);border-radius:14px;padding:16px;margin-top:16px}
-.inv-box h4{font-size:13px;font-weight:800;color:var(--green);margin-bottom:8px}
-.inv-link{background:rgba(0,0,0,.25);border:1px solid var(--border2);border-radius:10px;padding:8px 12px;font-size:11px;color:var(--muted);word-break:break-all;margin-bottom:10px;cursor:pointer;transition:border-color .2s}
-.inv-link:hover{border-color:var(--green)}
-.wa-btn{display:block;width:100%;padding:11px;background:linear-gradient(135deg,#128C7E,#25D366);color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;letter-spacing:.3px}
-.wa-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,211,102,.35)}
+/* INVITE BOX */
+.inv-box{background:linear-gradient(135deg,rgba(45,212,191,.08),rgba(34,197,94,.04));border:1px solid rgba(45,212,191,.2);border-radius:14px;padding:14px;margin-top:14px}
+.inv-box h4{font-size:13px;font-weight:800;color:var(--teal);margin-bottom:8px}
+.inv-link{background:rgba(0,0,0,.3);border:1px solid var(--rim);border-radius:10px;padding:8px 12px;font-size:12px;color:var(--fg3);word-break:break-all;margin-bottom:10px;cursor:pointer;transition:border-color .2s}
+.inv-link:hover{border-color:var(--teal)}
+.wa-btn{display:block;width:100%;padding:11px;background:linear-gradient(135deg,#075e54,#25d366);color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:.2px;transition:all .2s}
+.wa-btn:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(37,211,102,.35)}
 
-/* ════════════════════════════════
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    NOTIFICATIONS
-════════════════════════════════ */
-.nc{position:fixed;top:12px;right:12px;z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:300px}
-.notif{background:var(--panel2);border:1px solid var(--border2);border-radius:14px;padding:11px 14px;pointer-events:all;animation:nIn .3s cubic-bezier(.22,.68,0,1.2);display:flex;gap:10px;align-items:flex-start;box-shadow:0 8px 30px rgba(0,0,0,.5)}
-@keyframes nIn{from{opacity:0;transform:translateX(80px) scale(.9)}to{opacity:1;transform:none}}
-.notif.out{animation:nOut .25s ease forwards}
-@keyframes nOut{to{opacity:0;transform:translateX(80px) scale(.9)}}
-.n-icon{font-size:20px;flex-shrink:0}
-.n-body .n-title{font-size:12.5px;font-weight:700}
-.n-body .n-text{font-size:11.5px;color:var(--muted);margin-top:2px}
-.n-close{margin-left:auto;cursor:pointer;color:var(--muted);font-size:15px;background:none;border:none;flex-shrink:0;transition:color .15s}
-.n-close:hover{color:var(--text)}
-.n-green{border-color:rgba(34,211,160,.3)}
-.n-warn{border-color:rgba(240,192,64,.3)}
-.n-red{border-color:rgba(248,113,113,.3)}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.nc{position:fixed;top:12px;right:12px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:310px}
+.nt{background:rgba(15,12,35,.97);border:1px solid var(--rim);border-radius:15px;padding:11px 14px;pointer-events:all;display:flex;gap:10px;align-items:flex-start;box-shadow:0 8px 40px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04);animation:ntIn .32s cubic-bezier(.22,.68,0,1.2)}
+@keyframes ntIn{from{opacity:0;transform:translateX(80px) scale(.9)}to{opacity:1;transform:none}}
+.nt.out{animation:ntOut .25s ease forwards}
+@keyframes ntOut{to{opacity:0;transform:translateX(80px) scale(.9)}}
+.nt-ico{font-size:21px;flex-shrink:0}
+.nt-b .nt-t{font-size:12.5px;font-weight:800}
+.nt-b .nt-x{font-size:11.5px;color:var(--fg3);margin-top:2px}
+.nt-cl{margin-left:auto;background:none;border:none;color:var(--fg3);cursor:pointer;font-size:15px;flex-shrink:0;transition:color .15s}
+.nt-cl:hover{color:var(--fg)}
+.nt.c-g{border-color:rgba(52,211,153,.3)}
+.nt.c-w{border-color:rgba(245,200,66,.3)}
+.nt.c-r{border-color:rgba(248,113,113,.3)}
+.nt.c-b{border-color:rgba(56,189,248,.3)}
 
-/* ════════════════════════════════
-   INSTALL BANNER (PWA)
-════════════════════════════════ */
-.install-banner{position:fixed;bottom:0;left:0;right:0;z-index:300;padding:14px 20px;background:linear-gradient(135deg,rgba(124,58,237,.95),rgba(168,85,247,.95));backdrop-filter:blur(20px);display:none;align-items:center;gap:14px;box-shadow:0 -8px 40px rgba(0,0,0,.5)}
-.install-banner.show{display:flex}
-.install-banner p{flex:1;font-size:13.5px;font-weight:600;color:#fff;line-height:1.4}
-.install-banner p span{font-size:11px;opacity:.8;display:block;font-weight:400;margin-top:2px}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PWA INSTALL BANNER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.install-bar{position:fixed;bottom:0;left:0;right:0;z-index:300;display:none;align-items:center;gap:12px;padding:14px 20px;background:linear-gradient(135deg,rgba(109,40,217,.97),rgba(139,92,246,.97));backdrop-filter:blur(20px);box-shadow:0 -8px 40px rgba(0,0,0,.5)}
+.install-bar.on{display:flex}
+.install-bar p{flex:1;font-size:13.5px;font-weight:700;color:#fff;line-height:1.4}
+.install-bar p small{display:block;opacity:.75;font-weight:400;font-size:11.5px;margin-top:1px}
 
-/* ════════════════════════════════
-   MOBILE RESPONSIVE
-════════════════════════════════ */
-@media(max-width:680px){
-  :root{--sidebar-w:100vw}
-  .sidebar{position:fixed;top:0;left:0;bottom:0;transform:translateX(-100%);box-shadow:var(--shadow)}
-  .sidebar.open{transform:translateX(0)}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SEARCH OVERLAY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.search-ov{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.8);backdrop-filter:blur(10px);display:none;align-items:flex-start;justify-content:center;padding:60px 16px 16px}
+.search-ov.on{display:flex}
+.search-box{background:var(--ink2);border:1px solid var(--rim);border-radius:20px;width:min(560px,100%);box-shadow:var(--shad);animation:slideUp .3s ease;overflow:hidden}
+.search-inp-wrap{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--rim)}
+.search-inp-wrap input{flex:1;background:none;border:none;outline:none;color:var(--fg);font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600}
+.search-inp-wrap input::placeholder{color:var(--fg3)}
+.search-results{max-height:360px;overflow-y:auto;padding:8px}
+.sr-item{padding:10px 12px;border-radius:11px;cursor:pointer;transition:background .15s}
+.sr-item:hover{background:var(--glass)}
+.sr-room{font-size:11px;color:var(--fg3);font-weight:700;margin-bottom:2px}
+.sr-txt{font-size:13.5px;color:var(--fg2);font-weight:500}
+.sr-time{font-size:10.5px;color:var(--fg3);margin-top:2px}
+.sr-empty{text-align:center;padding:32px;color:var(--fg3);font-size:14px}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   MOBILE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media(max-width:700px){
+  :root{--sb:100vw}
+  .sb{position:fixed;top:0;left:0;bottom:0;transform:translateX(-100%);box-shadow:var(--shad)}
+  .sb.on{transform:translateX(0)}
   .back-btn{display:flex}
-  .ep{left:8px;right:8px;width:auto;bottom:72px}
-  .nc{top:auto;bottom:80px;right:8px;left:8px;max-width:100%}
-  .admin-card{width:100%;max-height:100vh;border-radius:0;height:100%}
-  #adminPanel{padding:0;align-items:stretch}
-  .prof-card{width:100%;border-radius:24px 24px 0 0;position:fixed;bottom:0;left:0;right:0}
-  #profileModal{align-items:flex-end;padding:0}
-  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .ep{left:8px;right:8px;width:auto;bottom:68px}
+  .nc{max-width:calc(100vw - 24px);right:12px}
+  .admin-card{width:100%;max-height:100dvh;border-radius:0}
+  .overlay{padding:0;align-items:stretch}
+  .prof-card{width:100%;border-radius:24px 24px 0 0;position:fixed;bottom:0;left:0;right:0;max-height:85dvh}
+  #oProfil{align-items:flex-end;padding:0}
+  .online-strip{display:none}
 }
-@media(min-width:681px){
-  .sidebar{transform:none!important}
-}
+@media(min-width:701px){.sb{transform:none!important}}
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════
-     AUTH SCREEN
-══════════════════════════════ -->
-<div class="screen active" id="authScreen">
-  <div class="auth-wrap">
-    <div class="auth-card">
-      <div class="logo">
-        <div class="logo-ring">💬</div>
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     AUTH
+═══════════════════════════════════════ -->
+<div class="screen on" id="sAuth">
+  <div class="auth-center">
+    <div class="auth-box">
+      <div class="brand">
+        <div class="brand-ico">💬</div>
         <h1>Zakayo Chat</h1>
         <p>Mazungumzo Ya Kweli · Salama · Ya Haraka</p>
       </div>
-      <div class="tabs">
-        <button class="tab-btn active" onclick="showTab('login')">🔑 Ingia</button>
-        <button class="tab-btn" onclick="showTab('register')">✨ Jisajili</button>
+      <div class="seg">
+        <button class="seg-btn on" id="tabL" onclick="showTab('L')">🔑 Ingia</button>
+        <button class="seg-btn" id="tabR" onclick="showTab('R')">✨ Jisajili</button>
       </div>
 
       <!-- LOGIN -->
-      <div id="fLogin">
-        <div class="form-group">
+      <div id="fL">
+        <div class="fg">
           <label>Barua Pepe</label>
-          <div class="input-icon-wrap"><span class="fi">📧</span><input type="email" id="lEmail" placeholder="barua@pepe.com" autocomplete="email"></div>
+          <div class="fi-wrap"><span class="fic">📧</span><input type="email" id="lE" placeholder="barua@pepe.com" autocomplete="email"></div>
         </div>
-        <div class="form-group">
+        <div class="fg">
           <label>Nywila</label>
-          <div class="input-icon-wrap"><span class="fi">🔒</span><input type="password" id="lPass" placeholder="Nywila yako" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+          <div class="fi-wrap"><span class="fic">🔒</span><input type="password" id="lP" placeholder="Nywila yako" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()"></div>
         </div>
-        <button class="btn btn-primary" onclick="doLogin()">Ingia Sasa →</button>
-        <div class="auth-err" id="lErr"></div>
+        <button class="abtn abtn-p" onclick="login()">Ingia Sasa →</button>
+        <div class="amsg" id="lM"></div>
       </div>
 
       <!-- REGISTER -->
-      <div id="fReg" style="display:none">
-        <div class="form-group">
+      <div id="fR" style="display:none">
+        <div class="fg">
           <label>Jina Kamili</label>
-          <div class="input-icon-wrap"><span class="fi">👤</span><input type="text" id="rName" placeholder="Jina lako kamili"></div>
+          <div class="fi-wrap"><span class="fic">👤</span><input type="text" id="rN" placeholder="Jina lako kamili"></div>
         </div>
-        <div class="form-group">
+        <div class="fg">
           <label>Barua Pepe</label>
-          <div class="input-icon-wrap"><span class="fi">📧</span><input type="email" id="rEmail" placeholder="barua@pepe.com"></div>
+          <div class="fi-wrap"><span class="fic">📧</span><input type="email" id="rE" placeholder="barua@pepe.com"></div>
         </div>
-        <div class="form-group">
+        <div class="fg">
           <label>Nywila</label>
-          <div class="input-icon-wrap"><span class="fi">🔒</span><input type="password" id="rPass" placeholder="Angalau herufi 6"></div>
+          <div class="fi-wrap"><span class="fic">🔒</span><input type="password" id="rP" placeholder="Angalau herufi 6"></div>
         </div>
-        <div class="form-group">
+        <div class="fg">
           <label>Thibitisha Nywila</label>
-          <div class="input-icon-wrap"><span class="fi">✅</span><input type="password" id="rPass2" placeholder="Rudia nywila" onkeydown="if(event.key==='Enter')doRegister()"></div>
+          <div class="fi-wrap"><span class="fic">✅</span><input type="password" id="rP2" placeholder="Rudia nywila" onkeydown="if(event.key==='Enter')register()"></div>
         </div>
-        <button class="btn btn-primary" onclick="doRegister()">Jisajili Sasa →</button>
-        <div class="auth-err" id="rErr"></div>
+        <button class="abtn abtn-p" onclick="register()">Jisajili Sasa →</button>
+        <div class="amsg" id="rM"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════
-     WAITING SCREEN
-══════════════════════════════ -->
-<div class="screen" id="waitScreen">
-  <div class="wait-card">
-    <span class="wait-anim">⏳</span>
+<!-- ═══════════════════════════════════════
+     WAIT
+═══════════════════════════════════════ -->
+<div class="screen" id="sWait">
+  <div class="bg-orbs"><div class="orb orb1"></div><div class="orb orb2"></div></div>
+  <div class="wait-box">
+    <span class="wait-ico">⏳</span>
     <h2>Inasubiri Idhini</h2>
-    <p>Asante kwa kujisajili! Akaunti yako ipo katika mstari wa kusubiri. Admin <strong>zakayomalogo@gmail.com</strong> atakupitishia hivi karibuni.</p>
-    <div class="status-pill"><div class="pulse-dot"></div> Inasubiri ukaguzi wa admin</div>
-    <br><br>
-    <button class="btn btn-outline btn-sm" onclick="doLogout()" style="width:auto;padding:9px 24px">← Rudi kuingia</button>
+    <p>Asante kwa kujisajili! Akaunti yako ipo kwenye mstari wa kusubiri. Admin <strong>zakayomalogo@gmail.com</strong> atakupitishia hivi karibuni.</p>
+    <div class="wait-badge"><div class="w-dot"></div>Inasubiri ukaguzi wa admin</div>
+    <div class="wait-btns">
+      <button class="sb2 sb2-o" onclick="logout()">← Rudi</button>
+      <button class="sb2 sb2-p" onclick="checkMyStatus()">🔄 Angalia Hali</button>
+    </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════
-     MAIN APP
-══════════════════════════════ -->
-<div class="screen" id="appScreen">
+<!-- ═══════════════════════════════════════
+     APP
+═══════════════════════════════════════ -->
+<div class="screen" id="sApp">
 
   <!-- SIDEBAR -->
-  <div class="sidebar" id="sidebar">
-    <div class="sb-header">
-      <div class="sb-brand">
-        <div class="sb-logo">💬</div>
-        <div>
-          <div class="sb-title">Zakayo Chat</div>
-          <div class="sb-version">v2.1 · GitHub Live</div>
+  <div class="sb" id="SB">
+    <div class="sb-top">
+      <div class="sb-logo">
+        <div class="sb-logo-ico">💬</div>
+        <div class="sb-logo-txt">
+          <h2>Zakayo Chat</h2>
+          <span>v3.0 · zakayo.github.io</span>
         </div>
       </div>
-      <div class="user-card">
-        <div class="ava" id="myAva" style="background:#a855f7">Z<div class="sdot"></div></div>
-        <div style="flex:1;min-width:0">
-          <div class="uc-name" id="myName">—</div>
-          <div style="font-size:10px;color:var(--green)">● Mtandaoni</div>
+      <div class="me-card" onclick="openProfile()">
+        <div class="av" id="myAv" style="width:36px;height:36px;font-size:14px;font-weight:800;background:#8b5cf6">Z
+          <div class="sd" style="width:11px;height:11px"></div>
         </div>
-        <div class="uc-role role-member" id="myRole">Mwanachama</div>
+        <div class="flex1">
+          <div class="me-name" id="myName">—</div>
+          <div style="font-size:10.5px;color:var(--ok);font-weight:600">● Mtandaoni</div>
+        </div>
+        <div class="me-tag tag-member" id="myTag">Mwanachama</div>
       </div>
     </div>
 
     <div class="sb-search">
-      <span class="si">🔍</span>
-      <input type="text" placeholder="Tafuta vyumba..." oninput="filterRooms(this.value)">
+      <input type="text" placeholder="Tafuta vyumba au ujumbe..." oninput="searchRooms(this.value)" id="sbSearch">
     </div>
 
-    <div class="sec-label">Vyumba vya Gumzo</div>
-    <div class="room-list" id="roomList"></div>
+    <div class="sb-sec">Vyumba vya Gumzo</div>
+    <div class="room-list scrolly" id="roomList"></div>
 
-    <div class="sb-footer">
-      <div class="fb" onclick="openProfile()" title="Profaili">👤<span class="fb-tip">Profaili</span></div>
-      <div class="fb" onclick="openInviteModal()" title="Alika">🔗<span class="fb-tip">Alika</span></div>
-      <div class="fb fb-admin" id="adminFab" onclick="openAdmin()" style="display:none" title="Admin">⚙️<span class="fb-tip">Admin</span></div>
-      <div class="fb fb-dl" onclick="downloadApp()" title="Pakua">⬇️<span class="fb-tip">Pakua</span></div>
-      <div class="fb" onclick="doLogout()" title="Toka">🚪<span class="fb-tip">Toka</span></div>
+    <div class="sb-foot">
+      <div class="fbt" onclick="openProfile()"><span>👤</span><span class="fbt-tip">Profaili</span></div>
+      <div class="fbt" onclick="openInviteModal()"><span>🔗</span><span class="fbt-tip">Alika</span></div>
+      <div class="fbt" onclick="openSearch()"><span>🔍</span><span class="fbt-tip">Tafuta</span></div>
+      <div class="fbt gold" id="adminFab" onclick="openAdmin()" style="display:none"><span>⚙️</span><span class="fbt-tip">Admin</span></div>
+      <div class="fbt green" onclick="downloadApp()"><span>⬇️</span><span class="fbt-tip">Pakua App</span></div>
+      <div class="fbt" onclick="logout()"><span>🚪</span><span class="fbt-tip">Toka</span></div>
     </div>
   </div>
 
   <!-- CHAT AREA -->
-  <div class="chat-area">
-    <div class="chat-header">
-      <button class="back-btn" onclick="closeSidebar()">←</button>
-      <div class="ch-icon" id="chIcon">💬</div>
+  <div class="ca">
+    <!-- HEADER -->
+    <div class="ch">
+      <button class="back-btn" onclick="closeSB()">←</button>
+      <div class="ch-ico" id="chIco">💬</div>
       <div class="ch-info">
         <div class="ch-name" id="chName">Zakayo Chat</div>
         <div class="ch-sub" id="chSub">Chagua chumba kushoto</div>
       </div>
-      <div class="ch-actions">
-        <div class="ia" onclick="toggleSearch()" title="Tafuta">🔍</div>
-        <div class="ia" id="muteIco" onclick="toggleMute()" title="Kimya/Arifa">🔔</div>
+      <div class="ch-acts">
+        <div class="ico-btn" onclick="openSearch()" title="Tafuta ujumbe">🔍</div>
+        <div class="ico-btn" onclick="showMembers()" title="Wanachama">👥</div>
+        <div class="ico-btn" id="muteBtn" onclick="toggleMute()" title="Arifa">🔔</div>
       </div>
     </div>
 
-    <div class="welcome" id="welcome">
-      <div class="wi">✨</div>
-      <h3>Karibu Zakayo Chat!</h3>
-      <p>Chagua chumba upande wa kushoto ili kuanza mazungumzo yako na marafiki.</p>
+    <!-- ONLINE USERS STRIP -->
+    <div class="online-strip" id="onlineStrip">
+      <span class="online-strip-lbl">Watandaoni:</span>
     </div>
 
-    <div class="msgs" id="msgs" style="display:none"></div>
+    <!-- WELCOME -->
+    <div class="welcome" id="welcome">
+      <div class="wl-ico">✨</div>
+      <div class="wl-title">Karibu Zakayo Chat!</div>
+      <div class="wl-sub">Chagua chumba upande wa kushoto ili kuanza mazungumzo yako na marafiki na wadau.</div>
+    </div>
 
-    <div class="input-area" id="inputArea" style="display:none">
+    <!-- MESSAGES -->
+    <div class="msgs scrolly" id="msgs" style="display:none"></div>
+
+    <!-- REPLY BAR -->
+    <div class="reply-bar" id="replyBar">
+      <div style="color:var(--plum2);font-size:16px">↩</div>
+      <div class="rb-txt">
+        <div class="rb-sender" id="rbSender"></div>
+        <div id="rbTxt" style="font-size:12px"></div>
+      </div>
+      <button class="rb-close" onclick="clearReply()">✕</button>
+    </div>
+
+    <!-- INPUT -->
+    <div class="inp-area" id="inpArea" style="display:none">
       <div style="position:relative">
         <div class="ep" id="ep"></div>
-        <div class="ir">
-          <div class="ia-small" onclick="simulateAttach()" title="Faili">📎</div>
-          <div class="ia-small" onclick="toggleEmoji()" title="Emoji">😊</div>
-          <div class="input-wrap">
-            <textarea class="mi" id="mi" rows="1" placeholder="Andika ujumbe..." oninput="autoR(this)" onkeydown="handleKey(event)"></textarea>
+        <div class="inp-row">
+          <div class="ia-ico" onclick="simulateAttach()" title="Faili">📎</div>
+          <div class="ia-ico" onclick="toggleEmoji()" title="Emoji" id="emojiTrigger">😊</div>
+          <div class="inp-wrap">
+            <textarea class="mi" id="mi" rows="1" placeholder="Andika ujumbe..." oninput="onInput(this)" onkeydown="handleKey(event)"></textarea>
           </div>
           <button class="send-btn" onclick="sendMsg()">➤</button>
         </div>
@@ -522,406 +634,517 @@ body::before{content:'';position:fixed;top:-20%;left:-10%;width:60%;height:60%;b
   </div>
 </div>
 
-<!-- ══════════════════════════════
+<!-- ═══════════════════════════════════════
      ADMIN PANEL
-══════════════════════════════ -->
-<div id="adminPanel">
+═══════════════════════════════════════ -->
+<div class="overlay" id="oAdmin">
   <div class="admin-card">
-    <div class="admin-top">
+    <div class="adm-hdr">
       <h2>⚙️ Dashibodi ya Admin</h2>
-      <button class="btn btn-outline btn-sm" onclick="closeAdmin()">✕ Funga</button>
+      <button class="sb2 sb2-o" onclick="$('oAdmin').classList.remove('on')">✕ Funga</button>
     </div>
-    <div class="admin-tabs" id="adminTabs">
-      <div class="atab active" onclick="aTab('overview')">📊 Muhtasari</div>
-      <div class="atab" onclick="aTab('users')">👥 Watumiaji</div>
-      <div class="atab" onclick="aTab('pending')">⏳ Wanaosubiri</div>
-      <div class="atab" onclick="aTab('rooms')">💬 Vyumba</div>
-      <div class="atab" onclick="aTab('broadcast')">📢 Tangazo</div>
-      <div class="atab" onclick="aTab('settings')">🛠️ Mipangilio</div>
+    <div class="adm-tabs" id="admTabs">
+      <div class="atb on" onclick="aTab(0)">📊 Muhtasari</div>
+      <div class="atb" onclick="aTab(1)">👥 Watumiaji</div>
+      <div class="atb" onclick="aTab(2)">⏳ Wanaosubiri</div>
+      <div class="atb" onclick="aTab(3)">💬 Vyumba</div>
+      <div class="atb" onclick="aTab(4)">📢 Tangazo</div>
+      <div class="atb" onclick="aTab(5)">🛠️ Mipangilio</div>
     </div>
-    <div class="admin-body">
-
-      <!-- OVERVIEW -->
-      <div class="asec active" id="as-overview">
-        <div class="stat-grid" id="statGrid"></div>
-        <div style="background:var(--glass);border:1px solid var(--border2);border-radius:12px;padding:14px;font-size:12.5px;color:var(--muted)">
-          <strong style="color:var(--gold)">Zakayo Chat</strong> v2.1 · Admin: zakayomalogo@gmail.com<br>
-          Data imehifadhiwa kwenye kifaa kwa njia salama · GitHub Pages Live
+    <div class="adm-body scrolly">
+      <!-- TAB 0: OVERVIEW -->
+      <div class="as on" id="at0">
+        <div class="stat-g" id="statG"></div>
+        <div style="margin-bottom:14px">
+          <div class="sb-sec" style="padding:0 0 8px">Ujumbe kwa Chumba</div>
+          <div class="chart-bar" id="chartBar"></div>
+        </div>
+        <div style="background:var(--glass);border:1px solid var(--rim);border-radius:12px;padding:13px;font-size:12.5px;color:var(--fg3)">
+          <strong style="color:var(--gold)">Zakayo Chat</strong> v3.0 · Admin: zakayomalogo@gmail.com<br>
+          Data imehifadhiwa salama kwenye kifaa · GitHub Pages Live
         </div>
       </div>
-
-      <!-- USERS -->
-      <div class="asec" id="as-users">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-          <h3 style="font-size:14px;font-weight:800">Watumiaji Wote</h3>
-          <span style="font-size:12px;color:var(--muted)" id="userCount"></span>
+      <!-- TAB 1: USERS -->
+      <div class="as" id="at1">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px">
+          <div style="font-size:14px;font-weight:800">Watumiaji Wote</div>
+          <span style="font-size:12px;color:var(--fg3)" id="uCount"></span>
         </div>
-        <div style="overflow-x:auto">
-          <table class="utbl" id="utbl"><tbody></tbody></table>
-        </div>
+        <div style="overflow-x:auto"><table class="utbl" id="utbl"><tbody></tbody></table></div>
       </div>
-
-      <!-- PENDING -->
-      <div class="asec" id="as-pending">
-        <h3 style="font-size:14px;font-weight:800;margin-bottom:14px;color:var(--gold)">⏳ Wanaosubiri Idhini</h3>
-        <div id="pendingList"></div>
+      <!-- TAB 2: PENDING -->
+      <div class="as" id="at2">
+        <div style="font-size:14px;font-weight:800;color:var(--gold);margin-bottom:13px">⏳ Wanaosubiri Idhini</div>
+        <div id="pendList"></div>
       </div>
-
-      <!-- ROOMS -->
-      <div class="asec" id="as-rooms">
-        <h3 style="font-size:14px;font-weight:800;margin-bottom:14px">Simamia Vyumba</h3>
+      <!-- TAB 3: ROOMS -->
+      <div class="as" id="at3">
+        <div style="font-size:14px;font-weight:800;margin-bottom:13px">Simamia Vyumba</div>
         <div id="roomMgr"></div>
-        <div class="add-room-box">
+        <div class="add-box">
           <h4>+ Ongeza Chumba Kipya</h4>
           <div class="af">
-            <input type="text" id="nrEmoji" placeholder="Emoji" style="max-width:72px">
-            <input type="text" id="nrName" placeholder="Jina la chumba">
-            <input type="text" id="nrDesc" placeholder="Maelezo">
-            <button class="btn btn-gold btn-sm" onclick="addRoom()">+ Ongeza</button>
+            <input type="text" id="nrIco" placeholder="Emoji" style="max-width:68px">
+            <input type="text" id="nrNm" placeholder="Jina la chumba">
+            <input type="text" id="nrDs" placeholder="Maelezo mafupi">
+            <button class="sb2 sb2-y" onclick="addRoom()">+ Ongeza</button>
           </div>
         </div>
       </div>
-
-      <!-- BROADCAST -->
-      <div class="asec" id="as-broadcast">
-        <h3 style="font-size:14px;font-weight:800;margin-bottom:14px">📢 Tangazo kwa Wote</h3>
-        <div class="form-group">
-          <label>Ujumbe wa Tangazo</label>
-          <textarea id="bcastMsg" rows="5" style="width:100%;padding:12px;background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-size:13.5px;font-family:'DM Sans',sans-serif;outline:none;resize:vertical;transition:border-color .2s" placeholder="Andika tangazo lako hapa... litaenda kwa vyumba vyote!" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border2)'"></textarea>
+      <!-- TAB 4: BROADCAST -->
+      <div class="as" id="at4">
+        <div style="font-size:14px;font-weight:800;margin-bottom:13px">📢 Tangazo kwa Vyumba Vyote</div>
+        <div class="fg"><label>Ujumbe wa Tangazo</label>
+          <textarea class="a-ta" id="bMsg" rows="5" placeholder="Andika tangazo lako hapa... Litaonekana katika vyumba vyote!"></textarea>
         </div>
-        <button class="btn btn-gold" onclick="doBroadcast()">📢 Tuma Tangazo kwa Wote</button>
+        <button class="abtn abtn-p" onclick="broadcast()" style="margin-top:4px">📢 Tuma Tangazo kwa Wote</button>
       </div>
-
-      <!-- SETTINGS -->
-      <div class="asec" id="as-settings">
-        <h3 style="font-size:14px;font-weight:800;margin-bottom:16px">🛠️ Mipangilio ya App</h3>
+      <!-- TAB 5: SETTINGS -->
+      <div class="as" id="at5">
+        <div style="font-size:14px;font-weight:800;margin-bottom:14px">🛠️ Mipangilio ya Mfumo</div>
         <div style="display:flex;flex-direction:column;gap:10px">
-          <div style="background:var(--glass);border:1px solid var(--border2);border-radius:13px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
-            <div><div style="font-weight:700;font-size:13.5px">Futa Data Zote</div><div style="font-size:11.5px;color:var(--muted);margin-top:2px">Futa ujumbe wote wa vyumba (watumiaji wataendelea)</div></div>
-            <button class="btn btn-danger btn-sm" onclick="clearAllMsgs()">🗑️ Futa</button>
+          <div style="background:var(--glass);border:1px solid var(--rim);border-radius:13px;padding:14px;display:flex;align-items:center;gap:12px">
+            <div style="flex:1"><div style="font-weight:700;font-size:13.5px">Futa Ujumbe Wote</div><div style="font-size:11.5px;color:var(--fg3);margin-top:2px">Futa mazungumzo ya vyumba vyote (watumiaji wataendelea)</div></div>
+            <button class="sb2 sb2-r" onclick="clearMsgs()">🗑️ Futa</button>
           </div>
-          <div style="background:var(--glass);border:1px solid var(--border2);border-radius:13px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
-            <div><div style="font-weight:700;font-size:13.5px">Export Data</div><div style="font-size:11.5px;color:var(--muted);margin-top:2px">Pakua nakala ya data yote (JSON)</div></div>
-            <button class="btn btn-primary btn-sm" onclick="exportData()">⬇️ Export</button>
+          <div style="background:var(--glass);border:1px solid var(--rim);border-radius:13px;padding:14px;display:flex;align-items:center;gap:12px">
+            <div style="flex:1"><div style="font-weight:700;font-size:13.5px">Export Backup</div><div style="font-size:11.5px;color:var(--fg3);margin-top:2px">Pakua nakala ya data yote (JSON)</div></div>
+            <button class="sb2 sb2-p" onclick="exportData()">⬇️ Export</button>
           </div>
-          <div style="background:var(--glass);border:1px solid rgba(248,113,113,.2);border-radius:13px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
-            <div><div style="font-weight:700;font-size:13.5px;color:var(--red)">Reset Kamili</div><div style="font-size:11.5px;color:var(--muted);margin-top:2px">Futa kila kitu – hifadhi ya awali</div></div>
-            <button class="btn btn-danger btn-sm" onclick="fullReset()">⚠️ Reset</button>
+          <div style="background:var(--glass);border:1px solid var(--rim);border-radius:13px;padding:14px;display:flex;align-items:center;gap:12px">
+            <div style="flex:1"><div style="font-weight:700;font-size:13.5px">Badilisha Nywila ya Admin</div><div style="font-size:11.5px;color:var(--fg3);margin-top:2px">Badilisha nywila ya akaunti yako ya admin</div></div>
+            <button class="sb2 sb2-y" onclick="openProfile()">🔑 Badilisha</button>
+          </div>
+          <div style="background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.2);border-radius:13px;padding:14px;display:flex;align-items:center;gap:12px">
+            <div style="flex:1"><div style="font-weight:700;font-size:13.5px;color:var(--err)">Reset Kamili</div><div style="font-size:11.5px;color:var(--fg3);margin-top:2px">Futa kila kitu na uanze upya — hatua isiyoweza kurudishwa!</div></div>
+            <button class="sb2 sb2-r" onclick="fullReset()">⚠️ Reset</button>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════
+<!-- ═══════════════════════════════════════
      PROFILE MODAL
-══════════════════════════════ -->
-<div id="profileModal">
+═══════════════════════════════════════ -->
+<div class="overlay" id="oProfil">
   <div class="prof-card" id="profContent"></div>
 </div>
 
-<!-- ══════════════════════════════
+<!-- ═══════════════════════════════════════
      INVITE MODAL
-══════════════════════════════ -->
-<div id="inviteModal" style="position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px">
-  <div style="background:var(--panel);border:1px solid rgba(34,211,160,.25);border-radius:24px;width:min(380px,100%);padding:28px 24px;box-shadow:var(--shadow);animation:cardIn .3s ease">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <h3 style="font-family:'Cinzel',serif;color:var(--green);font-size:18px">🔗 Alika Marafiki</h3>
-      <button class="btn btn-outline btn-sm" onclick="closeInvite()">✕</button>
+═══════════════════════════════════════ -->
+<div class="overlay" id="oInvite">
+  <div class="prof-card" style="border-color:rgba(45,212,191,.25)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <h3 style="font-family:'Syne',sans-serif;color:var(--teal);font-size:18px;font-weight:800">🔗 Alika Marafiki</h3>
+      <button class="sb2 sb2-o" onclick="$('oInvite').classList.remove('on')">✕</button>
     </div>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6">Shiriki link hii ili marafiki wako wajiunga na Zakayo Chat. Watahitaji idhini ya admin baada ya kujisajili.</p>
-    <div style="background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:12px;padding:12px;font-size:12px;color:var(--muted);word-break:break-all;margin-bottom:12px;cursor:pointer" id="invLinkTxt" onclick="copyLink()"></div>
-    <div style="display:flex;gap:8px">
-      <button class="btn btn-outline btn-sm" onclick="copyLink()" style="flex:1;padding:10px">📋 Nakili Link</button>
-      <button class="wa-btn btn-sm" onclick="shareWA()" style="flex:1;padding:10px;font-size:13px;border-radius:11px">📲 WhatsApp</button>
+    <p style="font-size:13px;color:var(--fg2);line-height:1.7;margin-bottom:16px">Shiriki link hii ili marafiki wako wajiunga na <strong>Zakayo Chat</strong>. Baada ya kujisajili, watahitaji idhini yako kama admin.</p>
+    <div class="inv-link" id="invLinkTxt" onclick="copyLink()"></div>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <button class="sb2 sb2-o" style="flex:1;padding:10px" onclick="copyLink()">📋 Nakili Link</button>
+      <button class="wa-btn" onclick="shareWA()" style="flex:1;border-radius:11px;padding:10px;font-size:13px">📲 Shiriki WhatsApp</button>
     </div>
-    <div style="margin-top:16px;padding:12px;background:rgba(34,211,160,.06);border:1px solid rgba(34,211,160,.15);border-radius:12px">
-      <p style="font-size:11.5px;color:var(--muted)">💡 <strong style="color:var(--green)">Jinsi ya kutumia:</strong> Mtu anapobonyeza link, atafungua Zakayo Chat. Baada ya kujisajili, atangoja idhini yako kama admin.</p>
+    <div style="background:rgba(45,212,191,.06);border:1px solid rgba(45,212,191,.15);border-radius:12px;padding:12px">
+      <p style="font-size:12px;color:var(--fg3);line-height:1.6">💡 <strong style="color:var(--teal)">Jinsi inavyofanya kazi:</strong> Mtu anapobonyeza link, atafungua Zakayo Chat. Baada ya kujisajili, akaunti yake itasubiri idhini yako kama admin kwenye <strong>Dashibodi ya Admin → Wanaosubiri</strong>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SEARCH OVERLAY
+═══════════════════════════════════════ -->
+<div class="search-ov" id="oSearch" onclick="if(event.target===this)this.classList.remove('on')">
+  <div class="search-box">
+    <div class="search-inp-wrap">
+      <span style="font-size:18px">🔍</span>
+      <input type="text" placeholder="Tafuta ujumbe katika vyumba vyote..." id="sInp" oninput="doSearch(this.value)">
+      <button class="sb2 sb2-o" onclick="$('oSearch').classList.remove('on');$('sInp').value='';$('sResults').innerHTML=''">✕</button>
+    </div>
+    <div class="search-results scrolly" id="sResults">
+      <div class="sr-empty">Andika kutafuta ujumbe...</div>
     </div>
   </div>
 </div>
 
 <!-- NOTIFICATIONS -->
-<div class="nc" id="nc"></div>
+<div class="nc" id="NC"></div>
 
-<!-- PWA INSTALL BANNER -->
-<div class="install-banner" id="installBanner">
+<!-- INSTALL BANNER -->
+<div class="install-bar" id="IB">
   <span style="font-size:32px">📲</span>
-  <p>Sakinisha Zakayo Chat kwenye simu yako!<span>Bonyeza hapa kuongeza kwenye skrini ya nyumbani</span></p>
-  <button class="btn btn-sm" style="background:#fff;color:#7c3aed;font-weight:800;white-space:nowrap" onclick="installPWA()">Sakinisha</button>
-  <button style="background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:18px;padding:4px" onclick="document.getElementById('installBanner').classList.remove('show')">✕</button>
+  <p>Sakinisha Zakayo Chat kwenye simu!<small>Bonyeza hapa kuongeza kwenye skrini ya nyumbani</small></p>
+  <button class="sb2 sb2-p" onclick="installPWA()">Sakinisha</button>
+  <button style="background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:20px" onclick="$('IB').classList.remove('on')">✕</button>
 </div>
 
+<!-- ═══════════════════════════════════════
+     SCRIPT ENGINE
+═══════════════════════════════════════ -->
 <script>
 'use strict';
-/* ═══════════════════════════════════════
-   ZAKAYO CHAT — ENGINE v2.1
-   GitHub Pages Edition
-═══════════════════════════════════════ */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ZAKAYO CHAT ENGINE v3.0
+   zakayo.github.io/chat/
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
 const ADMIN_EMAIL = 'zakayomalogo@gmail.com';
-const ADMIN_PASS  = 'Admin@Zakayo2024'; // changeable from settings later
-let deferredInstall = null;
+const VER = '3.0';
 
-// ── STORAGE ──
+// ── shortcut ──
+const $ = id => document.getElementById(id);
+
+// ── STORE ──
 const S = {
-  g(k){ try{ return JSON.parse(localStorage.getItem('zc2_'+k)); }catch(e){ return null; } },
-  s(k,v){ try{ localStorage.setItem('zc2_'+k, JSON.stringify(v)); }catch(e){} },
-  d(k){ localStorage.removeItem('zc2_'+k); }
+  g(k){ try{ return JSON.parse(localStorage.getItem('zc3_'+k)); }catch{ return null; }},
+  s(k,v){ try{ localStorage.setItem('zc3_'+k,JSON.stringify(v)); }catch{} },
+  d(k){ localStorage.removeItem('zc3_'+k); }
 };
 
-// ── STATE ──
-let CU = null; // current user
-let CR = null; // current room
-let muted = false;
-let pollTimer = null;
-let lastMsgCount = {};
+// ── SOUND ──
+function beep(type='msg'){
+  try{
+    const ctx = new(window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    if(type==='msg'){o.frequency.value=880;g.gain.setValueAtTime(.1,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.18);o.start();o.stop(ctx.currentTime+.18);}
+    else if(type==='send'){o.frequency.value=660;g.gain.setValueAtTime(.08,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.1);o.start();o.stop(ctx.currentTime+.1);}
+    else if(type==='notif'){o.frequency.value=1046;g.gain.setValueAtTime(.07,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.22);o.start();o.stop(ctx.currentTime+.22);}
+  }catch{}
+}
 
-/* ═══════════════════════════════════════
+// ── HASH ──
+function hp(s){ let h=5381; for(let i=0;i<s.length;i++){h=((h<<5)+h)+s.charCodeAt(i);h|=0;} return (h>>>0).toString(36); }
+
+// ── RANDOM ──
+const COLORS=['#8b5cf6','#3b82f6','#22d3a0','#f472b6','#fb923c','#facc15','#34d399','#e879f9','#60a5fa','#f87171'];
+const AVIS=['😊','🌟','🔥','💎','⚡','🦁','🌈','🎯','🚀','🎪','🌺','🦋','🐯','🎭','💫'];
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    DB INIT
-═══════════════════════════════════════ */
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function initDB(){
-  if(!S.g('init')){
-    S.s('users',[{
-      id:'admin001', name:'Zakayo Admin', email:ADMIN_EMAIL,
-      pw: hp(ADMIN_PASS), ava:'👑', color:'#f0c040',
-      role:'admin', ok:true, status:'online', joined: Date.now()
-    }]);
-    S.s('rooms',[
-      {id:'r1',ico:'🌍',name:'Jumla',       desc:'Mazungumzo ya kawaida kwa wote', locked:true},
-      {id:'r2',ico:'💡',name:'Mawazo',      desc:'Shiriki mawazo na mbinu mpya'},
-      {id:'r3',ico:'🎵',name:'Burudani',    desc:'Muziki, michezo na starehe'},
-      {id:'r4',ico:'💼',name:'Biashara',    desc:'Mazungumzo ya kazi na biashara'},
-      {id:'r5',ico:'📣',name:'Matangazo',   desc:'Habari rasmi kutoka kwa admin', locked:true},
-    ]);
-    S.s('msgs',{});
-    S.s('init',true);
+  if(S.g('init3')) return;
+  S.s('users',[{
+    id:'admin001',name:'Zakayo Admin',email:ADMIN_EMAIL,
+    pw:hp('Admin@Zakayo2024'),avi:'👑',col:'#f5c842',
+    role:'admin',ok:true,status:'online',joined:Date.now()
+  }]);
+  S.s('rooms',[
+    {id:'r1',ico:'🌍',name:'Jumla',      desc:'Mazungumzo ya kawaida kwa wote',     pin:true},
+    {id:'r2',ico:'💡',name:'Mawazo',     desc:'Shiriki mawazo na mbinu mpya'},
+    {id:'r3',ico:'🎵',name:'Burudani',   desc:'Muziki, michezo, sanaa na starehe'},
+    {id:'r4',ico:'💼',name:'Biashara',   desc:'Mazungumzo ya kazi na biashara'},
+    {id:'r5',ico:'📣',name:'Matangazo',  desc:'Habari rasmi kutoka kwa admin',      pin:true},
+  ]);
+  S.s('msgs',{});
+  // welcome msg
+  pushMsg('r1',{id:'m0',uid:'admin001',txt:'👋 **Karibu Zakayo Chat!** Mahali pa mazungumzo ya kweli kwa marafiki na wadau. Weka ujumbe wako wa kwanza! 🎉',ts:Date.now()-60000,read:true,rcts:[]});
+  pushMsg('r5',{id:'m1',uid:'admin001',txt:'📣 **Tangazo la Kwanza:** Zakayo Chat v3.0 imezinduliwa rasmi! Jibu wenzako na ufurahie mazungumzo ya kweli. — Admin',ts:Date.now()-30000,read:true,rcts:[],sys:true});
+  S.s('init3',true);
+}
+
+function pushMsg(rid,m){
+  const msgs=S.g('msgs')||{};
+  if(!msgs[rid]) msgs[rid]=[];
+  msgs[rid].push(m);
+  S.s('msgs',msgs);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   STATE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+let CU=null,CR=null,muted=false,replyTo=null,pollT=null,lastCounts={};
+const EP_CATS={
+  '😀':'😀😁😂🤣😊😍🥰😎🤩😋😏🤗😔😢😭😤🥳😅😆😉😌😪😴🤔',
+  '❤️':'❤️🧡💛💚💙💜🖤🤍🤎💕💞💓💗💖💝💟♥️',
+  '🔥':'🔥✨⚡🌟💫⭐🌈🎉🎊🎈🎁🏆🥇🎯🎮🕹️💰💎',
+  '👍':'👍👎👏🙌🤝🤜🤛✊👊🤚✋🖐👋🤙🫶🙏',
+  '🌍':'🌍🌺🌸🌻🌹🌷🌴🌊🏔️🏖️🌙☀️🌤️❄️',
+  '🎵':'🎵🎶🎸🎹🎷🥁🎤🎬🎭🎨🖼️📸📱💻🚀🛸'
+};
+let curCat='😀';
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   AUTH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function showTab(t){
+  $('tabL').classList.toggle('on',t==='L');
+  $('tabR').classList.toggle('on',t==='R');
+  $('fL').style.display=t==='L'?'block':'none';
+  $('fR').style.display=t==='R'?'block':'none';
+  $('lM').textContent=''; $('rM').textContent='';
+}
+
+function setMsg(el,txt,type='err'){
+  el.textContent=txt; el.className='amsg '+type;
+}
+
+function login(){
+  const email=$('lE').value.trim().toLowerCase();
+  const pw=$('lP').value;
+  const err=$('lM');
+  setMsg(err,'');
+  if(!email||!pw){ setMsg(err,'Jaza sehemu zote ✋'); return; }
+  const users=S.g('users')||[];
+  const u=users.find(x=>x.email===email&&x.pw===hp(pw));
+  if(!u){ setMsg(err,'Barua pepe au nywila si sahihi ❌'); return; }
+  u.status='online'; S.s('users',users.map(x=>x.id===u.id?u:x));
+  S.s('sess',u.id); CU=u;
+  u.ok?enterApp():goWait();
+}
+
+function register(){
+  const name=$('rN').value.trim();
+  const email=$('rE').value.trim().toLowerCase();
+  const pw=$('rP').value;
+  const pw2=$('rP2').value;
+  const err=$('rM');
+  setMsg(err,'');
+  if(!name||!email||!pw||!pw2){ setMsg(err,'Jaza sehemu zote ✋'); return; }
+  if(!/\S+@\S+\.\S+/.test(email)){ setMsg(err,'Barua pepe si sahihi ❌'); return; }
+  if(pw!==pw2){ setMsg(err,'Nywila hazifanani ❌'); return; }
+  if(pw.length<6){ setMsg(err,'Nywila angalau herufi 6 🔒'); return; }
+  const users=S.g('users')||[];
+  if(users.find(x=>x.email===email)){ setMsg(err,'Barua pepe tayari ipo 📧'); return; }
+  setMsg(err,'Inasajili...','ok');
+  const nu={
+    id:'u'+Date.now(),name,email,pw:hp(pw),
+    avi:AVIS[Math.floor(Math.random()*AVIS.length)],
+    col:COLORS[Math.floor(Math.random()*COLORS.length)],
+    role:email===ADMIN_EMAIL?'admin':'member',
+    ok:email===ADMIN_EMAIL,status:'offline',joined:Date.now()
+  };
+  users.push(nu); S.s('users',users); S.s('sess',nu.id); CU=nu;
+  if(!nu.ok){
+    // notify admin
+    pushMsg('r5',{id:'m'+Date.now(),uid:'admin001',txt:`📬 Mtumiaji mpya anataka kujiunga: **${nu.name}** (${nu.email})`,ts:Date.now(),read:false,rcts:[],sys:true});
+    goWait();
+  } else {
+    enterApp();
   }
 }
 
-function hp(s){ let h=5381; for(let i=0;i<s.length;i++){h=((h<<5)+h)+s.charCodeAt(i);h|=0;} return (h>>>0).toString(36); }
+function goWait(){ show('sWait'); }
 
-/* ═══════════════════════════════════════
-   AUTH
-═══════════════════════════════════════ */
-function showTab(t){
-  const li = t==='login';
-  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===(li?0:1)));
-  id('fLogin').style.display = li?'block':'none';
-  id('fReg').style.display   = li?'none':'block';
-  id('lErr').textContent=''; id('rErr').textContent='';
+function checkMyStatus(){
+  if(!CU) return;
+  const u=(S.g('users')||[]).find(x=>x.id===CU.id);
+  if(u&&u.ok){ CU=u; enterApp(); }
+  else{ toast('⏳','Bado hujapata idhini','Admin bado hakukupitishia','c-w'); }
 }
 
-function doLogin(){
-  const email = id('lEmail').value.trim().toLowerCase();
-  const pw    = id('lPass').value;
-  const err   = id('lErr');
-  err.textContent='';
-  if(!email||!pw){ err.textContent='Jaza sehemu zote'; return; }
-  const users = S.g('users')||[];
-  const u = users.find(x=>x.email===email && x.pw===hp(pw));
-  if(!u){ err.textContent='Barua pepe au nywila si sahihi ❌'; return; }
-  u.status='online';
-  S.s('users', users.map(x=>x.id===u.id?u:x));
-  S.s('sess', u.id);
-  CU = u;
-  u.ok ? enterApp() : showWait();
+function logout(){
+  if(CU){ S.s('users',(S.g('users')||[]).map(u=>u.id===CU.id?{...u,status:'offline'}:u)); }
+  S.d('sess'); CU=null; CR=null; replyTo=null;
+  clearInterval(pollT);
+  $('lE').value=''; $('lP').value=''; $('lM').textContent='';
+  show('sAuth');
 }
 
-function doRegister(){
-  const name  = id('rName').value.trim();
-  const email = id('rEmail').value.trim().toLowerCase();
-  const pw    = id('rPass').value;
-  const pw2   = id('rPass2').value;
-  const err   = id('rErr');
-  err.textContent='';
-  if(!name||!email||!pw||!pw2){ err.textContent='Jaza sehemu zote ✋'; return; }
-  if(pw!==pw2){ err.textContent='Nywila hazifanani ❌'; return; }
-  if(pw.length<6){ err.textContent='Nywila angalau herufi 6 🔒'; return; }
-  if(!/\S+@\S+\.\S+/.test(email)){ err.textContent='Barua pepe si sahihi ❌'; return; }
-  const users = S.g('users')||[];
-  if(users.find(x=>x.email===email)){ err.textContent='Barua pepe tayari ipo 📧'; return; }
-  const colors = ['#a855f7','#60a5fa','#22d3a0','#f87171','#fb923c','#facc15','#34d399','#e879f9'];
-  const avas   = ['😊','🌟','🎯','🔥','💎','🦋','🌺','⚡','🎪','🌈'];
-  const isAdmin = email===ADMIN_EMAIL;
-  const nu = {
-    id: 'u'+Date.now(),
-    name, email, pw: hp(pw),
-    ava: avas[Math.floor(Math.random()*avas.length)],
-    color: colors[Math.floor(Math.random()*colors.length)],
-    role: isAdmin?'admin':'member',
-    ok: isAdmin, status:'offline',
-    joined: Date.now()
-  };
-  users.push(nu);
-  S.s('users',users);
-  S.s('sess',nu.id);
-  CU = nu;
-  if(!isAdmin) postSysMsg('r5', `📬 Mtumiaji mpya anataka kujiunga: **${nu.name}** (${nu.email})`);
-  nu.ok ? enterApp() : showWait();
-}
-
-function showWait(){
-  screens('waitScreen');
-}
-
-function doLogout(){
-  if(CU){ const us=S.g('users')||[]; S.s('users',us.map(u=>u.id===CU.id?{...u,status:'offline'}:u)); }
-  S.d('sess'); CU=null; CR=null;
-  clearInterval(pollTimer);
-  id('lEmail').value=''; id('lPass').value=''; id('lErr').textContent='';
-  screens('authScreen');
-}
-
-/* ═══════════════════════════════════════
-   ENTER APP
-═══════════════════════════════════════ */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   APP ENTRY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function enterApp(){
-  screens('appScreen');
+  show('sApp');
   renderSB();
-  id('adminFab').style.display = CU.role==='admin' ? 'flex' : 'none';
-  clearInterval(pollTimer);
-  pollTimer = setInterval(poll,2000);
-  notify('👋','Karibu!',`Habari ${CU.name}! Umeingia vizuri.`,'green');
-  askNotifPerm();
+  $('adminFab').style.display = CU.role==='admin'?'flex':'none';
+  clearInterval(pollT);
+  pollT=setInterval(poll,1800);
+  toast('👋','Karibu!',`Habari ${CU.name}! Umeingia vizuri.`,'c-g');
+  requestNotifPerm();
+  renderOnlineStrip();
 }
 
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SIDEBAR RENDER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function renderSB(){
-  const av = id('myAva');
-  av.textContent = CU.ava;
-  av.style.background = CU.color;
-  id('myName').textContent = CU.name;
-  const roleEl = id('myRole');
-  roleEl.textContent = CU.role==='admin'?'👑 Admin':'Mwanachama';
-  roleEl.className = 'uc-role '+(CU.role==='admin'?'role-admin':'role-member');
+  const av=$('myAv');
+  av.textContent=CU.avi; av.style.background=CU.col;
+  $('myName').textContent=CU.name;
+  const tag=$('myTag');
+  tag.textContent=CU.role==='admin'?'👑 Admin':'Mwanachama';
+  tag.className='me-tag '+(CU.role==='admin'?'tag-admin':'tag-member');
   renderRooms();
 }
 
-/* ═══════════════════════════════════════
-   ROOMS
-═══════════════════════════════════════ */
 function renderRooms(filter=''){
-  const rooms = (S.g('rooms')||[]).filter(r=>!filter||r.name.toLowerCase().includes(filter.toLowerCase()));
-  const msgs  = S.g('msgs')||{};
-  id('roomList').innerHTML = rooms.map(r=>{
-    const rm  = msgs[r.id]||[];
-    const last = rm.filter(m=>!m.sys).slice(-1)[0];
-    const prev = last ? (last.txt.replace(/\*\*/g,'').substring(0,30)+(last.txt.length>30?'…':'')) : 'Bado hakuna ujumbe';
-    const unread = rm.filter(m=>!m.read && m.uid!==CU.id).length;
-    const isAct = CR && CR.id===r.id;
-    return `<div class="ri${isAct?' active':''}" onclick="openRoom('${r.id}')">
-      <div class="ri-icon">${r.ico}</div>
+  const rooms=(S.g('rooms')||[]).filter(r=>!filter||r.name.toLowerCase().includes(filter.toLowerCase())||r.desc.toLowerCase().includes(filter.toLowerCase()));
+  const msgs=S.g('msgs')||{};
+  const el=$('roomList');
+  el.innerHTML=rooms.map(r=>{
+    const rm=msgs[r.id]||[];
+    const last=rm.filter(m=>!m.sys).at(-1);
+    const prev=last?last.txt.replace(/\*\*/g,'').substring(0,32)+(last.txt.length>32?'…':''):'Bado hakuna ujumbe';
+    const unread=rm.filter(m=>!m.read&&m.uid!==CU.id).length;
+    const lastTime=last?fmtTime(last.ts):'';
+    const isOn=CR&&CR.id===r.id;
+    return`<div class="ri${isOn?' on':''}" onclick="openRoom('${r.id}')">
+      <div class="ri-ico">${r.ico}</div>
       <div class="ri-info">
         <div class="ri-name">${r.name}</div>
         <div class="ri-prev">${prev}</div>
       </div>
-      ${unread>0?`<div class="unread">${unread}</div>`:''}
+      <div class="ri-meta">
+        <span class="ri-time">${lastTime}</span>
+        ${unread>0?`<div class="unread">${unread}</div>`:''}
+      </div>
     </div>`;
   }).join('');
 }
 
-function filterRooms(v){ renderRooms(v); }
+function searchRooms(v){ renderRooms(v); }
 
-/* ═══════════════════════════════════════
-   OPEN ROOM & MESSAGES
-═══════════════════════════════════════ */
+function renderOnlineStrip(){
+  const users=(S.g('users')||[]).filter(u=>u.ok&&u.status==='online');
+  const strip=$('onlineStrip');
+  const items=users.map(u=>`
+    <div class="online-av">
+      <div class="av" style="width:28px;height:28px;font-size:12px;font-weight:800;background:${u.col}">
+        ${u.avi}<div class="sd" style="width:9px;height:9px"></div>
+      </div>
+      <div class="online-av-name">${u.name}</div>
+    </div>`).join('');
+  strip.innerHTML=`<span class="online-strip-lbl">Watandaoni:</span>${items||'<span style="font-size:11px;color:var(--fg3)">Hakuna bado</span>'}`;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   OPEN ROOM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function openRoom(rid){
-  const rooms = S.g('rooms')||[];
-  CR = rooms.find(r=>r.id===rid);
+  CR=(S.g('rooms')||[]).find(r=>r.id===rid);
   if(!CR) return;
-  id('sidebar').classList.remove('open');
-  id('welcome').style.display='none';
-  id('msgs').style.display='flex';
-  id('inputArea').style.display='block';
-  id('chIcon').textContent = CR.ico;
-  id('chName').textContent = CR.name;
-  const users = S.g('users')||[];
-  id('chSub').textContent = `${users.filter(u=>u.ok).length} wanachama · ${CR.desc}`;
+  $('SB').classList.remove('on');
+  $('welcome').style.display='none';
+  $('msgs').style.display='flex';
+  $('inpArea').style.display='block';
+  $('chIco').textContent=CR.ico;
+  $('chName').textContent=CR.name;
+  const users=S.g('users')||[];
+  $('chSub').textContent=`${users.filter(u=>u.ok).length} wanachama · ${CR.desc}`;
   markRead(rid);
   renderMsgs();
   renderRooms();
+  $('mi').focus();
 }
 
 function markRead(rid){
-  const msgs = S.g('msgs')||{};
+  const msgs=S.g('msgs')||{};
   if(msgs[rid]) msgs[rid]=msgs[rid].map(m=>m.uid===CU.id?m:{...m,read:true});
   S.s('msgs',msgs);
 }
 
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RENDER MESSAGES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function renderMsgs(){
   if(!CR) return;
-  const msgs  = S.g('msgs')||{};
-  const rm    = msgs[CR.id]||[];
-  const users = S.g('users')||[];
-  const el    = id('msgs');
-  const atBot = el.scrollHeight-el.scrollTop-el.clientHeight < 120;
-
-  let html='', lastDay='';
+  const msgs=S.g('msgs')||{};
+  const rm=msgs[CR.id]||[];
+  const users=S.g('users')||[];
+  const el=$('msgs');
+  const atBot=el.scrollHeight-el.scrollTop-el.clientHeight<140;
+  let html='',lastDay='';
   rm.forEach(m=>{
-    const d   = new Date(m.ts);
-    const day = d.toLocaleDateString('sw-TZ',{weekday:'long',day:'numeric',month:'long'});
-    if(day!==lastDay){ html+=`<div class="day-div"><span>${day}</span></div>`; lastDay=day; }
-    if(m.sys){ html+=`<div class="mrow sys"><div class="sys-bubble">📣 ${fmt(m.txt)}</div></div>`; return; }
-    const sender = users.find(u=>u.id===m.uid)||{name:'?',color:'#888',ava:'?'};
-    const isMe   = m.uid===CU.id;
-    const time   = d.toLocaleTimeString('sw-TZ',{hour:'2-digit',minute:'2-digit'});
-    const reacts = (m.rcts||[]).map(r=>`<div class="react" onclick="addReact('${m.id}','${r.e}')">${r.e}<span class="react-count">${r.n}</span></div>`).join('');
-    html+=`<div class="mrow ${isMe?'me':'them'}">
-      ${!isMe?`<div class="mava" style="background:${sender.color};font-size:${isEmoji(sender.ava)?'14':'11'}px">${sender.ava}</div>`:''}
-      <div class="bubble-wrap">
-        ${!isMe?`<div class="sname" style="color:${sender.color}">${sender.name}</div>`:''}
-        <div class="bubble">${fmt(m.txt)}
+    const d=new Date(m.ts);
+    const day=fmtDay(d);
+    if(day!==lastDay){ html+=`<div class="day-sep"><span>${day}</span></div>`; lastDay=day; }
+    if(m.sys){ html+=`<div class="mrow sys"><div class="sys-pill">📣 ${fmtTxt(m.txt)}</div></div>`; return; }
+    const s=users.find(u=>u.id===m.uid)||{name:'?',col:'#888',avi:'?'};
+    const me=m.uid===CU.id;
+    const time=d.toLocaleTimeString('sw-TZ',{hour:'2-digit',minute:'2-digit'});
+    const rcts=(m.rcts||[]).map(r=>`<div class="rc" onclick="addReact('${m.id}','${r.e}')">${r.e}<span class="rc-n">${r.n}</span></div>`).join('');
+    const replyHtml=m.replyTo?`<div class="reply-preview" onclick="scrollToMsg('${m.replyTo.id}')"><div class="rp-sender">↩ ${m.replyTo.sender}</div><div>${m.replyTo.txt.substring(0,60)}</div></div>`:'';
+    html+=`<div class="mrow ${me?'me':'them'}" id="msg-${m.id}" data-id="${m.id}">
+      ${!me?`<div class="m-av" style="background:${s.col}">${s.avi}</div>`:''}
+      <div class="bw">
+        ${!me?`<div class="sname" style="color:${s.col}">${s.name}</div>`:''}
+        <div class="bub">
+          ${replyHtml}
+          ${fmtTxt(m.txt)}
           <div class="bm">
             <span class="btime">${time}</span>
-            ${isMe?`<span class="bcheck${m.read?' seen':''}">✓✓</span>`:''}
+            ${me?`<span class="btick${m.read?' read':''}">✓✓</span>`:''}
           </div>
         </div>
-        ${reacts||m.rcts&&m.rcts.length?`<div class="react-bar">${reacts}<button class="react-add" onclick="quickReact('${m.id}')">+😊</button></div>`:`<button class="react-add" onclick="quickReact('${m.id}')">+ Jibu</button>`}
+        <div class="rbar">
+          ${rcts}
+          <button class="rc-add" onclick="pickReact('${m.id}')">+ 😊</button>
+          ${me?`<button class="rc-add" onclick="deleteMsg('${m.id}')">🗑️</button>`:`<button class="rc-add" onclick="startReply('${m.id}','${escq(s.name)}','${escq(m.txt.substring(0,60))}')">↩ Jibu</button>`}
+        </div>
       </div>
-      ${isMe?`<div class="mava" style="background:${CU.color};font-size:${isEmoji(CU.ava)?'14':'11'}px">${CU.ava}</div>`:''}
+      ${me?`<div class="m-av" style="background:${CU.col}">${CU.avi}</div>`:''}
     </div>`;
   });
-
-  if(!rm.length) html='<div style="text-align:center;color:var(--muted);margin:auto;font-size:14px;padding:40px">Hakuna ujumbe bado.<br>Anza mazungumzo! 🌟</div>';
+  if(!rm.length) html='<div style="text-align:center;color:var(--fg3);margin:auto;padding:40px;font-size:14px;font-weight:600">Hakuna ujumbe bado. Anza mazungumzo! ✨</div>';
   el.innerHTML=html;
-  if(atBot||rm.length<=3) el.scrollTop=el.scrollHeight;
+  if(atBot||rm.length<=4) el.scrollTop=el.scrollHeight;
 }
 
-function fmt(t){
-  return String(t)
-    .replace(/</g,'&lt;').replace(/>/g,'&gt;')
+function fmtTxt(t){
+  return String(t).replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
     .replace(/\*(.*?)\*/g,'<em>$1</em>')
-    .replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener" style="color:var(--blue);word-break:break-all">$1</a>')
+    .replace(/`(.*?)`/g,'<code style="background:rgba(255,255,255,.1);padding:1px 5px;border-radius:4px;font-size:12px">$1</code>')
+    .replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>')
     .replace(/\n/g,'<br>');
 }
 
-function isEmoji(s){ return /\p{Emoji}/u.test(s); }
+function fmtTime(ts){ const d=new Date(ts); return d.toLocaleTimeString('sw-TZ',{hour:'2-digit',minute:'2-digit'}); }
+function fmtDay(d){
+  const now=new Date(),today=now.toDateString(),yesterday=new Date(now-86400000).toDateString();
+  if(d.toDateString()===today) return 'Leo';
+  if(d.toDateString()===yesterday) return 'Jana';
+  return d.toLocaleDateString('sw-TZ',{weekday:'long',day:'numeric',month:'long'});
+}
+function escq(s){ return String(s).replace(/'/g,'&apos;').replace(/"/g,'&quot;'); }
 
-/* ═══════════════════════════════════════
-   SEND MESSAGE
-═══════════════════════════════════════ */
+function scrollToMsg(id){
+  const el=document.getElementById('msg-'+id);
+  if(el){ el.scrollIntoView({behavior:'smooth',block:'center'}); el.style.background='rgba(139,92,246,.15)'; setTimeout(()=>el.style.background='',1200); }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SEND / REPLY / DELETE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function sendMsg(){
-  const inp = id('mi');
-  const txt = inp.value.trim();
+  const inp=$('mi');
+  const txt=inp.value.trim();
   if(!txt||!CR) return;
-  const msgs = S.g('msgs')||{};
-  if(!msgs[CR.id]) msgs[CR.id]=[];
-  msgs[CR.id].push({id:'m'+Date.now()+Math.random().toString(36).slice(2,6), uid:CU.id, txt, ts:Date.now(), read:false, rcts:[]});
-  S.s('msgs',msgs);
+  const m={id:'m'+Date.now()+Math.random().toString(36).slice(2,5),uid:CU.id,txt,ts:Date.now(),read:false,rcts:[]};
+  if(replyTo){ m.replyTo=replyTo; clearReply(); }
+  pushMsg(CR.id,m);
   inp.value=''; inp.style.height='auto';
-  id('ep').classList.remove('open');
+  $('ep').classList.remove('on');
+  beep('send');
   renderMsgs(); renderRooms();
 }
 
 function handleKey(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();} }
-function autoR(t){ t.style.height='auto'; t.style.height=Math.min(t.scrollHeight,120)+'px'; }
+function onInput(t){ t.style.height='auto'; t.style.height=Math.min(t.scrollHeight,130)+'px'; }
 
-/* ═══════════════════════════════════════
+function startReply(mid,sender,txt){
+  replyTo={id:mid,sender,txt};
+  $('replyBar').classList.add('on');
+  $('rbSender').textContent=sender;
+  $('rbTxt').textContent=txt;
+  $('mi').focus();
+}
+function clearReply(){ replyTo=null; $('replyBar').classList.remove('on'); }
+
+function deleteMsg(mid){
+  if(!confirm('Futa ujumbe huu?')) return;
+  const msgs=S.g('msgs')||{}, rm=msgs[CR.id]||[];
+  msgs[CR.id]=rm.filter(m=>m.id!==mid);
+  S.s('msgs',msgs); renderMsgs();
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    REACTIONS
-═══════════════════════════════════════ */
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function addReact(mid,emoji){
   const msgs=S.g('msgs')||{}, rm=msgs[CR.id]||[];
   const m=rm.find(x=>x.id===mid); if(!m) return;
@@ -931,323 +1154,382 @@ function addReact(mid,emoji){
   S.s('msgs',msgs); renderMsgs();
 }
 
-function quickReact(mid){
-  const opts=['❤️','👍','😂','🔥','😮','👏','✅','🙏'];
-  addReact(mid, opts[Math.floor(Math.random()*opts.length)]);
+const QUICK=['❤️','👍','😂','🔥','😮','👏','✅','🙏','💎','⚡'];
+function pickReact(mid){
+  const e=QUICK[Math.floor(Math.random()*QUICK.length)];
+  addReact(mid,e);
 }
 
-/* ═══════════════════════════════════════
-   EMOJI PICKER
-═══════════════════════════════════════ */
-const EMOJIS='😀😁😂🤣😊😍🥰😎🤩😋😏🤗😔😢😭😤🥳🎉🔥❤️💯✨💎🌟👑🙏💪👍🤝🌍🎵🎶🚀💡🌺🦋💬📱💻🎁🍕☕🎯💰🏆🌈⚡🎪🎭🦁🐯🌙⭐🎊🥂🍾🎸🎹'.split('');
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   EMOJI PANEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function buildEP(){
-  id('ep').innerHTML=EMOJIS.map(e=>`<button class="ep-btn" onclick="insertE('${e}')">${e}</button>`).join('');
+  const panel=$('ep');
+  const catBtns=Object.keys(EP_CATS).map(k=>`<button class="ep-cat-btn${k===curCat?' on':''}" onclick="switchCat('${k}')">${k}</button>`).join('');
+  const emojis=[...EP_CATS[curCat]].filter(c=>c.trim()).map(e=>`<button class="ep-btn" onclick="insertE('${e}')">${e}</button>`).join('');
+  panel.innerHTML=`<div class="ep-cat">${catBtns}</div>${emojis}`;
 }
-function toggleEmoji(){ id('ep').classList.toggle('open'); }
-function insertE(e){ const i=id('mi'); i.value+=e; i.focus(); id('ep').classList.remove('open'); }
-document.addEventListener('click',e=>{ if(!e.target.closest('.ia-small')&&!e.target.closest('.ep')) id('ep').classList.remove('open'); });
 
-/* ═══════════════════════════════════════
-   POLL (simulate live updates)
-═══════════════════════════════════════ */
+function switchCat(c){ curCat=c; buildEP(); }
+function toggleEmoji(){ const ep=$('ep'); ep.classList.toggle('on'); if(ep.classList.contains('on')) buildEP(); }
+function insertE(e){ const i=$('mi'); i.value+=e; i.focus(); $('ep').classList.remove('on'); }
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#emojiTrigger')&&!e.target.closest('#ep')) $('ep').classList.remove('on');
+});
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SEARCH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function openSearch(){ $('oSearch').classList.add('on'); $('sInp').focus(); }
+
+function doSearch(q){
+  const el=$('sResults'); if(!q.trim()){ el.innerHTML='<div class="sr-empty">Andika kutafuta ujumbe...</div>'; return; }
+  const msgs=S.g('msgs')||{}, rooms=S.g('rooms')||[];
+  const results=[];
+  Object.entries(msgs).forEach(([rid,rm])=>{
+    const room=rooms.find(r=>r.id===rid);
+    rm.filter(m=>!m.sys&&m.txt.toLowerCase().includes(q.toLowerCase())).forEach(m=>{
+      results.push({rid,roomName:room?room.name:'?',roomIco:room?room.ico:'💬',m});
+    });
+  });
+  if(!results.length){ el.innerHTML='<div class="sr-empty">Hakuna ujumbe unaofanana na "<strong>'+q+'</strong>"</div>'; return; }
+  el.innerHTML=results.sort((a,b)=>b.m.ts-a.m.ts).slice(0,30).map(r=>`
+    <div class="sr-item" onclick="openRoom('${r.rid}');$('oSearch').classList.remove('on');setTimeout(()=>scrollToMsg('${r.m.id}'),400)">
+      <div class="sr-room">${r.roomIco} ${r.roomName}</div>
+      <div class="sr-txt">${fmtTxt(r.m.txt.substring(0,100))}</div>
+      <div class="sr-time">${fmtTime(r.m.ts)}</div>
+    </div>`).join('');
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   POLL / NOTIFICATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function poll(){
-  if(CR) renderMsgs();
-  // Check for new messages in other rooms & notify
-  const msgs=S.g('msgs')||{};
+  if(CR){ renderMsgs(); markRead(CR.id); }
+  renderRooms(); renderOnlineStrip();
+  // check unread in other rooms
+  const msgs=S.g('msgs')||{}, rooms=S.g('rooms')||[], users=S.g('users')||[];
   Object.keys(msgs).forEach(rid=>{
     if(CR&&rid===CR.id) return;
     const rm=msgs[rid]||[];
-    const prev=lastMsgCount[rid]||0;
-    const news=rm.filter(m=>!m.read&&m.uid!==CU.id);
-    if(news.length>prev){
-      const m=news[news.length-1];
-      const rooms=S.g('rooms')||[];
+    const newMsgs=rm.filter(m=>!m.read&&m.uid!==CU.id&&!m.sys);
+    const prev=lastCounts[rid]||0;
+    if(newMsgs.length>prev){
+      const m=newMsgs.at(-1);
       const room=rooms.find(r=>r.id===rid);
-      const users=S.g('users')||[];
       const sender=users.find(u=>u.id===m.uid);
-      if(room&&sender&&!m.sys){
-        notify('💬',room.name,`${sender.name}: ${m.txt.substring(0,40)}${m.txt.length>40?'…':''}`);
+      if(room&&sender){
+        toast('💬',room.ico+' '+room.name,`${sender.name}: ${m.txt.replace(/\*\*/g,'').substring(0,45)}${m.txt.length>45?'…':''}`);
+        beep('notif');
+        if(Notification.permission==='granted') new Notification('Zakayo Chat — '+room.name,{body:`${sender.name}: ${m.txt.replace(/\*\*/g,'').substring(0,80)}`,silent:false});
       }
     }
-    lastMsgCount[rid]=news.length;
+    lastCounts[rid]=newMsgs.length;
   });
-  renderRooms();
 }
 
-/* ═══════════════════════════════════════
-   NOTIFICATIONS
-═══════════════════════════════════════ */
-function notify(icon,title,text,type=''){
-  if(muted) return;
-  const c=id('nc'), n=document.createElement('div');
-  n.className='notif'+(type?' n-'+type:'');
-  n.innerHTML=`<div class="n-icon">${icon}</div>
-    <div class="n-body"><div class="n-title">${title}</div><div class="n-text">${text}</div></div>
-    <button class="n-close" onclick="closeN(this.parentElement)">✕</button>`;
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOAST NOTIFICATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function toast(ico,title,text,cls=''){
+  if(muted&&cls!=='c-g') return;
+  const c=$('NC'), n=document.createElement('div');
+  n.className='nt'+(cls?' '+cls:'');
+  n.innerHTML=`<div class="nt-ico">${ico}</div>
+    <div class="nt-b"><div class="nt-t">${title}</div><div class="nt-x">${text}</div></div>
+    <button class="nt-cl" onclick="closeToast(this.parentElement)">✕</button>`;
   c.appendChild(n);
-  if('Notification' in window && Notification.permission==='granted'){
-    new Notification('Zakayo Chat — '+title,{body:text,icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%237c3aed"/><text y=".9em" font-size="75" x="12">💬</text></svg>'});
-  }
-  setTimeout(()=>closeN(n),5000);
+  setTimeout(()=>closeToast(n),5000);
 }
-function closeN(n){ if(!n||!n.parentElement) return; n.classList.add('out'); setTimeout(()=>n.remove(),280); }
-function toggleMute(){ muted=!muted; id('muteIco').textContent=muted?'🔕':'🔔'; notify(muted?'🔕':'🔔','Arifa',muted?'Arifa zimezimwa':'Arifa zimewashwa'); }
-function askNotifPerm(){ if('Notification' in window && Notification.permission==='default') Notification.requestPermission(); }
+function closeToast(n){ if(!n||!n.parentElement) return; n.classList.add('out'); setTimeout(()=>n.remove(),280); }
+function toggleMute(){ muted=!muted; $('muteBtn').textContent=muted?'🔕':'🔔'; toast(muted?'🔕':'🔔','Arifa',muted?'Arifa zimezimwa':'Arifa zimewashwa'); }
+function requestNotifPerm(){ if('Notification' in window&&Notification.permission==='default') Notification.requestPermission(); }
 
-/* ═══════════════════════════════════════
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    ADMIN PANEL
-═══════════════════════════════════════ */
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function openAdmin(){
-  if(CU.role!=='admin'){ notify('🚫','Ruhusa Imekatazwa','Huna mamlaka ya admin','red'); return; }
-  id('adminPanel').classList.add('open');
-  aTab('overview');
+  if(CU.role!=='admin'){ toast('🚫','Ruhusa Imekatazwa','Huna mamlaka ya admin','c-r'); return; }
+  $('oAdmin').classList.add('on'); aTab(0);
 }
-function closeAdmin(){ id('adminPanel').classList.remove('open'); }
 
-function aTab(t){
-  const tabs=['overview','users','pending','rooms','broadcast','settings'];
-  document.querySelectorAll('.atab').forEach((el,i)=>el.classList.toggle('active',tabs[i]===t));
-  document.querySelectorAll('.asec').forEach(s=>s.classList.remove('active'));
-  id('as-'+t).classList.add('active');
-  if(t==='overview')  renderStats();
-  if(t==='users')     renderUsers();
-  if(t==='pending')   renderPending();
-  if(t==='rooms')     renderRoomMgr();
+function aTab(i){
+  document.querySelectorAll('.atb').forEach((t,j)=>t.classList.toggle('on',j===i));
+  for(let j=0;j<6;j++) $('at'+j).classList.toggle('on',j===i);
+  if(i===0) renderStats();
+  if(i===1) renderUsers();
+  if(i===2) renderPending();
+  if(i===3) renderRoomMgr();
 }
 
 function renderStats(){
   const users=S.g('users')||[], msgs=S.g('msgs')||{}, rooms=S.g('rooms')||[];
   const total=Object.values(msgs).reduce((s,a)=>s+a.length,0);
-  const online=users.filter(u=>u.status==='online').length;
-  id('statGrid').innerHTML=[
-    ['var(--gold)',  users.filter(u=>u.ok).length,    'Wanachama Waliokubaliwa'],
-    ['var(--gold2)', users.filter(u=>!u.ok).length,   'Wanaosubiri Idhini'],
-    ['var(--green)', total,                            'Jumla ya Ujumbe Wote'],
-    ['var(--accent)',rooms.length,                     'Vyumba vya Gumzo'],
-    ['var(--blue)',  online,                           'Watandaoni Sasa Hivi'],
-    ['var(--orange)',users.length,                     'Watumiaji Wote'],
-  ].map(([c,n,l])=>`<div class="sc"><div class="sc-num" style="color:${c}">${n}</div><div class="sc-lbl">${l}</div></div>`).join('');
+  $('statG').innerHTML=[
+    ['var(--gold)',  users.filter(u=>u.ok).length,    'Wanachama'],
+    ['var(--plum2)',users.filter(u=>!u.ok).length,    'Wanaosubiri'],
+    ['var(--ok)',   total,                             'Ujumbe Wote'],
+    ['var(--sky)',  rooms.length,                      'Vyumba'],
+    ['var(--teal)', users.filter(u=>u.status==='online').length,'Watandaoni'],
+    ['var(--rose)', users.length,                      'Watumiaji Wote'],
+  ].map(([c,n,l])=>`<div class="sc"><div class="sc-n" style="color:${c}">${n}</div><div class="sc-l">${l}</div></div>`).join('');
+
+  // chart
+  const maxM=Math.max(...rooms.map(r=>(msgs[r.id]||[]).length),1);
+  $('chartBar').innerHTML=rooms.map(r=>{
+    const n=(msgs[r.id]||[]).length;
+    const pct=Math.round(n/maxM*100);
+    return`<div class="cb-row">
+      <div class="cb-lbl">${r.ico} ${r.name}</div>
+      <div class="cb-track"><div class="cb-fill" style="width:${pct}%;background:linear-gradient(90deg,var(--plum),var(--plum2))"></div></div>
+      <div class="cb-val">${n}</div>
+    </div>`;
+  }).join('');
 }
 
 function renderUsers(){
   const users=S.g('users')||[];
-  id('userCount').textContent=`Jumla: ${users.length}`;
+  $('uCount').textContent='Jumla: '+users.length;
   document.querySelector('#utbl tbody').innerHTML=users.map(u=>`
     <tr>
       <td><div style="display:flex;gap:8px;align-items:center">
-        <div style="width:28px;height:28px;border-radius:50%;background:${u.color};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">${u.ava}</div>
-        <span style="font-weight:600">${u.name}</span></div></td>
-      <td style="color:var(--muted)">${u.email}</td>
-      <td><span class="spill ${u.ok?'sp-g':'sp-y'}">${u.ok?'✓ Amekubaliwa':'⏳ Inasubiri'}</span></td>
-      <td><span class="spill ${u.role==='admin'?'sp-y':'sp-g'}">${u.role==='admin'?'👑 Admin':'👤 Mwanachama'}</span></td>
-      <td>
-        ${u.id!=='admin001'?`
-          ${!u.ok?`<button class="btn btn-sm btn-primary" onclick="approveU('${u.id}')" style="margin-right:4px">✓</button>`:''}
-          <button class="btn btn-sm btn-danger" onclick="removeU('${u.id}')">✕</button>
-        `:'<span style="color:var(--gold);font-size:12px">Mkuu</span>'}
-      </td>
+        <div style="width:28px;height:28px;border-radius:50%;background:${u.col};display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">${u.avi}</div>
+        <span style="font-weight:700">${u.name}</span></div></td>
+      <td style="color:var(--fg3)">${u.email}</td>
+      <td><span class="pill ${u.ok?'p-g':'p-y'}">${u.ok?'✓ Amekubaliwa':'⏳ Inasubiri'}</span></td>
+      <td><span class="pill ${u.role==='admin'?'p-y':'p-b'}">${u.role==='admin'?'👑 Admin':'👤 Mwanachama'}</span></td>
+      <td><div style="display:flex;gap:5px;flex-wrap:wrap">
+        ${u.id!=='admin001'?`${!u.ok?`<button class="sb2 sb2-g" onclick="approveU('${u.id}')">✓</button>`:''}
+        <button class="sb2 sb2-r" onclick="removeU('${u.id}')">✕</button>`:'<span style="color:var(--gold);font-size:12px;font-weight:800">Mkuu</span>'}
+      </div></td>
     </tr>`).join('');
 }
 
 function renderPending(){
   const pending=(S.g('users')||[]).filter(u=>!u.ok);
-  const el=id('pendingList');
-  if(!pending.length){ el.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">🎉 Hakuna wanasubiri kwa sasa!</div>'; return; }
+  const el=$('pendList');
+  if(!pending.length){ el.innerHTML='<div style="text-align:center;padding:40px;color:var(--fg3);font-weight:600">🎉 Hakuna wanaosubiri kwa sasa!</div>'; return; }
   el.innerHTML=pending.map(u=>`
     <div class="pcard">
-      <div style="width:44px;height:44px;border-radius:50%;background:${u.color};display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">${u.ava}</div>
+      <div style="width:46px;height:46px;border-radius:50%;background:${u.col};display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">${u.avi}</div>
       <div style="flex:1">
-        <div style="font-weight:700;font-size:13.5px">${u.name}</div>
-        <div style="font-size:11.5px;color:var(--muted)">${u.email}</div>
-        <div style="font-size:10.5px;color:var(--muted);margin-top:2px">Alijisajili: ${new Date(u.joined).toLocaleDateString('sw-TZ')}</div>
+        <div style="font-weight:800;font-size:14px">${u.name}</div>
+        <div style="font-size:12px;color:var(--fg3)">${u.email}</div>
+        <div style="font-size:11px;color:var(--fg3);margin-top:3px">Alijisajili: ${new Date(u.joined).toLocaleDateString('sw-TZ',{day:'numeric',month:'long',year:'numeric'})}</div>
       </div>
-      <button class="btn btn-sm btn-primary" onclick="approveU('${u.id}');renderPending()" style="margin-right:4px">✓ Kubali</button>
-      <button class="btn btn-sm btn-danger" onclick="removeU('${u.id}');renderPending()">✕ Kataa</button>
+      <div style="display:flex;gap:6px;flex-shrink:0">
+        <button class="sb2 sb2-g" onclick="approveU('${u.id}');renderPending()">✓ Kubali</button>
+        <button class="sb2 sb2-r" onclick="removeU('${u.id}');renderPending()">✕ Kataa</button>
+      </div>
     </div>`).join('');
 }
 
 function approveU(uid){
   const users=S.g('users')||[], u=users.find(x=>x.id===uid);
   S.s('users',users.map(x=>x.id===uid?{...x,ok:true}:x));
-  if(u){ postSysMsg('r1',`🎉 Karibu! **${u.name}** amejiunga na Zakayo Chat!`); }
-  notify('✅','Imekubaliwa',`${u?u.name:'Mtumiaji'} amepewa ruhusa`,'green');
+  if(u) pushMsg('r1',{id:'m'+Date.now(),uid:'admin001',txt:`🎉 Karibu! **${u.name}** amejiunga na Zakayo Chat!`,ts:Date.now(),read:false,rcts:[],sys:true});
+  toast('✅','Imekubaliwa',`${u?u.name:'Mtumiaji'} amepewa ruhusa`,'c-g');
   renderUsers(); renderStats();
 }
 
 function removeU(uid){
-  if(!confirm('Una uhakika wa kumfuta mtumiaji huyu?')) return;
+  if(!confirm('Una uhakika wa kumfuta mtumiaji huyu? Hatua hii haiwezi kurudishwa.')) return;
   S.s('users',(S.g('users')||[]).filter(u=>u.id!==uid));
-  notify('🗑️','Mtumiaji Amefutwa','','warn');
+  toast('🗑️','Mtumiaji Amefutwa','','c-w');
   renderUsers(); renderStats();
 }
 
 function renderRoomMgr(){
-  const rooms=S.g('rooms')||[];
-  id('roomMgr').innerHTML=rooms.map(r=>`
+  $('roomMgr').innerHTML=(S.g('rooms')||[]).map(r=>`
     <div class="rm-row">
-      <div style="font-size:24px">${r.ico}</div>
+      <div style="font-size:26px">${r.ico}</div>
       <div style="flex:1">
-        <div style="font-weight:700;font-size:13.5px">${r.name}</div>
-        <div style="font-size:11.5px;color:var(--muted);margin-top:2px">${r.desc}</div>
+        <div style="font-weight:800;font-size:14px">${r.name}</div>
+        <div style="font-size:12px;color:var(--fg3);margin-top:2px">${r.desc}</div>
       </div>
-      ${!r.locked?`<button class="btn btn-sm btn-danger" onclick="delRoom('${r.id}')">🗑️ Futa</button>`:'<span style="font-size:11px;color:var(--muted);padding:4px 8px;background:var(--glass);border-radius:8px">Imehifadhiwa</span>'}
+      ${!r.pin?`<button class="sb2 sb2-r" onclick="delRoom('${r.id}')">🗑️ Futa</button>`:'<span style="font-size:11px;color:var(--fg3);background:var(--glass);padding:4px 10px;border-radius:50px;font-weight:700">🔒 Imehifadhiwa</span>'}
     </div>`).join('');
 }
 
 function addRoom(){
-  const ico=id('nrEmoji').value.trim()||'💬', name=id('nrName').value.trim(), desc=id('nrDesc').value.trim();
-  if(!name){ notify('⚠️','Hitilafu','Weka jina la chumba','warn'); return; }
+  const ico=$('nrIco').value.trim()||'💬', name=$('nrNm').value.trim(), desc=$('nrDs').value.trim();
+  if(!name){ toast('⚠️','Hitilafu','Weka jina la chumba','c-w'); return; }
   const rooms=S.g('rooms')||[];
-  rooms.push({id:'r'+Date.now(),ico,name,desc:desc||'Chumba kipya cha mazungumzo'});
+  rooms.push({id:'r'+Date.now(),ico,name,desc:desc||'Chumba kipya'});
   S.s('rooms',rooms);
-  id('nrEmoji').value=''; id('nrName').value=''; id('nrDesc').value='';
+  ['nrIco','nrNm','nrDs'].forEach(id=>{$(id).value='';});
   renderRoomMgr(); renderRooms();
-  notify('✅','Chumba Kimeongezwa',`${ico} ${name}`,'green');
+  toast('✅','Chumba Kimeongezwa',`${ico} ${name}`,'c-g');
 }
 
 function delRoom(rid){
   if(!confirm('Futa chumba hiki na ujumbe wake wote?')) return;
   S.s('rooms',(S.g('rooms')||[]).filter(r=>r.id!==rid));
   const msgs=S.g('msgs')||{}; delete msgs[rid]; S.s('msgs',msgs);
-  if(CR&&CR.id===rid){ CR=null; id('msgs').style.display='none'; id('inputArea').style.display='none'; id('welcome').style.display='flex'; }
+  if(CR&&CR.id===rid){ CR=null; $('msgs').style.display='none'; $('inpArea').style.display='none'; $('welcome').style.display='flex'; }
   renderRoomMgr(); renderRooms();
 }
 
-function doBroadcast(){
-  const txt=id('bcastMsg').value.trim();
-  if(!txt){ notify('⚠️','Hakuna ujumbe','Andika ujumbe wa tangazo','warn'); return; }
-  const msgs=S.g('msgs')||{}, rooms=S.g('rooms')||[];
-  rooms.forEach(r=>{ if(!msgs[r.id]) msgs[r.id]=[]; msgs[r.id].push({id:'m'+Date.now()+r.id,uid:'admin001',txt:`📢 TANGAZO: ${txt}`,ts:Date.now(),read:false,rcts:[],sys:true}); });
-  S.s('msgs',msgs);
-  id('bcastMsg').value='';
-  notify('📢','Tangazo Limetumwa','Ujumbe umewafikia wote!','green');
+function broadcast(){
+  const txt=$('bMsg').value.trim();
+  if(!txt){ toast('⚠️','Hakuna ujumbe','Andika ujumbe wa tangazo','c-w'); return; }
+  const rooms=S.g('rooms')||[];
+  rooms.forEach(r=>pushMsg(r.id,{id:'m'+Date.now()+r.id,uid:'admin001',txt:`📢 TANGAZO: ${txt}`,ts:Date.now(),read:false,rcts:[],sys:true}));
+  $('bMsg').value='';
+  toast('📢','Tangazo Limetumwa','Ujumbe umewafikia wote!','c-g');
   if(CR) renderMsgs();
 }
 
-function clearAllMsgs(){ if(!confirm('Futa ujumbe WOTE wa vyumba vyote?')) return; S.s('msgs',{}); if(CR) renderMsgs(); notify('🗑️','Imefutwa','Ujumbe wote umefutwa','warn'); }
+function clearMsgs(){ if(!confirm('Futa ujumbe WOTE wa vyumba vyote?')) return; S.s('msgs',{}); if(CR) renderMsgs(); toast('🗑️','Ujumbe Umefutwa','','c-w'); }
 function exportData(){
-  const data={users:S.g('users'),rooms:S.g('rooms'),msgs:S.g('msgs'),exported:new Date().toISOString()};
+  const data={users:S.g('users'),rooms:S.g('rooms'),msgs:S.g('msgs'),version:VER,exported:new Date().toISOString()};
   const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='ZakayoChat_backup.json'; a.click();
+  const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`ZakayoChat_backup_${Date.now()}.json`; a.click();
+  toast('✅','Export Imefanikiwa','Backup imehifadhiwa','c-g');
 }
-function fullReset(){ if(!confirm('RESET KAMILI? Kila kitu kitafutwa!')) return; localStorage.clear(); location.reload(); }
+function fullReset(){ if(!confirm('RESET KAMILI? Kila kitu kitafutwa na huwezi kurudisha!')) return; if(!confirm('Una uhakika KABISA?')) return; localStorage.clear(); location.reload(); }
 
-/* ═══════════════════════════════════════
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    PROFILE
-═══════════════════════════════════════ */
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function openProfile(){
-  id('profContent').innerHTML=`
-    <div style="display:flex;justify-content:flex-end;margin-bottom:-8px"><button class="btn btn-outline btn-sm" onclick="document.getElementById('profileModal').classList.remove('open')">✕</button></div>
+  $('profContent').innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800">Profaili Yangu</h3>
+      <button class="sb2 sb2-o" onclick="$('oProfil').classList.remove('on')">✕</button>
+    </div>
     <div class="prof-top">
-      <div class="prof-ava" style="background:${CU.color}">${CU.ava}</div>
+      <div class="prof-av" id="pAv" style="background:${CU.col}">${CU.avi}</div>
       <div class="prof-name">${CU.name}</div>
       <div class="prof-email">${CU.email}</div>
       <div class="prof-badge">${CU.role==='admin'?'👑 Admin':'👤 Mwanachama'}</div>
     </div>
-    <div style="margin-bottom:12px">
-      <label style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:5px">Badilisha Nywila</label>
-      <div style="display:flex;gap:8px">
-        <input type="password" id="npw" placeholder="Nywila mpya (min. 6)" style="flex:1;padding:9px 12px;background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none">
-        <button class="btn btn-primary btn-sm" onclick="changePw()">Hifadhi</button>
-      </div>
+    <div style="font-size:11px;font-weight:800;color:var(--fg3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px">Chagua Emoji/Avatar</div>
+    <div class="av-pick" id="avPick">${AVIS.map(a=>`<div class="av-opt${a===CU.avi?' picked':''}" onclick="pickAvi('${a}')">${a}</div>`).join('')}</div>
+    <div style="font-size:11px;font-weight:800;color:var(--fg3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px">Chagua Rangi</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">${COLORS.map(c=>`<div onclick="pickCol('${c}')" style="width:28px;height:28px;background:${c};border-radius:50%;cursor:pointer;transition:transform .15s;border:${c===CU.col?'3px solid #fff':'2px solid transparent'}" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></div>`).join('')}</div>
+    <div style="font-size:11px;font-weight:800;color:var(--fg3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px">Badilisha Nywila</div>
+    <div style="display:flex;gap:7px;margin-bottom:16px">
+      <input type="password" id="npw" placeholder="Nywila mpya (min. 6 herufi)" style="flex:1;padding:9px 12px;background:rgba(0,0,0,.35);border:1px solid var(--rim);border-radius:10px;color:var(--fg);font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;outline:none">
+      <button class="sb2 sb2-p" onclick="changePw()">Hifadhi</button>
     </div>
     <div class="inv-box">
       <h4>🔗 Alika Marafiki</h4>
-      <div class="inv-link" id="iLink" onclick="copyLink()" title="Bonyeza kunakili">${location.href}</div>
-      <div style="display:flex;gap:8px">
-        <button class="btn btn-outline btn-sm" onclick="copyLink()" style="flex:1;padding:9px">📋 Nakili</button>
-        <button class="wa-btn" onclick="shareWA()" style="flex:1">📲 WhatsApp</button>
+      <div class="inv-link" onclick="copyLink()" title="Bonyeza kunakili">${location.href}</div>
+      <div style="display:flex;gap:7px">
+        <button class="sb2 sb2-o" onclick="copyLink()" style="flex:1;padding:10px">📋 Nakili Link</button>
+        <button class="wa-btn" onclick="shareWA()" style="flex:1;border-radius:11px;padding:10px;font-size:13.5px">📲 WhatsApp</button>
       </div>
     </div>`;
-  id('profileModal').classList.add('open');
+  $('oProfil').classList.add('on');
 }
 
-function changePw(){
-  const pw=id('npw')?.value; if(!pw||pw.length<6){ notify('⚠️','Nywila fupi','Angalau herufi 6','warn'); return; }
+function pickAvi(a){
+  CU.avi=a; updateMe();
+  document.querySelectorAll('.av-opt').forEach(el=>{el.classList.toggle('picked',el.textContent===a);});
+  const pAv=$('pAv'); if(pAv) pAv.textContent=a;
+  $('myAv').textContent=a;
+}
+function pickCol(c){
+  CU.col=c; updateMe();
+  const pAv=$('pAv'); if(pAv) pAv.style.background=c;
+  $('myAv').style.background=c;
+}
+function updateMe(){
   const users=S.g('users')||[];
-  S.s('users',users.map(u=>u.id===CU.id?{...u,pw:hp(pw)}:u));
-  CU={...CU,pw:hp(pw)}; id('npw').value='';
-  notify('✅','Imehifadhiwa','Nywila imebadilishwa','green');
+  S.s('users',users.map(u=>u.id===CU.id?{...u,avi:CU.avi,col:CU.col}:u));
+}
+function changePw(){
+  const pw=$('npw')?.value; if(!pw||pw.length<6){ toast('⚠️','Nywila fupi','Angalau herufi 6','c-w'); return; }
+  CU.pw=hp(pw); updateMe(); if($('npw')) $('npw').value='';
+  toast('✅','Nywila Imebadilishwa','Imehifadhiwa salama','c-g');
 }
 
-/* ═══════════════════════════════════════
-   INVITE
-═══════════════════════════════════════ */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   INVITE / WHATSAPP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function openInviteModal(){
-  id('invLinkTxt').textContent = location.href;
-  id('inviteModal').style.display='flex';
+  $('invLinkTxt').textContent=location.href;
+  $('oInvite').classList.add('on');
 }
-function closeInvite(){ id('inviteModal').style.display='none'; }
-
 function copyLink(){
-  navigator.clipboard.writeText(location.href).then(()=>notify('📋','Imenakiliwa','Link imenakiliwa kwenye ubao wa kunakili','green')).catch(()=>{
-    const t=document.createElement('textarea'); t.value=location.href; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove();
-    notify('📋','Imenakiliwa','Link imenakiliwa','green');
-  });
+  const txt=location.href;
+  if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(()=>toast('📋','Imenakiliwa','Link imenakiliwa!','c-g')).catch(()=>fallbackCopy(txt)); }
+  else fallbackCopy(txt);
 }
-
+function fallbackCopy(txt){ const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();toast('📋','Imenakiliwa','Link imenakiliwa!','c-g'); }
 function shareWA(){
-  const msg=encodeURIComponent(`🌟 Jiunge na *Zakayo Chat*!\n\nApp ya mazungumzo ya kweli, salama na ya haraka kwa marafiki na wadau.\n\n💬 Bonyeza hapa kujisajili:\n${location.href}\n\n_Zakayo Chat — Mazungumzo Ya Kweli_ ✨`);
+  const link=location.href;
+  const msg=encodeURIComponent(`🌟 *Jiunge na Zakayo Chat!*\n\nApp ya mazungumzo ya kweli, salama na ya haraka kwa marafiki na wadau.\n\n💬 Bonyeza hapa kujisajili:\n${link}\n\n✨ _Zakayo Chat — Mazungumzo Ya Kweli_`);
   window.open('https://wa.me/?text='+msg,'_blank');
 }
 
-/* ═══════════════════════════════════════
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    MISC
-═══════════════════════════════════════ */
-function postSysMsg(rid,txt){
-  const msgs=S.g('msgs')||{};
-  if(!msgs[rid]) msgs[rid]=[];
-  msgs[rid].push({id:'m'+Date.now(),uid:'admin001',txt,ts:Date.now(),read:false,rcts:[],sys:true});
-  S.s('msgs',msgs);
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function showMembers(){
+  const users=(S.g('users')||[]).filter(u=>u.ok);
+  const html=users.map(u=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--rim)">
+    <div style="width:36px;height:36px;border-radius:50%;background:${u.col};display:flex;align-items:center;justify-content:center;font-size:18px">${u.avi}</div>
+    <div><div style="font-weight:700;font-size:13.5px">${u.name}</div><div style="font-size:11.5px;color:${u.status==='online'?'var(--ok)':'var(--fg3)'}">${u.status==='online'?'● Mtandaoni':'○ Hakuna mtandaoni'}</div></div>
+    ${u.role==='admin'?'<span class="pill p-y" style="margin-left:auto">👑 Admin</span>':''}
+  </div>`).join('');
+  alert(`Wanachama (${users.length}):\n\n${users.map(u=>u.name+(u.status==='online'?' ●':'')).join('\n')}`);
 }
 
-function simulateAttach(){ notify('📎','Faili','Kipengele cha faili kitapatikana hivi karibuni 🚧','warn'); }
-
-function toggleSearch(){ id('sidebar').classList.toggle('open'); document.querySelector('.sb-search input').focus(); }
-function closeSidebar(){ id('sidebar').classList.remove('open'); }
+function simulateAttach(){ toast('📎','Faili','Kipengele cha faili kitapatikana hivi karibuni 🚧','c-w'); }
 
 function downloadApp(){
   const html=document.documentElement.outerHTML;
   const b=new Blob([html],{type:'text/html'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='ZakayoChat.html'; a.click();
-  notify('⬇️','Inapakuliwa','ZakayoChat.html imehifadhiwa kwenye simu/kompyuta yako','green');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='ZakayoChat_v3.html'; a.click();
+  toast('⬇️','Inapakuliwa','ZakayoChat_v3.html imehifadhiwa','c-g');
 }
 
-function id(x){ return document.getElementById(x); }
-function screens(s){ document.querySelectorAll('.screen').forEach(el=>{ el.classList.remove('active'); el.style.display=''; }); const el=id(s); el.classList.add('active'); if(s==='appScreen') el.style.display='flex'; }
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>{ s.classList.remove('on'); s.style.display=''; });
+  const el=$(id);
+  el.classList.add('on');
+  if(id==='sApp') el.style.display='flex';
+}
 
-/* ── SWIPE GESTURES (mobile) ── */
+/* SWIPE */
 let tx=0;
 document.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
 document.addEventListener('touchend',e=>{
   const dx=e.changedTouches[0].clientX-tx;
-  if(dx>65&&tx<45) id('sidebar').classList.add('open');
-  if(dx<-65)       id('sidebar').classList.remove('open');
+  if(dx>65&&tx<50) $('SB').classList.add('on');
+  if(dx<-65) $('SB').classList.remove('on');
 },{passive:true});
+function closeSB(){ $('SB').classList.remove('on'); }
 
-/* ── PWA INSTALL ── */
-window.addEventListener('beforeinstallprompt',e=>{
-  e.preventDefault(); deferredInstall=e;
-  setTimeout(()=>id('installBanner').classList.add('show'),3000);
-});
-function installPWA(){
-  id('installBanner').classList.remove('show');
-  if(deferredInstall){ deferredInstall.prompt(); deferredInstall.userChoice.then(r=>{ if(r.outcome==='accepted') notify('✅','Imewekwa','Zakayo Chat imesakinishwa kwenye simu yako!','green'); deferredInstall=null; }); }
-}
-window.addEventListener('appinstalled',()=>notify('✅','Imesakinishwa','Zakayo Chat ipo kwenye skrini yako ya nyumbani! 🎉','green'));
+/* PWA */
+let deferredInstall=null;
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferredInstall=e; setTimeout(()=>$('IB').classList.add('on'),4000); });
+function installPWA(){ $('IB').classList.remove('on'); if(deferredInstall){ deferredInstall.prompt(); deferredInstall.userChoice.then(r=>{ if(r.outcome==='accepted') toast('✅','Imesakinishwa','Zakayo Chat ipo kwenye simu yako! 🎉','c-g'); deferredInstall=null; }); } }
+window.addEventListener('appinstalled',()=>toast('✅','Imesakinishwa','Karibu uifungue kutoka skrini yako ya nyumbani 📱','c-g'));
 
-/* ── SERVICE WORKER ── */
-if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
+/* SERVICE WORKER */
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 
-/* ── BOOT ── */
-window.addEventListener('load',()=>{
-  initDB(); buildEP();
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BOOT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+window.addEventListener('DOMContentLoaded',()=>{
+  initDB();
   const sid=S.g('sess');
   if(sid){
     const u=(S.g('users')||[]).find(x=>x.id===sid);
-    if(u){ CU=u; u.ok?enterApp():showWait(); return; }
+    if(u){ CU=u; u.ok?enterApp():goWait(); return; }
   }
-  screens('authScreen');
+  show('sAuth');
+  // keyboard shortcuts
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){
+      ['oAdmin','oProfil','oInvite','oSearch'].forEach(id=>$(id).classList.remove('on'));
+    }
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){ e.preventDefault(); openSearch(); }
+  });
 });
 </script>
 </body>
