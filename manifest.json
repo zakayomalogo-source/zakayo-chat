@@ -2,29 +2,48 @@
   "name": "Zakayo Chat",
   "short_name": "Zakayo Chat",
   "description": "Mazungumzo Ya Kweli, Salama na Ya Haraka kwa Marafiki na Wadau",
-  "start_url": ".",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#05040f",
-  "theme_color": "#05040f",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "background_color": "#060414",
+  "theme_color": "#060414",
   "orientation": "any",
   "lang": "sw",
-  "categories": ["social", "communication"],
+  "dir": "ltr",
+  "categories": ["social", "communication", "utilities"],
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%237c3aed'/><text y='380' x='64' font-size='380'>💬</text></svg>",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%236d28d9'/%3E%3Crect width='512' height='512' rx='110' fill='url(%23g)'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236d28d9'/%3E%3Cstop offset='1' stop-color='%23f5c842'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ctext y='370' x='60' font-size='370' font-family='Apple Color Emoji,Segoe UI Emoji,sans-serif'%3E%F0%9F%92%AC%3C/text%3E%3C/svg%3E",
       "sizes": "512x512",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%236d28d9'/%3E%3Ctext y='370' x='60' font-size='370' font-family='Apple Color Emoji,Segoe UI Emoji,sans-serif'%3E%F0%9F%92%AC%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ],
-  "screenshots": [],
   "shortcuts": [
     {
       "name": "Chumba cha Jumla",
       "short_name": "Jumla",
-      "description": "Nenda moja kwa moja kwenye chumba cha Jumla",
-      "url": "./#jumla",
-      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>", "sizes": "96x96" }]
+      "description": "Fungua chumba cha mazungumzo ya jumla",
+      "url": "./"
+    },
+    {
+      "name": "Dashibodi ya Admin",
+      "short_name": "Admin",
+      "description": "Fungua dashibodi ya admin",
+      "url": "./"
     }
-  ]
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  }
 }
