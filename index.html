@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#05040f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Zakayo Chat">
+<meta name="description" content="Zakayo Chat – Mazungumzo Ya Kweli, Salama na Ya Haraka">
+<meta property="og:title" content="Zakayo Chat">
+<meta property="og:description" content="Jiunge na Zakayo Chat – App ya mazungumzo ya kweli kwa marafiki na wadau.">
+<meta property="og:type" content="website">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237c3aed'/><text y='.9em' font-size='75' x='12'>💬</text></svg>">
+<title>Zakayo Chat – Mazungumzo Ya Kweli</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════
+   ZAKAYO CHAT — DESIGN TOKENS
+════════════════════════════════ */
+:root{
+  --bg:#05040f;
+  --panel:#0e0c1f;
+  --panel2:#131128;
+  --glass:rgba(255,255,255,0.04);
+  --glass2:rgba(255,255,255,0.07);
+  --glass3:rgba(255,255,255,0.11);
+  --border:rgba(255,215,100,0.12);
+  --border2:rgba(255,255,255,0.08);
+  --gold:#f0c040;
+  --gold2:#ffda6a;
+  --accent:#a855f7;
+  --accent2:#7c3aed;
+  --green:#22d3a0;
+  --red:#f87171;
+  --blue:#60a5fa;
+  --orange:#fb923c;
+  --text:#f0edf9;
+  --text2:#b8b3d4;
+  --muted:#6b678e;
+  --bubble-me:linear-gradient(140deg,#7c3aed 0%,#a855f7 100%);
+  --bubble-them:rgba(255,255,255,0.06);
+  --shadow:0 20px 60px rgba(0,0,0,0.7);
+  --shadow2:0 4px 20px rgba(0,0,0,0.4);
+  --radius:18px;
+  --sidebar-w:300px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
+html{height:100%;height:-webkit-fill-available}
+body{height:100%;height:-webkit-fill-available;background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);overflow:hidden;position:fixed;inset:0}
+
+/* ── GRAIN TEXTURE ── */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
+
+/* ── AMBIENT GLOW ── */
+body::before{content:'';position:fixed;top:-20%;left:-10%;width:60%;height:60%;background:radial-gradient(ellipse,rgba(124,58,237,.18) 0%,transparent 65%);pointer-events:none;z-index:0}
+
+/* ════════════════════════════════
+   SCREENS
+════════════════════════════════ */
+.screen{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.screen.active{display:flex}
+
+/* ════════════════════════════════
+   AUTH SCREEN
+════════════════════════════════ */
+#authScreen{background:radial-gradient(ellipse 90% 60% at 50% -5%,rgba(124,58,237,.28) 0%,transparent 70%),var(--bg)}
+
+.auth-wrap{position:relative;z-index:1;width:100%;display:flex;align-items:center;justify-content:center;padding:16px;min-height:100%}
+.auth-card{background:var(--panel);border:1px solid var(--border);border-radius:28px;padding:36px 32px 32px;width:min(420px,100%);box-shadow:var(--shadow),0 0 100px rgba(124,58,237,.12),inset 0 1px 0 rgba(255,255,255,.06);position:relative;overflow:hidden;animation:cardIn .5s cubic-bezier(.22,.68,0,1.2)}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.auth-card::before{content:'';position:absolute;top:-80px;right:-80px;width:220px;height:220px;background:radial-gradient(circle,rgba(240,192,64,.12),transparent 70%);pointer-events:none}
+.auth-card::after{content:'';position:absolute;bottom:-60px;left:-60px;width:180px;height:180px;background:radial-gradient(circle,rgba(124,58,237,.1),transparent 70%);pointer-events:none}
+
+.logo{text-align:center;margin-bottom:28px}
+.logo-ring{width:72px;height:72px;background:linear-gradient(135deg,#7c3aed,#f0c040);border-radius:22px;display:inline-flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:14px;box-shadow:0 8px 32px rgba(124,58,237,.5),0 0 0 1px rgba(240,192,64,.2);position:relative}
+.logo-ring::after{content:'';position:absolute;inset:-3px;border-radius:25px;border:1px solid rgba(240,192,64,.2);pointer-events:none}
+.logo h1{font-family:'Cinzel',serif;font-size:26px;font-weight:700;background:linear-gradient(135deg,var(--gold2),var(--gold),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:.5px}
+.logo p{color:var(--muted);font-size:12.5px;margin-top:5px;letter-spacing:.3px}
+
+.tabs{display:flex;background:rgba(0,0,0,.3);border-radius:13px;padding:4px;margin-bottom:22px;border:1px solid var(--border2)}
+.tab-btn{flex:1;padding:9px 0;border:none;background:none;color:var(--muted);border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;transition:all .3s;letter-spacing:.2px}
+.tab-btn.active{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;box-shadow:0 3px 14px rgba(124,58,237,.5)}
+
+.form-group{margin-bottom:14px;position:relative}
+.form-group label{display:block;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.8px}
+.input-icon-wrap{position:relative}
+.input-icon-wrap .fi{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none}
+.form-group input{width:100%;padding:11px 14px 11px 38px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s}
+.form-group input:focus{border-color:var(--accent);background:rgba(168,85,247,.06);box-shadow:0 0 0 3px rgba(168,85,247,.12)}
+.form-group input::placeholder{color:var(--muted)}
+
+.btn{width:100%;padding:13px;border:none;border-radius:13px;font-size:14.5px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .25s;letter-spacing:.2px;position:relative;overflow:hidden}
+.btn::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.07),transparent);pointer-events:none}
+.btn-primary{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;box-shadow:0 6px 24px rgba(124,58,237,.45)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 30px rgba(124,58,237,.55)}
+.btn-primary:active{transform:translateY(0) scale(.99)}
+.btn-gold{background:linear-gradient(135deg,#92400e,#d97706,#f0c040);color:#fff;box-shadow:0 4px 20px rgba(217,119,6,.35)}
+.btn-gold:hover{transform:translateY(-1px)}
+.btn-danger{background:linear-gradient(135deg,#991b1b,#f87171);color:#fff;box-shadow:0 4px 16px rgba(239,68,68,.3)}
+.btn-green{background:linear-gradient(135deg,#065f46,#22d3a0);color:#fff}
+.btn-sm{padding:7px 14px;font-size:12.5px;width:auto;border-radius:9px;font-weight:700}
+.btn-outline{background:transparent;border:1px solid var(--border2);color:var(--text2)}
+.btn-outline:hover{background:var(--glass2);border-color:var(--border)}
+
+.auth-err{font-size:12.5px;color:var(--red);text-align:center;margin-top:10px;min-height:18px;font-weight:500}
+.auth-ok{font-size:12.5px;color:var(--green);text-align:center;margin-top:10px;font-weight:500}
+
+/* ════════════════════════════════
+   WAITING SCREEN
+════════════════════════════════ */
+#waitScreen{background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(240,192,64,.07),transparent),var(--bg)}
+.wait-card{text-align:center;padding:48px 32px;max-width:360px;z-index:1}
+.wait-anim{font-size:72px;margin-bottom:20px;display:block;animation:floatY 3s ease-in-out infinite}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.wait-card h2{font-family:'Cinzel',serif;color:var(--gold);font-size:22px;margin-bottom:12px}
+.wait-card p{color:var(--text2);line-height:1.7;font-size:14px;margin-bottom:22px}
+.wait-card strong{color:var(--gold2)}
+.status-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(240,192,64,.08);border:1px solid rgba(240,192,64,.25);border-radius:50px;padding:8px 20px;font-size:13px;color:var(--gold);font-weight:600}
+.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulseD 1.4s ease infinite}
+@keyframes pulseD{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+
+/* ════════════════════════════════
+   MAIN APP LAYOUT
+════════════════════════════════ */
+#appScreen{background:var(--bg);flex-direction:row;align-items:stretch;display:none;position:fixed;inset:0}
+#appScreen.active{display:flex}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar-w);background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;z-index:20;transition:transform .32s cubic-bezier(.4,0,.2,1)}
+.sb-header{padding:18px 14px 12px;border-bottom:1px solid var(--border)}
+.sb-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.sb-logo{width:36px;height:36px;background:linear-gradient(135deg,#7c3aed,#f0c040);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 3px 12px rgba(124,58,237,.4);flex-shrink:0}
+.sb-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;background:linear-gradient(135deg,var(--gold2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sb-version{font-size:10px;color:var(--muted);margin-top:1px}
+.user-card{display:flex;align-items:center;gap:10px;background:var(--glass);border-radius:13px;padding:9px 10px;border:1px solid var(--border2)}
+.ava{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;position:relative;border:2px solid rgba(255,255,255,.1)}
+.ava .sdot{position:absolute;bottom:0;right:0;width:11px;height:11px;border-radius:50%;border:2px solid var(--panel);background:var(--green)}
+.ava .sdot.off{background:var(--muted)}
+.uc-name{font-size:13px;font-weight:700;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.uc-role{font-size:10px;padding:2px 8px;border-radius:50px;font-weight:700;flex-shrink:0}
+.role-admin{background:rgba(240,192,64,.15);color:var(--gold);border:1px solid rgba(240,192,64,.3)}
+.role-member{background:rgba(168,85,247,.1);color:var(--accent);border:1px solid rgba(168,85,247,.2)}
+
+.sb-search{margin:10px 10px 2px;position:relative}
+.sb-search input{width:100%;padding:8px 12px 8px 34px;background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:12.5px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
+.sb-search input:focus{border-color:var(--accent)}
+.sb-search input::placeholder{color:var(--muted)}
+.sb-search .si{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none}
+
+.sec-label{padding:10px 14px 3px;font-size:10px;font-weight:800;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase}
+
+.room-list{flex:1;overflow-y:auto;padding:2px 8px 8px;scrollbar-width:thin;scrollbar-color:var(--glass2) transparent}
+.room-list::-webkit-scrollbar{width:3px}
+.room-list::-webkit-scrollbar-thumb{background:var(--glass2);border-radius:4px}
+
+.ri{display:flex;align-items:center;gap:10px;padding:9px 10px;cursor:pointer;border-radius:12px;margin:1px 0;transition:all .15s;position:relative;border:1px solid transparent}
+.ri:hover{background:var(--glass);border-color:var(--border2)}
+.ri.active{background:linear-gradient(135deg,rgba(124,58,237,.22),rgba(168,85,247,.12));border-color:rgba(168,85,247,.3)}
+.ri.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;background:var(--accent);border-radius:0 3px 3px 0}
+.ri-icon{font-size:20px;width:38px;height:38px;background:var(--glass);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border2)}
+.ri.active .ri-icon{background:rgba(168,85,247,.15);border-color:rgba(168,85,247,.3)}
+.ri-info{flex:1;min-width:0}
+.ri-name{font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ri-prev{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+.unread{background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:50px;min-width:18px;text-align:center;animation:popIn .2s ease}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+
+.sb-footer{padding:10px 10px;border-top:1px solid var(--border);display:flex;gap:6px}
+.fb{flex:1;padding:9px 0;background:var(--glass);border:1px solid var(--border2);border-radius:10px;color:var(--muted);cursor:pointer;font-size:18px;transition:all .2s;display:flex;align-items:center;justify-content:center;position:relative}
+.fb:hover{background:var(--glass2);color:var(--text);transform:translateY(-1px)}
+.fb.fb-admin{border-color:rgba(240,192,64,.3);color:var(--gold)}
+.fb.fb-admin:hover{background:rgba(240,192,64,.1)}
+.fb.fb-dl{color:var(--green)}
+.fb.fb-dl:hover{background:rgba(34,211,160,.08)}
+.fb-tip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--border2);border-radius:7px;padding:4px 8px;font-size:10px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;font-family:'DM Sans',sans-serif;color:var(--text2)}
+.fb:hover .fb-tip{opacity:1}
+
+/* ── CHAT AREA ── */
+.chat-area{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+
+.chat-header{padding:0 18px;height:62px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:rgba(14,12,31,.85);backdrop-filter:blur(20px);flex-shrink:0;position:relative;z-index:5}
+.back-btn{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:background .15s;margin-right:-4px}
+.back-btn:hover{background:var(--glass2)}
+.ch-icon{font-size:26px;flex-shrink:0}
+.ch-info{flex:1;min-width:0}
+.ch-name{font-weight:700;font-size:15.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ch-sub{font-size:11.5px;color:var(--muted);margin-top:1px}
+.ch-actions{display:flex;gap:6px;flex-shrink:0}
+.ia{width:34px;height:34px;background:var(--glass);border:1px solid var(--border2);border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:all .2s}
+.ia:hover{background:var(--glass2);transform:scale(1.05)}
+
+/* MESSAGES */
+.msgs{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:4px;scrollbar-width:thin;scrollbar-color:var(--glass2) transparent}
+.msgs::-webkit-scrollbar{width:4px}
+.msgs::-webkit-scrollbar-thumb{background:var(--glass2);border-radius:4px}
+
+.day-div{text-align:center;margin:12px 0;display:flex;align-items:center;gap:10px}
+.day-div::before,.day-div::after{content:'';flex:1;height:1px;background:var(--border)}
+.day-div span{font-size:11px;color:var(--muted);white-space:nowrap;background:var(--bg);padding:0 8px}
+
+.mrow{display:flex;gap:8px;align-items:flex-end;animation:msgIn .22s ease;max-width:78%}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.mrow.me{flex-direction:row-reverse;align-self:flex-end}
+.mrow.them{align-self:flex-start}
+.mrow.sys{max-width:100%;align-self:center}
+.sys-bubble{background:var(--glass);border:1px solid var(--border2);border-radius:20px;padding:6px 16px;font-size:12px;color:var(--muted);text-align:center}
+
+.mava{width:28px;height:28px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px}
+.bubble-wrap{display:flex;flex-direction:column}
+.sname{font-size:10.5px;font-weight:800;margin-bottom:3px;padding-left:2px}
+.mrow.me .sname{text-align:right;padding-left:0;padding-right:2px}
+.bubble{padding:9px 13px;border-radius:18px;word-break:break-word;position:relative;max-width:340px;line-height:1.45}
+.mrow.me .bubble{background:var(--bubble-me);border-bottom-right-radius:5px;color:#fff;box-shadow:0 4px 16px rgba(124,58,237,.4)}
+.mrow.them .bubble{background:var(--bubble-them);border:1px solid var(--border2);border-bottom-left-radius:5px}
+.bm{display:flex;align-items:center;gap:5px;margin-top:4px;justify-content:flex-end}
+.mrow.them .bm{justify-content:flex-start}
+.btime{font-size:10px;opacity:.55}
+.bcheck{font-size:11px;opacity:.6}
+.bcheck.seen{opacity:1;color:#60efb0}
+.mrow.me .bcheck.seen{color:rgba(180,255,210,.9)}
+
+.react-bar{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
+.react{background:var(--glass);border:1px solid var(--border2);border-radius:50px;padding:2px 8px;font-size:12px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:3px}
+.react:hover{background:var(--glass2);transform:scale(1.05)}
+.react-count{font-size:10px;color:var(--muted)}
+.react-add{background:none;border:1px dashed rgba(255,255,255,.15);border-radius:50px;padding:2px 8px;font-size:10.5px;cursor:pointer;color:var(--muted);transition:all .15s}
+.react-add:hover{border-color:var(--accent);color:var(--accent)}
+
+/* TYPING */
+.typing-row{align-self:flex-start;display:flex;gap:8px;align-items:flex-end}
+.typing-bubble{display:flex;gap:4px;padding:10px 14px;background:var(--bubble-them);border:1px solid var(--border2);border-radius:18px;border-bottom-left-radius:5px}
+.td{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:td .9s ease infinite}
+.td:nth-child(2){animation-delay:.15s}
+.td:nth-child(3){animation-delay:.3s}
+@keyframes td{0%,80%,100%{transform:scale(1);opacity:.4}40%{transform:scale(1.3);opacity:1}}
+
+/* INPUT */
+.input-area{padding:10px 14px 14px;border-top:1px solid var(--border);background:rgba(14,12,31,.92);backdrop-filter:blur(20px);flex-shrink:0}
+.ir{display:flex;gap:8px;align-items:flex-end}
+.ia-small{width:36px;height:36px;background:var(--glass);border:1px solid var(--border2);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;flex-shrink:0;transition:all .2s}
+.ia-small:hover{background:var(--glass2)}
+.input-wrap{flex:1;background:rgba(0,0,0,.25);border:1px solid var(--border2);border-radius:16px;display:flex;align-items:flex-end;padding:2px 12px;transition:border-color .2s}
+.input-wrap:focus-within{border-color:var(--accent);background:rgba(168,85,247,.05)}
+.mi{width:100%;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;padding:9px 0;resize:none;max-height:120px;line-height:1.45}
+.mi::placeholder{color:var(--muted)}
+.send-btn{width:40px;height:40px;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .2s;font-size:17px;color:#fff;box-shadow:0 4px 16px rgba(124,58,237,.45)}
+.send-btn:hover{transform:scale(1.06);box-shadow:0 6px 22px rgba(124,58,237,.6)}
+.send-btn:active{transform:scale(.95)}
+
+/* EMOJI PICKER */
+.ep{position:absolute;bottom:68px;left:14px;background:var(--panel2);border:1px solid var(--border2);border-radius:18px;padding:12px;display:none;flex-wrap:wrap;gap:5px;width:min(300px,calc(100vw - 28px));box-shadow:var(--shadow);z-index:50;max-height:200px;overflow-y:auto}
+.ep.open{display:flex}
+.ep-btn{background:none;border:none;font-size:22px;cursor:pointer;padding:4px;border-radius:8px;transition:background .15s;line-height:1}
+.ep-btn:hover{background:var(--glass2)}
+
+/* WELCOME */
+.welcome{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);text-align:center;padding:40px;gap:16px}
+.welcome .wi{font-size:72px;animation:floatY 4s ease-in-out infinite}
+.welcome h3{font-family:'Cinzel',serif;color:var(--text2);font-size:20px}
+.welcome p{font-size:13.5px;max-width:280px;line-height:1.6}
+
+/* ════════════════════════════════
+   ADMIN PANEL
+════════════════════════════════ */
+#adminPanel{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.82);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:16px}
+#adminPanel.open{display:flex}
+.admin-card{background:var(--panel);border:1px solid rgba(240,192,64,.25);border-radius:24px;width:min(740px,100%);max-height:min(88vh,700px);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow),0 0 80px rgba(240,192,64,.07);animation:cardIn .3s ease}
+.admin-top{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(146,64,14,.12),rgba(240,192,64,.04))}
+.admin-top h2{font-family:'Cinzel',serif;color:var(--gold);font-size:17px;flex:1}
+.admin-tabs{display:flex;border-bottom:1px solid var(--border);background:rgba(0,0,0,.2);overflow-x:auto;scrollbar-width:none}
+.admin-tabs::-webkit-scrollbar{display:none}
+.atab{padding:12px 16px;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--muted);border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.atab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.atab:hover:not(.active){color:var(--text2)}
+.admin-body{flex:1;overflow-y:auto;padding:20px 22px;scrollbar-width:thin;scrollbar-color:var(--glass2) transparent}
+.asec{display:none}
+.asec.active{display:block}
+
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:20px}
+.sc{background:var(--glass);border:1px solid var(--border2);border-radius:14px;padding:14px 16px;transition:transform .2s}
+.sc:hover{transform:translateY(-2px)}
+.sc-num{font-family:'Cinzel',serif;font-size:30px;font-weight:700;line-height:1}
+.sc-lbl{font-size:11px;color:var(--muted);margin-top:5px;font-weight:500}
+
+.utbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.utbl th{text-align:left;font-size:10px;font-weight:800;letter-spacing:.9px;color:var(--muted);text-transform:uppercase;padding:8px 10px;border-bottom:1px solid var(--border)}
+.utbl td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:middle}
+.utbl tr:hover td{background:var(--glass)}
+.spill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:50px;font-size:10.5px;font-weight:700}
+.sp-g{background:rgba(34,211,160,.1);color:var(--green);border:1px solid rgba(34,211,160,.2)}
+.sp-y{background:rgba(240,192,64,.1);color:var(--gold);border:1px solid rgba(240,192,64,.2)}
+.sp-r{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.2)}
+
+.pcard{background:var(--glass);border:1px solid rgba(240,192,64,.18);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;transition:border-color .2s}
+.pcard:hover{border-color:rgba(240,192,64,.35)}
+
+.rm-row{background:var(--glass);border:1px solid var(--border2);border-radius:13px;padding:13px 15px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:border-color .2s}
+.rm-row:hover{border-color:var(--border)}
+
+.add-room-box{background:var(--glass);border:1px dashed rgba(240,192,64,.25);border-radius:14px;padding:16px;margin-top:12px}
+.add-room-box h4{font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px}
+.af{display:flex;gap:8px;flex-wrap:wrap}
+.af input{flex:1;min-width:110px;padding:8px 12px;background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:12.5px;font-family:'DM Sans',sans-serif;outline:none}
+.af input:focus{border-color:var(--gold)}
+
+/* ════════════════════════════════
+   PROFILE MODAL
+════════════════════════════════ */
+#profileModal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px}
+#profileModal.open{display:flex}
+.prof-card{background:var(--panel);border:1px solid var(--border);border-radius:24px;width:min(380px,100%);padding:28px 24px;box-shadow:var(--shadow);animation:cardIn .3s ease;max-height:90vh;overflow-y:auto}
+.prof-top{text-align:center;margin-bottom:20px}
+.prof-ava{width:74px;height:74px;border-radius:50%;font-size:30px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;border:3px solid var(--accent);box-shadow:0 0 0 6px rgba(168,85,247,.1)}
+.prof-name{font-family:'Cinzel',serif;font-size:19px}
+.prof-email{font-size:12.5px;color:var(--muted);margin-top:4px}
+.prof-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(240,192,64,.1);border:1px solid rgba(240,192,64,.3);border-radius:50px;padding:4px 14px;font-size:11.5px;color:var(--gold);margin-top:10px;font-weight:700}
+
+.inv-box{background:linear-gradient(135deg,rgba(34,211,160,.08),rgba(34,197,94,.04));border:1px solid rgba(34,211,160,.2);border-radius:14px;padding:16px;margin-top:16px}
+.inv-box h4{font-size:13px;font-weight:800;color:var(--green);margin-bottom:8px}
+.inv-link{background:rgba(0,0,0,.25);border:1px solid var(--border2);border-radius:10px;padding:8px 12px;font-size:11px;color:var(--muted);word-break:break-all;margin-bottom:10px;cursor:pointer;transition:border-color .2s}
+.inv-link:hover{border-color:var(--green)}
+.wa-btn{display:block;width:100%;padding:11px;background:linear-gradient(135deg,#128C7E,#25D366);color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;letter-spacing:.3px}
+.wa-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,211,102,.35)}
+
+/* ════════════════════════════════
+   NOTIFICATIONS
+════════════════════════════════ */
+.nc{position:fixed;top:12px;right:12px;z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:300px}
+.notif{background:var(--panel2);border:1px solid var(--border2);border-radius:14px;padding:11px 14px;pointer-events:all;animation:nIn .3s cubic-bezier(.22,.68,0,1.2);display:flex;gap:10px;align-items:flex-start;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+@keyframes nIn{from{opacity:0;transform:translateX(80px) scale(.9)}to{opacity:1;transform:none}}
+.notif.out{animation:nOut .25s ease forwards}
+@keyframes nOut{to{opacity:0;transform:translateX(80px) scale(.9)}}
+.n-icon{font-size:20px;flex-shrink:0}
+.n-body .n-title{font-size:12.5px;font-weight:700}
+.n-body .n-text{font-size:11.5px;color:var(--muted);margin-top:2px}
+.n-close{margin-left:auto;cursor:pointer;color:var(--muted);font-size:15px;background:none;border:none;flex-shrink:0;transition:color .15s}
+.n-close:hover{color:var(--text)}
+.n-green{border-color:rgba(34,211,160,.3)}
+.n-warn{border-color:rgba(240,192,64,.3)}
+.n-red{border-color:rgba(248,113,113,.3)}
+
+/* ════════════════════════════════
+   INSTALL BANNER (PWA)
+════════════════════════════════ */
+.install-banner{position:fixed;bottom:0;left:0;right:0;z-index:300;padding:14px 20px;background:linear-gradient(135deg,rgba(124,58,237,.95),rgba(168,85,247,.95));backdrop-filter:blur(20px);display:none;align-items:center;gap:14px;box-shadow:0 -8px 40px rgba(0,0,0,.5)}
+.install-banner.show{display:flex}
+.install-banner p{flex:1;font-size:13.5px;font-weight:600;color:#fff;line-height:1.4}
+.install-banner p span{font-size:11px;opacity:.8;display:block;font-weight:400;margin-top:2px}
+
+/* ════════════════════════════════
+   MOBILE RESPONSIVE
+════════════════════════════════ */
+@media(max-width:680px){
+  :root{--sidebar-w:100vw}
+  .sidebar{position:fixed;top:0;left:0;bottom:0;transform:translateX(-100%);box-shadow:var(--shadow)}
+  .sidebar.open{transform:translateX(0)}
+  .back-btn{display:flex}
+  .ep{left:8px;right:8px;width:auto;bottom:72px}
+  .nc{top:auto;bottom:80px;right:8px;left:8px;max-width:100%}
+  .admin-card{width:100%;max-height:100vh;border-radius:0;height:100%}
+  #adminPanel{padding:0;align-items:stretch}
+  .prof-card{width:100%;border-radius:24px 24px 0 0;position:fixed;bottom:0;left:0;right:0}
+  #profileModal{align-items:flex-end;padding:0}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:681px){
+  .sidebar{transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     AUTH SCREEN
+══════════════════════════════ -->
+<div class="screen active" id="authScreen">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="logo">
+        <div class="logo-ring">💬</div>
+        <h1>Zakayo Chat</h1>
+        <p>Mazungumzo Ya Kweli · Salama · Ya Haraka</p>
+      </div>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('login')">🔑 Ingia</button>
+        <button class="tab-btn" onclick="showTab('register')">✨ Jisajili</button>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="fLogin">
+        <div class="form-group">
+          <label>Barua Pepe</label>
+          <div class="input-icon-wrap"><span class="fi">📧</span><input type="email" id="lEmail" placeholder="barua@pepe.com" autocomplete="email"></div>
+        </div>
+        <div class="form-group">
+          <label>Nywila</label>
+          <div class="input-icon-wrap"><span class="fi">🔒</span><input type="password" id="lPass" placeholder="Nywila yako" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+        </div>
+        <button class="btn btn-primary" onclick="doLogin()">Ingia Sasa →</button>
+        <div class="auth-err" id="lErr"></div>
+      </div>
+
+      <!-- REGISTER -->
+      <div id="fReg" style="display:none">
+        <div class="form-group">
+          <label>Jina Kamili</label>
+          <div class="input-icon-wrap"><span class="fi">👤</span><input type="text" id="rName" placeholder="Jina lako kamili"></div>
+        </div>
+        <div class="form-group">
+          <label>Barua Pepe</label>
+          <div class="input-icon-wrap"><span class="fi">📧</span><input type="email" id="rEmail" placeholder="barua@pepe.com"></div>
+        </div>
+        <div class="form-group">
+          <label>Nywila</label>
+          <div class="input-icon-wrap"><span class="fi">🔒</span><input type="password" id="rPass" placeholder="Angalau herufi 6"></div>
+        </div>
+        <div class="form-group">
+          <label>Thibitisha Nywila</label>
+          <div class="input-icon-wrap"><span class="fi">✅</span><input type="password" id="rPass2" placeholder="Rudia nywila" onkeydown="if(event.key==='Enter')doRegister()"></div>
+        </div>
+        <button class="btn btn-primary" onclick="doRegister()">Jisajili Sasa →</button>
+        <div class="auth-err" id="rErr"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     WAITING SCREEN
+══════════════════════════════ -->
+<div class="screen" id="waitScreen">
+  <div class="wait-card">
+    <span class="wait-anim">⏳</span>
+    <h2>Inasubiri Idhini</h2>
+    <p>Asante kwa kujisajili! Akaunti yako ipo katika mstari wa kusubiri. Admin <strong>zakayomalogo@gmail.com</strong> atakupitishia hivi karibuni.</p>
+    <div class="status-pill"><div class="pulse-dot"></div> Inasubiri ukaguzi wa admin</div>
+    <br><br>
+    <button class="btn btn-outline btn-sm" onclick="doLogout()" style="width:auto;padding:9px 24px">← Rudi kuingia</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MAIN APP
+══════════════════════════════ -->
+<div class="screen" id="appScreen">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sb-header">
+      <div class="sb-brand">
+        <div class="sb-logo">💬</div>
+        <div>
+          <div class="sb-title">Zakayo Chat</div>
+          <div class="sb-version">v2.1 · GitHub Live</div>
+        </div>
+      </div>
+      <div class="user-card">
+        <div class="ava" id="myAva" style="background:#a855f7">Z<div class="sdot"></div></div>
+        <div style="flex:1;min-width:0">
+          <div class="uc-name" id="myName">—</div>
+          <div style="font-size:10px;color:var(--green)">● Mtandaoni</div>
+        </div>
+        <div class="uc-role role-member" id="myRole">Mwanachama</div>
+      </div>
+    </div>
+
+    <div class="sb-search">
+      <span class="si">🔍</span>
+      <input type="text" placeholder="Tafuta vyumba..." oninput="filterRooms(this.value)">
+    </div>
+
+    <div class="sec-label">Vyumba vya Gumzo</div>
+    <div class="room-list" id="roomList"></div>
+
+    <div class="sb-footer">
+      <div class="fb" onclick="openProfile()" title="Profaili">👤<span class="fb-tip">Profaili</span></div>
+      <div class="fb" onclick="openInviteModal()" title="Alika">🔗<span class="fb-tip">Alika</span></div>
+      <div class="fb fb-admin" id="adminFab" onclick="openAdmin()" style="display:none" title="Admin">⚙️<span class="fb-tip">Admin</span></div>
+      <div class="fb fb-dl" onclick="downloadApp()" title="Pakua">⬇️<span class="fb-tip">Pakua</span></div>
+      <div class="fb" onclick="doLogout()" title="Toka">🚪<span class="fb-tip">Toka</span></div>
+    </div>
+  </div>
+
+  <!-- CHAT AREA -->
+  <div class="chat-area">
+    <div class="chat-header">
+      <button class="back-btn" onclick="closeSidebar()">←</button>
+      <div class="ch-icon" id="chIcon">💬</div>
+      <div class="ch-info">
+        <div class="ch-name" id="chName">Zakayo Chat</div>
+        <div class="ch-sub" id="chSub">Chagua chumba kushoto</div>
+      </div>
+      <div class="ch-actions">
+        <div class="ia" onclick="toggleSearch()" title="Tafuta">🔍</div>
+        <div class="ia" id="muteIco" onclick="toggleMute()" title="Kimya/Arifa">🔔</div>
+      </div>
+    </div>
+
+    <div class="welcome" id="welcome">
+      <div class="wi">✨</div>
+      <h3>Karibu Zakayo Chat!</h3>
+      <p>Chagua chumba upande wa kushoto ili kuanza mazungumzo yako na marafiki.</p>
+    </div>
+
+    <div class="msgs" id="msgs" style="display:none"></div>
+
+    <div class="input-area" id="inputArea" style="display:none">
+      <div style="position:relative">
+        <div class="ep" id="ep"></div>
+        <div class="ir">
+          <div class="ia-small" onclick="simulateAttach()" title="Faili">📎</div>
+          <div class="ia-small" onclick="toggleEmoji()" title="Emoji">😊</div>
+          <div class="input-wrap">
+            <textarea class="mi" id="mi" rows="1" placeholder="Andika ujumbe..." oninput="autoR(this)" onkeydown="handleKey(event)"></textarea>
+          </div>
+          <button class="send-btn" onclick="sendMsg()">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     ADMIN PANEL
+══════════════════════════════ -->
+<div id="adminPanel">
+  <div class="admin-card">
+    <div class="admin-top">
+      <h2>⚙️ Dashibodi ya Admin</h2>
+      <button class="btn btn-outline btn-sm" onclick="closeAdmin()">✕ Funga</button>
+    </div>
+    <div class="admin-tabs" id="adminTabs">
+      <div class="atab active" onclick="aTab('overview')">📊 Muhtasari</div>
+      <div class="atab" onclick="aTab('users')">👥 Watumiaji</div>
+      <div class="atab" onclick="aTab('pending')">⏳ Wanaosubiri</div>
+      <div class="atab" onclick="aTab('rooms')">💬 Vyumba</div>
+      <div class="atab" onclick="aTab('broadcast')">📢 Tangazo</div>
+      <div class="atab" onclick="aTab('settings')">🛠️ Mipangilio</div>
+    </div>
+    <div class="admin-body">
+
+      <!-- OVERVIEW -->
+      <div class="asec active" id="as-overview">
+        <div class="stat-grid" id="statGrid"></div>
+        <div style="background:var(--glass);border:1px solid var(--border2);border-radius:12px;padding:14px;font-size:12.5px;color:var(--muted)">
+          <strong style="color:var(--gold)">Zakayo Chat</strong> v2.1 · Admin: zakayomalogo@gmail.com<br>
+          Data imehifadhiwa kwenye kifaa kwa njia salama · GitHub Pages Live
+        </div>
+      </div>
+
+      <!-- USERS -->
+      <div class="asec" id="as-users">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <h3 style="font-size:14px;font-weight:800">Watumiaji Wote</h3>
+          <span style="font-size:12px;color:var(--muted)" id="userCount"></span>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="utbl" id="utbl"><tbody></tbody></table>
+        </div>
+      </div>
+
+      <!-- PENDING -->
+      <div class="asec" id="as-pending">
+        <h3 style="font-size:14px;font-weight:800;margin-bottom:14px;color:var(--gold)">⏳ Wanaosubiri Idhini</h3>
+        <div id="pendingList"></div>
+      </div>
+
+      <!-- ROOMS -->
+      <div class="asec" id="as-rooms">
+        <h3 style="font-size:14px;font-weight:800;margin-bottom:14px">Simamia Vyumba</h3>
+        <div id="roomMgr"></div>
+        <div class="add-room-box">
+          <h4>+ Ongeza Chumba Kipya</h4>
+          <div class="af">
+            <input type="text" id="nrEmoji" placeholder="Emoji" style="max-width:72px">
+            <input type="text" id="nrName" placeholder="Jina la chumba">
+            <input type="text" id="nrDesc" placeholder="Maelezo">
+            <button class="btn btn-gold btn-sm" onclick="addRoom()">+ Ongeza</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BROADCAST -->
+      <div class="asec" id="as-broadcast">
+        <h3 style="font-size:14px;font-weight:800;margin-bottom:14px">📢 Tangazo kwa Wote</h3>
+        <div class="form-group">
+          <label>Ujumbe wa Tangazo</label>
+          <textarea id="bcastMsg" rows="5" style="width:100%;padding:12px;background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-size:13.5px;font-family:'DM Sans',sans-serif;outline:none;resize:vertical;transition:border-color .2s" placeholder="Andika tangazo lako hapa... litaenda kwa vyumba vyote!" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border2)'"></textarea>
+        </div>
+        <button class="btn btn-gold" onclick="doBroadcast()">📢 Tuma Tangazo kwa Wote</button>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="asec" id="as-settings">
+        <h3 style="font-size:14px;font-weight:800;margin-bottom:16px">🛠️ Mipangilio ya App</h3>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="background:var(--glass);border:1px solid var(--border2);border-radius:13px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+            <div><div style="font-weight:700;font-size:13.5px">Futa Data Zote</div><div style="font-size:11.5px;color:var(--muted);margin-top:2px">Futa ujumbe wote wa vyumba (watumiaji wataendelea)</div></div>
+            <button class="btn btn-danger btn-sm" onclick="clearAllMsgs()">🗑️ Futa</button>
+          </div>
+          <div style="background:var(--glass);border:1px solid var(--border2);border-radius:13px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+            <div><div style="font-weight:700;font-size:13.5px">Export Data</div><div style="font-size:11.5px;color:var(--muted);margin-top:2px">Pakua nakala ya data yote (JSON)</div></div>
+            <button class="btn btn-primary btn-sm" onclick="exportData()">⬇️ Export</button>
+          </div>
+          <div style="background:var(--glass);border:1px solid rgba(248,113,113,.2);border-radius:13px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+            <div><div style="font-weight:700;font-size:13.5px;color:var(--red)">Reset Kamili</div><div style="font-size:11.5px;color:var(--muted);margin-top:2px">Futa kila kitu – hifadhi ya awali</div></div>
+            <button class="btn btn-danger btn-sm" onclick="fullReset()">⚠️ Reset</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PROFILE MODAL
+══════════════════════════════ -->
+<div id="profileModal">
+  <div class="prof-card" id="profContent"></div>
+</div>
+
+<!-- ══════════════════════════════
+     INVITE MODAL
+══════════════════════════════ -->
+<div id="inviteModal" style="position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px">
+  <div style="background:var(--panel);border:1px solid rgba(34,211,160,.25);border-radius:24px;width:min(380px,100%);padding:28px 24px;box-shadow:var(--shadow);animation:cardIn .3s ease">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h3 style="font-family:'Cinzel',serif;color:var(--green);font-size:18px">🔗 Alika Marafiki</h3>
+      <button class="btn btn-outline btn-sm" onclick="closeInvite()">✕</button>
+    </div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6">Shiriki link hii ili marafiki wako wajiunga na Zakayo Chat. Watahitaji idhini ya admin baada ya kujisajili.</p>
+    <div style="background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:12px;padding:12px;font-size:12px;color:var(--muted);word-break:break-all;margin-bottom:12px;cursor:pointer" id="invLinkTxt" onclick="copyLink()"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-outline btn-sm" onclick="copyLink()" style="flex:1;padding:10px">📋 Nakili Link</button>
+      <button class="wa-btn btn-sm" onclick="shareWA()" style="flex:1;padding:10px;font-size:13px;border-radius:11px">📲 WhatsApp</button>
+    </div>
+    <div style="margin-top:16px;padding:12px;background:rgba(34,211,160,.06);border:1px solid rgba(34,211,160,.15);border-radius:12px">
+      <p style="font-size:11.5px;color:var(--muted)">💡 <strong style="color:var(--green)">Jinsi ya kutumia:</strong> Mtu anapobonyeza link, atafungua Zakayo Chat. Baada ya kujisajili, atangoja idhini yako kama admin.</p>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div class="nc" id="nc"></div>
+
+<!-- PWA INSTALL BANNER -->
+<div class="install-banner" id="installBanner">
+  <span style="font-size:32px">📲</span>
+  <p>Sakinisha Zakayo Chat kwenye simu yako!<span>Bonyeza hapa kuongeza kwenye skrini ya nyumbani</span></p>
+  <button class="btn btn-sm" style="background:#fff;color:#7c3aed;font-weight:800;white-space:nowrap" onclick="installPWA()">Sakinisha</button>
+  <button style="background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:18px;padding:4px" onclick="document.getElementById('installBanner').classList.remove('show')">✕</button>
+</div>
+
+<script>
+'use strict';
+/* ═══════════════════════════════════════
+   ZAKAYO CHAT — ENGINE v2.1
+   GitHub Pages Edition
+═══════════════════════════════════════ */
+
+const ADMIN_EMAIL = 'zakayomalogo@gmail.com';
+const ADMIN_PASS  = 'Admin@Zakayo2024'; // changeable from settings later
+let deferredInstall = null;
+
+// ── STORAGE ──
+const S = {
+  g(k){ try{ return JSON.parse(localStorage.getItem('zc2_'+k)); }catch(e){ return null; } },
+  s(k,v){ try{ localStorage.setItem('zc2_'+k, JSON.stringify(v)); }catch(e){} },
+  d(k){ localStorage.removeItem('zc2_'+k); }
+};
+
+// ── STATE ──
+let CU = null; // current user
+let CR = null; // current room
+let muted = false;
+let pollTimer = null;
+let lastMsgCount = {};
+
+/* ═══════════════════════════════════════
+   DB INIT
+═══════════════════════════════════════ */
+function initDB(){
+  if(!S.g('init')){
+    S.s('users',[{
+      id:'admin001', name:'Zakayo Admin', email:ADMIN_EMAIL,
+      pw: hp(ADMIN_PASS), ava:'👑', color:'#f0c040',
+      role:'admin', ok:true, status:'online', joined: Date.now()
+    }]);
+    S.s('rooms',[
+      {id:'r1',ico:'🌍',name:'Jumla',       desc:'Mazungumzo ya kawaida kwa wote', locked:true},
+      {id:'r2',ico:'💡',name:'Mawazo',      desc:'Shiriki mawazo na mbinu mpya'},
+      {id:'r3',ico:'🎵',name:'Burudani',    desc:'Muziki, michezo na starehe'},
+      {id:'r4',ico:'💼',name:'Biashara',    desc:'Mazungumzo ya kazi na biashara'},
+      {id:'r5',ico:'📣',name:'Matangazo',   desc:'Habari rasmi kutoka kwa admin', locked:true},
+    ]);
+    S.s('msgs',{});
+    S.s('init',true);
+  }
+}
+
+function hp(s){ let h=5381; for(let i=0;i<s.length;i++){h=((h<<5)+h)+s.charCodeAt(i);h|=0;} return (h>>>0).toString(36); }
+
+/* ═══════════════════════════════════════
+   AUTH
+═══════════════════════════════════════ */
+function showTab(t){
+  const li = t==='login';
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===(li?0:1)));
+  id('fLogin').style.display = li?'block':'none';
+  id('fReg').style.display   = li?'none':'block';
+  id('lErr').textContent=''; id('rErr').textContent='';
+}
+
+function doLogin(){
+  const email = id('lEmail').value.trim().toLowerCase();
+  const pw    = id('lPass').value;
+  const err   = id('lErr');
+  err.textContent='';
+  if(!email||!pw){ err.textContent='Jaza sehemu zote'; return; }
+  const users = S.g('users')||[];
+  const u = users.find(x=>x.email===email && x.pw===hp(pw));
+  if(!u){ err.textContent='Barua pepe au nywila si sahihi ❌'; return; }
+  u.status='online';
+  S.s('users', users.map(x=>x.id===u.id?u:x));
+  S.s('sess', u.id);
+  CU = u;
+  u.ok ? enterApp() : showWait();
+}
+
+function doRegister(){
+  const name  = id('rName').value.trim();
+  const email = id('rEmail').value.trim().toLowerCase();
+  const pw    = id('rPass').value;
+  const pw2   = id('rPass2').value;
+  const err   = id('rErr');
+  err.textContent='';
+  if(!name||!email||!pw||!pw2){ err.textContent='Jaza sehemu zote ✋'; return; }
+  if(pw!==pw2){ err.textContent='Nywila hazifanani ❌'; return; }
+  if(pw.length<6){ err.textContent='Nywila angalau herufi 6 🔒'; return; }
+  if(!/\S+@\S+\.\S+/.test(email)){ err.textContent='Barua pepe si sahihi ❌'; return; }
+  const users = S.g('users')||[];
+  if(users.find(x=>x.email===email)){ err.textContent='Barua pepe tayari ipo 📧'; return; }
+  const colors = ['#a855f7','#60a5fa','#22d3a0','#f87171','#fb923c','#facc15','#34d399','#e879f9'];
+  const avas   = ['😊','🌟','🎯','🔥','💎','🦋','🌺','⚡','🎪','🌈'];
+  const isAdmin = email===ADMIN_EMAIL;
+  const nu = {
+    id: 'u'+Date.now(),
+    name, email, pw: hp(pw),
+    ava: avas[Math.floor(Math.random()*avas.length)],
+    color: colors[Math.floor(Math.random()*colors.length)],
+    role: isAdmin?'admin':'member',
+    ok: isAdmin, status:'offline',
+    joined: Date.now()
+  };
+  users.push(nu);
+  S.s('users',users);
+  S.s('sess',nu.id);
+  CU = nu;
+  if(!isAdmin) postSysMsg('r5', `📬 Mtumiaji mpya anataka kujiunga: **${nu.name}** (${nu.email})`);
+  nu.ok ? enterApp() : showWait();
+}
+
+function showWait(){
+  screens('waitScreen');
+}
+
+function doLogout(){
+  if(CU){ const us=S.g('users')||[]; S.s('users',us.map(u=>u.id===CU.id?{...u,status:'offline'}:u)); }
+  S.d('sess'); CU=null; CR=null;
+  clearInterval(pollTimer);
+  id('lEmail').value=''; id('lPass').value=''; id('lErr').textContent='';
+  screens('authScreen');
+}
+
+/* ═══════════════════════════════════════
+   ENTER APP
+═══════════════════════════════════════ */
+function enterApp(){
+  screens('appScreen');
+  renderSB();
+  id('adminFab').style.display = CU.role==='admin' ? 'flex' : 'none';
+  clearInterval(pollTimer);
+  pollTimer = setInterval(poll,2000);
+  notify('👋','Karibu!',`Habari ${CU.name}! Umeingia vizuri.`,'green');
+  askNotifPerm();
+}
+
+function renderSB(){
+  const av = id('myAva');
+  av.textContent = CU.ava;
+  av.style.background = CU.color;
+  id('myName').textContent = CU.name;
+  const roleEl = id('myRole');
+  roleEl.textContent = CU.role==='admin'?'👑 Admin':'Mwanachama';
+  roleEl.className = 'uc-role '+(CU.role==='admin'?'role-admin':'role-member');
+  renderRooms();
+}
+
+/* ═══════════════════════════════════════
+   ROOMS
+═══════════════════════════════════════ */
+function renderRooms(filter=''){
+  const rooms = (S.g('rooms')||[]).filter(r=>!filter||r.name.toLowerCase().includes(filter.toLowerCase()));
+  const msgs  = S.g('msgs')||{};
+  id('roomList').innerHTML = rooms.map(r=>{
+    const rm  = msgs[r.id]||[];
+    const last = rm.filter(m=>!m.sys).slice(-1)[0];
+    const prev = last ? (last.txt.replace(/\*\*/g,'').substring(0,30)+(last.txt.length>30?'…':'')) : 'Bado hakuna ujumbe';
+    const unread = rm.filter(m=>!m.read && m.uid!==CU.id).length;
+    const isAct = CR && CR.id===r.id;
+    return `<div class="ri${isAct?' active':''}" onclick="openRoom('${r.id}')">
+      <div class="ri-icon">${r.ico}</div>
+      <div class="ri-info">
+        <div class="ri-name">${r.name}</div>
+        <div class="ri-prev">${prev}</div>
+      </div>
+      ${unread>0?`<div class="unread">${unread}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function filterRooms(v){ renderRooms(v); }
+
+/* ═══════════════════════════════════════
+   OPEN ROOM & MESSAGES
+═══════════════════════════════════════ */
+function openRoom(rid){
+  const rooms = S.g('rooms')||[];
+  CR = rooms.find(r=>r.id===rid);
+  if(!CR) return;
+  id('sidebar').classList.remove('open');
+  id('welcome').style.display='none';
+  id('msgs').style.display='flex';
+  id('inputArea').style.display='block';
+  id('chIcon').textContent = CR.ico;
+  id('chName').textContent = CR.name;
+  const users = S.g('users')||[];
+  id('chSub').textContent = `${users.filter(u=>u.ok).length} wanachama · ${CR.desc}`;
+  markRead(rid);
+  renderMsgs();
+  renderRooms();
+}
+
+function markRead(rid){
+  const msgs = S.g('msgs')||{};
+  if(msgs[rid]) msgs[rid]=msgs[rid].map(m=>m.uid===CU.id?m:{...m,read:true});
+  S.s('msgs',msgs);
+}
+
+function renderMsgs(){
+  if(!CR) return;
+  const msgs  = S.g('msgs')||{};
+  const rm    = msgs[CR.id]||[];
+  const users = S.g('users')||[];
+  const el    = id('msgs');
+  const atBot = el.scrollHeight-el.scrollTop-el.clientHeight < 120;
+
+  let html='', lastDay='';
+  rm.forEach(m=>{
+    const d   = new Date(m.ts);
+    const day = d.toLocaleDateString('sw-TZ',{weekday:'long',day:'numeric',month:'long'});
+    if(day!==lastDay){ html+=`<div class="day-div"><span>${day}</span></div>`; lastDay=day; }
+    if(m.sys){ html+=`<div class="mrow sys"><div class="sys-bubble">📣 ${fmt(m.txt)}</div></div>`; return; }
+    const sender = users.find(u=>u.id===m.uid)||{name:'?',color:'#888',ava:'?'};
+    const isMe   = m.uid===CU.id;
+    const time   = d.toLocaleTimeString('sw-TZ',{hour:'2-digit',minute:'2-digit'});
+    const reacts = (m.rcts||[]).map(r=>`<div class="react" onclick="addReact('${m.id}','${r.e}')">${r.e}<span class="react-count">${r.n}</span></div>`).join('');
+    html+=`<div class="mrow ${isMe?'me':'them'}">
+      ${!isMe?`<div class="mava" style="background:${sender.color};font-size:${isEmoji(sender.ava)?'14':'11'}px">${sender.ava}</div>`:''}
+      <div class="bubble-wrap">
+        ${!isMe?`<div class="sname" style="color:${sender.color}">${sender.name}</div>`:''}
+        <div class="bubble">${fmt(m.txt)}
+          <div class="bm">
+            <span class="btime">${time}</span>
+            ${isMe?`<span class="bcheck${m.read?' seen':''}">✓✓</span>`:''}
+          </div>
+        </div>
+        ${reacts||m.rcts&&m.rcts.length?`<div class="react-bar">${reacts}<button class="react-add" onclick="quickReact('${m.id}')">+😊</button></div>`:`<button class="react-add" onclick="quickReact('${m.id}')">+ Jibu</button>`}
+      </div>
+      ${isMe?`<div class="mava" style="background:${CU.color};font-size:${isEmoji(CU.ava)?'14':'11'}px">${CU.ava}</div>`:''}
+    </div>`;
+  });
+
+  if(!rm.length) html='<div style="text-align:center;color:var(--muted);margin:auto;font-size:14px;padding:40px">Hakuna ujumbe bado.<br>Anza mazungumzo! 🌟</div>';
+  el.innerHTML=html;
+  if(atBot||rm.length<=3) el.scrollTop=el.scrollHeight;
+}
+
+function fmt(t){
+  return String(t)
+    .replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g,'<em>$1</em>')
+    .replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener" style="color:var(--blue);word-break:break-all">$1</a>')
+    .replace(/\n/g,'<br>');
+}
+
+function isEmoji(s){ return /\p{Emoji}/u.test(s); }
+
+/* ═══════════════════════════════════════
+   SEND MESSAGE
+═══════════════════════════════════════ */
+function sendMsg(){
+  const inp = id('mi');
+  const txt = inp.value.trim();
+  if(!txt||!CR) return;
+  const msgs = S.g('msgs')||{};
+  if(!msgs[CR.id]) msgs[CR.id]=[];
+  msgs[CR.id].push({id:'m'+Date.now()+Math.random().toString(36).slice(2,6), uid:CU.id, txt, ts:Date.now(), read:false, rcts:[]});
+  S.s('msgs',msgs);
+  inp.value=''; inp.style.height='auto';
+  id('ep').classList.remove('open');
+  renderMsgs(); renderRooms();
+}
+
+function handleKey(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();} }
+function autoR(t){ t.style.height='auto'; t.style.height=Math.min(t.scrollHeight,120)+'px'; }
+
+/* ═══════════════════════════════════════
+   REACTIONS
+═══════════════════════════════════════ */
+function addReact(mid,emoji){
+  const msgs=S.g('msgs')||{}, rm=msgs[CR.id]||[];
+  const m=rm.find(x=>x.id===mid); if(!m) return;
+  if(!m.rcts) m.rcts=[];
+  const ex=m.rcts.find(r=>r.e===emoji);
+  if(ex) ex.n=(ex.n||1)+1; else m.rcts.push({e:emoji,n:1});
+  S.s('msgs',msgs); renderMsgs();
+}
+
+function quickReact(mid){
+  const opts=['❤️','👍','😂','🔥','😮','👏','✅','🙏'];
+  addReact(mid, opts[Math.floor(Math.random()*opts.length)]);
+}
+
+/* ═══════════════════════════════════════
+   EMOJI PICKER
+═══════════════════════════════════════ */
+const EMOJIS='😀😁😂🤣😊😍🥰😎🤩😋😏🤗😔😢😭😤🥳🎉🔥❤️💯✨💎🌟👑🙏💪👍🤝🌍🎵🎶🚀💡🌺🦋💬📱💻🎁🍕☕🎯💰🏆🌈⚡🎪🎭🦁🐯🌙⭐🎊🥂🍾🎸🎹'.split('');
+function buildEP(){
+  id('ep').innerHTML=EMOJIS.map(e=>`<button class="ep-btn" onclick="insertE('${e}')">${e}</button>`).join('');
+}
+function toggleEmoji(){ id('ep').classList.toggle('open'); }
+function insertE(e){ const i=id('mi'); i.value+=e; i.focus(); id('ep').classList.remove('open'); }
+document.addEventListener('click',e=>{ if(!e.target.closest('.ia-small')&&!e.target.closest('.ep')) id('ep').classList.remove('open'); });
+
+/* ═══════════════════════════════════════
+   POLL (simulate live updates)
+═══════════════════════════════════════ */
+function poll(){
+  if(CR) renderMsgs();
+  // Check for new messages in other rooms & notify
+  const msgs=S.g('msgs')||{};
+  Object.keys(msgs).forEach(rid=>{
+    if(CR&&rid===CR.id) return;
+    const rm=msgs[rid]||[];
+    const prev=lastMsgCount[rid]||0;
+    const news=rm.filter(m=>!m.read&&m.uid!==CU.id);
+    if(news.length>prev){
+      const m=news[news.length-1];
+      const rooms=S.g('rooms')||[];
+      const room=rooms.find(r=>r.id===rid);
+      const users=S.g('users')||[];
+      const sender=users.find(u=>u.id===m.uid);
+      if(room&&sender&&!m.sys){
+        notify('💬',room.name,`${sender.name}: ${m.txt.substring(0,40)}${m.txt.length>40?'…':''}`);
+      }
+    }
+    lastMsgCount[rid]=news.length;
+  });
+  renderRooms();
+}
+
+/* ═══════════════════════════════════════
+   NOTIFICATIONS
+═══════════════════════════════════════ */
+function notify(icon,title,text,type=''){
+  if(muted) return;
+  const c=id('nc'), n=document.createElement('div');
+  n.className='notif'+(type?' n-'+type:'');
+  n.innerHTML=`<div class="n-icon">${icon}</div>
+    <div class="n-body"><div class="n-title">${title}</div><div class="n-text">${text}</div></div>
+    <button class="n-close" onclick="closeN(this.parentElement)">✕</button>`;
+  c.appendChild(n);
+  if('Notification' in window && Notification.permission==='granted'){
+    new Notification('Zakayo Chat — '+title,{body:text,icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%237c3aed"/><text y=".9em" font-size="75" x="12">💬</text></svg>'});
+  }
+  setTimeout(()=>closeN(n),5000);
+}
+function closeN(n){ if(!n||!n.parentElement) return; n.classList.add('out'); setTimeout(()=>n.remove(),280); }
+function toggleMute(){ muted=!muted; id('muteIco').textContent=muted?'🔕':'🔔'; notify(muted?'🔕':'🔔','Arifa',muted?'Arifa zimezimwa':'Arifa zimewashwa'); }
+function askNotifPerm(){ if('Notification' in window && Notification.permission==='default') Notification.requestPermission(); }
+
+/* ═══════════════════════════════════════
+   ADMIN PANEL
+═══════════════════════════════════════ */
+function openAdmin(){
+  if(CU.role!=='admin'){ notify('🚫','Ruhusa Imekatazwa','Huna mamlaka ya admin','red'); return; }
+  id('adminPanel').classList.add('open');
+  aTab('overview');
+}
+function closeAdmin(){ id('adminPanel').classList.remove('open'); }
+
+function aTab(t){
+  const tabs=['overview','users','pending','rooms','broadcast','settings'];
+  document.querySelectorAll('.atab').forEach((el,i)=>el.classList.toggle('active',tabs[i]===t));
+  document.querySelectorAll('.asec').forEach(s=>s.classList.remove('active'));
+  id('as-'+t).classList.add('active');
+  if(t==='overview')  renderStats();
+  if(t==='users')     renderUsers();
+  if(t==='pending')   renderPending();
+  if(t==='rooms')     renderRoomMgr();
+}
+
+function renderStats(){
+  const users=S.g('users')||[], msgs=S.g('msgs')||{}, rooms=S.g('rooms')||[];
+  const total=Object.values(msgs).reduce((s,a)=>s+a.length,0);
+  const online=users.filter(u=>u.status==='online').length;
+  id('statGrid').innerHTML=[
+    ['var(--gold)',  users.filter(u=>u.ok).length,    'Wanachama Waliokubaliwa'],
+    ['var(--gold2)', users.filter(u=>!u.ok).length,   'Wanaosubiri Idhini'],
+    ['var(--green)', total,                            'Jumla ya Ujumbe Wote'],
+    ['var(--accent)',rooms.length,                     'Vyumba vya Gumzo'],
+    ['var(--blue)',  online,                           'Watandaoni Sasa Hivi'],
+    ['var(--orange)',users.length,                     'Watumiaji Wote'],
+  ].map(([c,n,l])=>`<div class="sc"><div class="sc-num" style="color:${c}">${n}</div><div class="sc-lbl">${l}</div></div>`).join('');
+}
+
+function renderUsers(){
+  const users=S.g('users')||[];
+  id('userCount').textContent=`Jumla: ${users.length}`;
+  document.querySelector('#utbl tbody').innerHTML=users.map(u=>`
+    <tr>
+      <td><div style="display:flex;gap:8px;align-items:center">
+        <div style="width:28px;height:28px;border-radius:50%;background:${u.color};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">${u.ava}</div>
+        <span style="font-weight:600">${u.name}</span></div></td>
+      <td style="color:var(--muted)">${u.email}</td>
+      <td><span class="spill ${u.ok?'sp-g':'sp-y'}">${u.ok?'✓ Amekubaliwa':'⏳ Inasubiri'}</span></td>
+      <td><span class="spill ${u.role==='admin'?'sp-y':'sp-g'}">${u.role==='admin'?'👑 Admin':'👤 Mwanachama'}</span></td>
+      <td>
+        ${u.id!=='admin001'?`
+          ${!u.ok?`<button class="btn btn-sm btn-primary" onclick="approveU('${u.id}')" style="margin-right:4px">✓</button>`:''}
+          <button class="btn btn-sm btn-danger" onclick="removeU('${u.id}')">✕</button>
+        `:'<span style="color:var(--gold);font-size:12px">Mkuu</span>'}
+      </td>
+    </tr>`).join('');
+}
+
+function renderPending(){
+  const pending=(S.g('users')||[]).filter(u=>!u.ok);
+  const el=id('pendingList');
+  if(!pending.length){ el.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">🎉 Hakuna wanasubiri kwa sasa!</div>'; return; }
+  el.innerHTML=pending.map(u=>`
+    <div class="pcard">
+      <div style="width:44px;height:44px;border-radius:50%;background:${u.color};display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">${u.ava}</div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:13.5px">${u.name}</div>
+        <div style="font-size:11.5px;color:var(--muted)">${u.email}</div>
+        <div style="font-size:10.5px;color:var(--muted);margin-top:2px">Alijisajili: ${new Date(u.joined).toLocaleDateString('sw-TZ')}</div>
+      </div>
+      <button class="btn btn-sm btn-primary" onclick="approveU('${u.id}');renderPending()" style="margin-right:4px">✓ Kubali</button>
+      <button class="btn btn-sm btn-danger" onclick="removeU('${u.id}');renderPending()">✕ Kataa</button>
+    </div>`).join('');
+}
+
+function approveU(uid){
+  const users=S.g('users')||[], u=users.find(x=>x.id===uid);
+  S.s('users',users.map(x=>x.id===uid?{...x,ok:true}:x));
+  if(u){ postSysMsg('r1',`🎉 Karibu! **${u.name}** amejiunga na Zakayo Chat!`); }
+  notify('✅','Imekubaliwa',`${u?u.name:'Mtumiaji'} amepewa ruhusa`,'green');
+  renderUsers(); renderStats();
+}
+
+function removeU(uid){
+  if(!confirm('Una uhakika wa kumfuta mtumiaji huyu?')) return;
+  S.s('users',(S.g('users')||[]).filter(u=>u.id!==uid));
+  notify('🗑️','Mtumiaji Amefutwa','','warn');
+  renderUsers(); renderStats();
+}
+
+function renderRoomMgr(){
+  const rooms=S.g('rooms')||[];
+  id('roomMgr').innerHTML=rooms.map(r=>`
+    <div class="rm-row">
+      <div style="font-size:24px">${r.ico}</div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:13.5px">${r.name}</div>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:2px">${r.desc}</div>
+      </div>
+      ${!r.locked?`<button class="btn btn-sm btn-danger" onclick="delRoom('${r.id}')">🗑️ Futa</button>`:'<span style="font-size:11px;color:var(--muted);padding:4px 8px;background:var(--glass);border-radius:8px">Imehifadhiwa</span>'}
+    </div>`).join('');
+}
+
+function addRoom(){
+  const ico=id('nrEmoji').value.trim()||'💬', name=id('nrName').value.trim(), desc=id('nrDesc').value.trim();
+  if(!name){ notify('⚠️','Hitilafu','Weka jina la chumba','warn'); return; }
+  const rooms=S.g('rooms')||[];
+  rooms.push({id:'r'+Date.now(),ico,name,desc:desc||'Chumba kipya cha mazungumzo'});
+  S.s('rooms',rooms);
+  id('nrEmoji').value=''; id('nrName').value=''; id('nrDesc').value='';
+  renderRoomMgr(); renderRooms();
+  notify('✅','Chumba Kimeongezwa',`${ico} ${name}`,'green');
+}
+
+function delRoom(rid){
+  if(!confirm('Futa chumba hiki na ujumbe wake wote?')) return;
+  S.s('rooms',(S.g('rooms')||[]).filter(r=>r.id!==rid));
+  const msgs=S.g('msgs')||{}; delete msgs[rid]; S.s('msgs',msgs);
+  if(CR&&CR.id===rid){ CR=null; id('msgs').style.display='none'; id('inputArea').style.display='none'; id('welcome').style.display='flex'; }
+  renderRoomMgr(); renderRooms();
+}
+
+function doBroadcast(){
+  const txt=id('bcastMsg').value.trim();
+  if(!txt){ notify('⚠️','Hakuna ujumbe','Andika ujumbe wa tangazo','warn'); return; }
+  const msgs=S.g('msgs')||{}, rooms=S.g('rooms')||[];
+  rooms.forEach(r=>{ if(!msgs[r.id]) msgs[r.id]=[]; msgs[r.id].push({id:'m'+Date.now()+r.id,uid:'admin001',txt:`📢 TANGAZO: ${txt}`,ts:Date.now(),read:false,rcts:[],sys:true}); });
+  S.s('msgs',msgs);
+  id('bcastMsg').value='';
+  notify('📢','Tangazo Limetumwa','Ujumbe umewafikia wote!','green');
+  if(CR) renderMsgs();
+}
+
+function clearAllMsgs(){ if(!confirm('Futa ujumbe WOTE wa vyumba vyote?')) return; S.s('msgs',{}); if(CR) renderMsgs(); notify('🗑️','Imefutwa','Ujumbe wote umefutwa','warn'); }
+function exportData(){
+  const data={users:S.g('users'),rooms:S.g('rooms'),msgs:S.g('msgs'),exported:new Date().toISOString()};
+  const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='ZakayoChat_backup.json'; a.click();
+}
+function fullReset(){ if(!confirm('RESET KAMILI? Kila kitu kitafutwa!')) return; localStorage.clear(); location.reload(); }
+
+/* ═══════════════════════════════════════
+   PROFILE
+═══════════════════════════════════════ */
+function openProfile(){
+  id('profContent').innerHTML=`
+    <div style="display:flex;justify-content:flex-end;margin-bottom:-8px"><button class="btn btn-outline btn-sm" onclick="document.getElementById('profileModal').classList.remove('open')">✕</button></div>
+    <div class="prof-top">
+      <div class="prof-ava" style="background:${CU.color}">${CU.ava}</div>
+      <div class="prof-name">${CU.name}</div>
+      <div class="prof-email">${CU.email}</div>
+      <div class="prof-badge">${CU.role==='admin'?'👑 Admin':'👤 Mwanachama'}</div>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:5px">Badilisha Nywila</label>
+      <div style="display:flex;gap:8px">
+        <input type="password" id="npw" placeholder="Nywila mpya (min. 6)" style="flex:1;padding:9px 12px;background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none">
+        <button class="btn btn-primary btn-sm" onclick="changePw()">Hifadhi</button>
+      </div>
+    </div>
+    <div class="inv-box">
+      <h4>🔗 Alika Marafiki</h4>
+      <div class="inv-link" id="iLink" onclick="copyLink()" title="Bonyeza kunakili">${location.href}</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-outline btn-sm" onclick="copyLink()" style="flex:1;padding:9px">📋 Nakili</button>
+        <button class="wa-btn" onclick="shareWA()" style="flex:1">📲 WhatsApp</button>
+      </div>
+    </div>`;
+  id('profileModal').classList.add('open');
+}
+
+function changePw(){
+  const pw=id('npw')?.value; if(!pw||pw.length<6){ notify('⚠️','Nywila fupi','Angalau herufi 6','warn'); return; }
+  const users=S.g('users')||[];
+  S.s('users',users.map(u=>u.id===CU.id?{...u,pw:hp(pw)}:u));
+  CU={...CU,pw:hp(pw)}; id('npw').value='';
+  notify('✅','Imehifadhiwa','Nywila imebadilishwa','green');
+}
+
+/* ═══════════════════════════════════════
+   INVITE
+═══════════════════════════════════════ */
+function openInviteModal(){
+  id('invLinkTxt').textContent = location.href;
+  id('inviteModal').style.display='flex';
+}
+function closeInvite(){ id('inviteModal').style.display='none'; }
+
+function copyLink(){
+  navigator.clipboard.writeText(location.href).then(()=>notify('📋','Imenakiliwa','Link imenakiliwa kwenye ubao wa kunakili','green')).catch(()=>{
+    const t=document.createElement('textarea'); t.value=location.href; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove();
+    notify('📋','Imenakiliwa','Link imenakiliwa','green');
+  });
+}
+
+function shareWA(){
+  const msg=encodeURIComponent(`🌟 Jiunge na *Zakayo Chat*!\n\nApp ya mazungumzo ya kweli, salama na ya haraka kwa marafiki na wadau.\n\n💬 Bonyeza hapa kujisajili:\n${location.href}\n\n_Zakayo Chat — Mazungumzo Ya Kweli_ ✨`);
+  window.open('https://wa.me/?text='+msg,'_blank');
+}
+
+/* ═══════════════════════════════════════
+   MISC
+═══════════════════════════════════════ */
+function postSysMsg(rid,txt){
+  const msgs=S.g('msgs')||{};
+  if(!msgs[rid]) msgs[rid]=[];
+  msgs[rid].push({id:'m'+Date.now(),uid:'admin001',txt,ts:Date.now(),read:false,rcts:[],sys:true});
+  S.s('msgs',msgs);
+}
+
+function simulateAttach(){ notify('📎','Faili','Kipengele cha faili kitapatikana hivi karibuni 🚧','warn'); }
+
+function toggleSearch(){ id('sidebar').classList.toggle('open'); document.querySelector('.sb-search input').focus(); }
+function closeSidebar(){ id('sidebar').classList.remove('open'); }
+
+function downloadApp(){
+  const html=document.documentElement.outerHTML;
+  const b=new Blob([html],{type:'text/html'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='ZakayoChat.html'; a.click();
+  notify('⬇️','Inapakuliwa','ZakayoChat.html imehifadhiwa kwenye simu/kompyuta yako','green');
+}
+
+function id(x){ return document.getElementById(x); }
+function screens(s){ document.querySelectorAll('.screen').forEach(el=>{ el.classList.remove('active'); el.style.display=''; }); const el=id(s); el.classList.add('active'); if(s==='appScreen') el.style.display='flex'; }
+
+/* ── SWIPE GESTURES (mobile) ── */
+let tx=0;
+document.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(dx>65&&tx<45) id('sidebar').classList.add('open');
+  if(dx<-65)       id('sidebar').classList.remove('open');
+},{passive:true});
+
+/* ── PWA INSTALL ── */
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault(); deferredInstall=e;
+  setTimeout(()=>id('installBanner').classList.add('show'),3000);
+});
+function installPWA(){
+  id('installBanner').classList.remove('show');
+  if(deferredInstall){ deferredInstall.prompt(); deferredInstall.userChoice.then(r=>{ if(r.outcome==='accepted') notify('✅','Imewekwa','Zakayo Chat imesakinishwa kwenye simu yako!','green'); deferredInstall=null; }); }
+}
+window.addEventListener('appinstalled',()=>notify('✅','Imesakinishwa','Zakayo Chat ipo kwenye skrini yako ya nyumbani! 🎉','green'));
+
+/* ── SERVICE WORKER ── */
+if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
+
+/* ── BOOT ── */
+window.addEventListener('load',()=>{
+  initDB(); buildEP();
+  const sid=S.g('sess');
+  if(sid){
+    const u=(S.g('users')||[]).find(x=>x.id===sid);
+    if(u){ CU=u; u.ok?enterApp():showWait(); return; }
+  }
+  screens('authScreen');
+});
+</script>
+</body>
+</html>
