@@ -9,7 +9,8 @@
 <meta name="apple-mobile-web-app-title" content="Zakayo Chat">
 <link rel="manifest" href="manifest.json">
 <title>Zakayo Chat 💬</title>
-<style>@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap");</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap" media="print" onload="this.media='all'">
 <style>
 :root{
   --bg:#06050f;--p1:#0f0d20;--p2:#151229;--p3:#1c1935;
@@ -313,11 +314,7 @@ strong{font-weight:800}em{font-style:italic}
 <body>
 
 <!-- LOADER -->
-<div id="ldr" style="transition:none">
-  <div style="font-size:52px;animation:wb 2s ease infinite">💬</div>
-  <div class="spin"></div>
-  <div style="font-size:14px;color:var(--mt);font-weight:600" id="ldrTxt">Zakayo Chat inaanza...</div>
-</div>
+
 
 <!-- AUTH -->
 <div class="sc" id="sAuth">
@@ -606,7 +603,7 @@ async function loadSession(){
 function clearSession(){idToken=null;uid=null;localStorage.removeItem('zc_tok');}
 
 // ══ BOOT ══
-window.addEventListener('load',()=>{
+document.addEventListener('DOMContentLoaded',()=>{
   buildEP();
   // Onyesha Auth MARA MOJA — hakuna kusubiri
   hideL();
@@ -634,7 +631,7 @@ async function bootWithSession(){
   }catch(e){clearSession();}
 }
 
-function hideL(){const l=G('ldr');if(l){l.remove();}}
+function hideL(){}
 function scr(s){document.querySelectorAll('.sc').forEach(e=>{e.classList.remove('on');e.style.display='';});const e=G(s);e.classList.add('on');if(s==='sApp')e.style.display='flex';}
 
 async function initRooms(){
@@ -707,7 +704,6 @@ async function chkAppr(){
 // ══ ENTER APP ══
 async function goApp(){
   // Onyesha app HARAKA — data itapakia nyuma
-  hideL();
   scr('sApp');
   const av=G('myAva');av.textContent=CU.ava||'😊';av.style.background=CU.color||'#9333ea';
   G('myName').textContent=CU.name;
