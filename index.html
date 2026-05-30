@@ -291,6 +291,33 @@ html,body{height:100%;overflow:hidden;position:fixed;inset:0;background:var(--bg
   .ch{padding:0 10px}
 }
 @media(min-width:661px){.sb{transform:none!important}}
+
+/* ─── PROFILE PICTURE ─── */
+.av img,.ul-av img,.mav img,.pavabig img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.av-wrap{position:relative;cursor:pointer}
+.av-edit{position:absolute;bottom:-2px;right:-2px;width:18px;height:18px;background:var(--vi);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;border:2px solid var(--p1)}
+.photo-upload{display:none}
+.prof-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--vi);box-shadow:0 0 0 5px rgba(168,85,247,.1)}
+
+/* ─── STATUS MESSAGE ─── */
+.status-badge{display:inline-block;background:rgba(255,255,255,.07);border:1px solid var(--bdr);border-radius:50px;padding:3px 11px;font-size:11px;color:var(--tx2);margin-top:5px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ─── ATTACHMENTS ─── */
+.msg-img{max-width:240px;border-radius:12px;cursor:pointer;display:block;margin-top:5px;border:1px solid rgba(255,255,255,.1)}
+.msg-video{max-width:260px;border-radius:12px;display:block;margin-top:5px;max-height:200px}
+.msg-file{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid var(--bdr);border-radius:11px;padding:9px 12px;margin-top:5px;cursor:pointer;transition:background .15s;text-decoration:none;color:var(--tx)}
+.msg-file:hover{background:rgba(255,255,255,.13)}
+.msg-file .fi{font-size:22px}
+.msg-file .fn{font-size:12px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px}
+.msg-file .fs{font-size:10px;color:var(--mt)}
+.upload-prog{height:3px;background:var(--vi);border-radius:3px;transition:width .3s;margin-top:4px}
+
+/* ─── IMAGE LIGHTBOX ─── */
+#lightbox{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;cursor:zoom-out}
+#lightbox.on{display:flex}
+#lightbox img{max-width:95vw;max-height:92vh;border-radius:10px;object-fit:contain}
+#lightbox video{max-width:95vw;max-height:92vh;border-radius:10px}
+
 a{color:var(--bl);word-break:break-all;text-decoration:none}
 strong{font-weight:800}em{font-style:italic}
 ::selection{background:rgba(168,85,247,.3)}
@@ -420,6 +447,7 @@ strong{font-weight:800}em{font-style:italic}
         <div class="ep" id="ep"></div>
         <div class="inpr">
           <div class="ism" onclick="togEp()">😊</div>
+          <div class="ism" onclick="G('attachInput').click()" title="Ambatanisha faili">📎</div>
           <div class="iw2" id="iWrap"><textarea class="mi" id="mi" rows="1" placeholder="Andika ujumbe..." oninput="aR(this)" onkeydown="hKey(event)"></textarea></div>
           <button class="sndbtn" id="sBtn" onclick="sndMsg()">➤</button>
         </div>
@@ -488,6 +516,9 @@ strong{font-weight:800}em{font-style:italic}
 </div>
 
 <div class="nc" id="nc"></div>
+<div id="lightbox" onclick="G('lightbox').classList.remove('on')"><div id="lbContent"></div></div>
+<input type="file" id="attachInput" accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.zip,.txt" style="display:none" onchange="handleAttach(this)">
+<input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhoto(this)">
 <div class="instb" id="instb">
   <span style="font-size:32px">📲</span>
   <p>Weka Zakayo Chat kwenye simu yako!<span>Kama app ya kawaida — bila App Store</span></p>
@@ -510,6 +541,7 @@ const KEY = 'AIzaSyDgsot_nMDcrRTiY8KSi5X2LGxZn_2C1gg';
 const DB  = 'https://zakayo-chat-default-rtdb.firebaseio.com';
 const AU  = 'https://identitytoolkit.googleapis.com/v1/accounts';
 const ADM = 'zakayomalogo@gmail.com';
+const BUCKET = 'zakayo-chat.firebasestorage.app';
 
 const ROOMS=[{id:'r1',ico:'🌍',name:'Jumla',desc:'Mazungumzo ya kawaida kwa wote',lock:true},{id:'r2',ico:'💡',name:'Mawazo',desc:'Shiriki mawazo na mbinu mpya'},{id:'r3',ico:'🎵',name:'Burudani',desc:'Muziki, michezo na starehe'},{id:'r4',ico:'💼',name:'Biashara',desc:'Mazungumzo ya kazi na biashara'},{id:'r5',ico:'📣',name:'Matangazo',desc:'Habari rasmi kutoka kwa admin',lock:true},{id:'r6',ico:'🏋️',name:'Afya',desc:'Mazoezi, lishe na ustawi wa mwili'},{id:'r7',ico:'📚',name:'Elimu',desc:'Maarifa na ujifunzaji'}];
 const AVAS=['😊','🌟','🎯','🔥','💎','🦋','🌺','⚡','🎪','🌈','🦁','🐯','🦊','🐺','🎭','🌙','🐉','🦅','🌊','🎸'];
@@ -618,7 +650,9 @@ async function initRooms(){const ex=await dbG('rooms');if(!ex||ex.error){const o
 async function goApp(){
   scr('sApp');
   dbP('users/'+uid,{status:'online'}).catch(()=>{});
-  const av=G('myAv');av.textContent=CU.ava||'😊';av.style.background=CU.color||'#9333ea';
+  const av=G('myAv');
+  if(CU.photo){av.innerHTML='<img src="'+CU.photo+'" style="width:100%;height:100%;border-radius:50%;object-fit:cover"><div class="od"></div>';}
+  else{av.textContent=CU.ava||'😊';av.style.background=CU.color||'#9333ea';}
   G('myNm').textContent=CU.name;
   const rt=G('myRt');rt.textContent=CU.role==='admin'?'👑 Admin':'Mwanachama';rt.className='rt '+(CU.role==='admin'?'rta':'rtm');
   G('admFb').style.display=CU.role==='admin'?'flex':'none';
@@ -667,10 +701,29 @@ async function loadUsers(f=''){
     const b=G('onlB');if(b)b.textContent=onl+'●';
   }catch{}
 }
-function renderUsers(f=''){
-  const fl=f?users.filter(u=>u.name.toLowerCase().includes(f.toLowerCase())):users;
-  G('pList').innerHTML=fl.map(u=>`<div class="ul-item" onclick="startDM('${u.uid}')"><div class="ul-av" style="background:${u.color}">${u.ava}<div class="ul-od" style="background:${u.status==='online'?'var(--gr)':'var(--mt)'}"></div></div><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:700">${u.name}</div><div style="font-size:10.5px;color:var(--mt)">${u.status==='online'?'● Mtandaoni':'○ Nje ya mtandao'}</div></div><button class="btn bteal bsm" style="padding:6px 11px;font-size:11px">💬 DM</button></div>`).join('')||'<div style="text-align:center;padding:28px;color:var(--mt)">Hakuna wanachama wengine bado</div>';
+function renderUsers(f){
+  f=f||'';
+  var fl=f?users.filter(function(u){return u.name.toLowerCase().includes(f.toLowerCase());}):users;
+  if(!fl.length){G('pList').innerHTML='<div style="text-align:center;padding:28px;color:var(--mt)">Hakuna wanachama wengine bado</div>';return;}
+  var html='';
+  fl.forEach(function(u){
+    var avHtml=u.photo?'<img src="'+u.photo+'" style="width:100%;height:100%;border-radius:50%;object-fit:cover">':u.ava;
+    var avBg=u.photo?'transparent':u.color;
+    var st=u.statusMsg||'';
+    var onl=u.status==='online';
+    html+='<div class="ul-item" data-uid="'+u.uid+'" onclick="startDM(this.dataset.uid)">'
+      +'<div class="ul-av" style="background:'+avBg+'">'+avHtml
+      +'<div class="ul-od" style="background:'+(onl?'var(--gr)':'var(--mt)')+'"></div></div>'
+      +'<div style="flex:1;min-width:0">'
+      +'<div style="font-size:13px;font-weight:700">'+u.name+'</div>'
+      +'<div style="font-size:10.5px;color:var(--mt)">'+(st?'● '+st:(onl?'● Mtandaoni':'○ Nje ya mtandao'))+'</div>'
+      +'</div>'
+      +'<button class="btn bteal bsm" style="padding:6px 11px;font-size:11px" data-uid2="'+u.uid+'" onclick="event.stopPropagation();startDM(this.dataset.uid2)">💬 DM</button>'
+      +'</div>';
+  });
+  G('pList').innerHTML=html;
 }
+
 function fltP(v){renderUsers(v);}
 
 // ── OPEN ROOM ──
@@ -703,7 +756,7 @@ async function fetchR(rid){
       const rcts=m.rcts?Object.entries(m.rcts).map(([e,n])=>'<div class="re" onclick="addR(\''+rid+'\',\''+m._k+'\',\''+e+'\')">'+e+'<span class="rc">'+n+'</span></div>').join(''):'';
       h+='<div class="mr '+(me?'me':'th')+'"><'+(!me?'div class="mav" style="background:'+col+'">'+(av)+'</div':'')+'><div class="bw">'
         +(!me?'<div class="sn" style="color:'+col+'">'+nm+'</div>':'')
-        +'<div class="bubble">'+fmt(m.txt)+'<div class="bmeta"><span class="bt">'+t+'</span>'+(me?'<span class="bc">✓✓</span>':'')+'</div></div>'
+        +'<div class="bubble">'+fmt(m.txt)+(m.fileUrl?renderFile(m):'')+'<div class="bmeta"><span class="bt">'+t+'</span>'+(me?'<span class="bc">✓✓</span>':'')+'</div></div>'
         +(rcts?'<div class="rbar">'+rcts+'<button class="radd" onclick="qR(\''+rid+'\',\''+m._k+'\')">+😊</button></div>':'<button class="radd" onclick="qR(\''+rid+'\',\''+m._k+'\')">+ Jibu</button>')
         +'</div>'+(me?'<div class="mav" style="background:'+(CU.color||'#9333ea')+'">'+(CU.ava||'😊')+'</div>':'')+'</div>';
     });
@@ -798,6 +851,17 @@ function hKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sndMsg();}}
 function aR(t){t.style.height='auto';t.style.height=Math.min(t.scrollHeight,110)+'px';}
 function fmt(t){return String(t||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>').replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>').replace(/\n/g,'<br>');}
 
+function renderFile(m){
+  if(!m.fileUrl) return '';
+  var t=m.fileType||'';
+  var url=m.fileUrl;
+  if(t.startsWith('image/'))
+    return '<img src="'+url+'" class="msg-img" data-url="'+url+'" data-type="'+t+'" onclick="openLightbox(this.dataset.url,this.dataset.type)" loading="lazy">';
+  if(t.startsWith('video/'))
+    return '<video src="'+url+'" class="msg-video" controls preload="metadata"></video>';
+  return '<a href="'+url+'" target="_blank" class="msg-file"><span class="fi">📎</span><div><div class="fn">'+(m.fileName||'Faili')+'</div><div class="fs">'+(m.fileSize||'')+'</div></div></a>';
+}
+
 // ── REACTIONS ──
 async function addR(rid,key,e){const c=await dbG('messages/'+rid+'/'+key+'/rcts/'+e);await dbS('messages/'+rid+'/'+key+'/rcts/'+e,(c&&!c.error?c:0)+1);fetchR(rid);}
 function qR(rid,key){const o=['❤️','👍','😂','🔥','😮','👏','✅','🙏'];addR(rid,key,o[~~(Math.random()*o.length)]);}
@@ -811,10 +875,28 @@ document.addEventListener('click',e=>{if(!e.target.closest('.ism')&&!e.target.cl
 // ── USERS MODAL ──
 function openUModal(){renderUPick('');G('uM').classList.add('on');}
 function fltU(v){renderUPick(v);}
-function renderUPick(f=''){
-  const fl=f?users.filter(u=>u.name.toLowerCase().includes(f.toLowerCase())):users;
-  G('uPickList').innerHTML=fl.map(u=>'<div class="ul-item" onclick="startDM(\''+u.uid+'\')"><div class="ul-av" style="background:'+u.color+';width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;position:relative">'+u.ava+'<div class="ul-od" style="background:'+(u.status==='online'?'var(--gr)':'var(--mt)')+'"></div></div><div style="flex:1;min-width:0"><div style="font-weight:700;font-size:13.5px">'+u.name+'</div><div style="font-size:11px;color:var(--mt)">'+(u.status==='online'?'● Mtandaoni':'○ Nje ya mtandao')+'</div></div><button class="btn bteal bsm" style="padding:7px 13px">💬 DM</button></div>').join('')||'<div style="text-align:center;padding:28px;color:var(--mt)">Hakuna wanachama wengine</div>';
+function renderUPick(f){
+  f=f||'';
+  var fl=f?users.filter(function(u){return u.name.toLowerCase().includes(f.toLowerCase());}):users;
+  if(!fl.length){G('uPickList').innerHTML='<div style="text-align:center;padding:28px;color:var(--mt)">Hakuna wanachama wengine</div>';return;}
+  var html='';
+  fl.forEach(function(u){
+    var avHtml=u.photo?'<img src="'+u.photo+'" style="width:100%;height:100%;border-radius:50%;object-fit:cover">':u.ava;
+    var avBg=u.photo?'transparent':u.color;
+    var onl=u.status==='online';
+    html+='<div class="ul-item" data-uid="'+u.uid+'" onclick="startDM(this.dataset.uid)">'
+      +'<div style="width:38px;height:38px;border-radius:50%;background:'+avBg+';display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;position:relative">'+avHtml
+      +'<div class="ul-od" style="background:'+(onl?'var(--gr)':'var(--mt)')+'"></div></div>'
+      +'<div style="flex:1;min-width:0">'
+      +'<div style="font-weight:700;font-size:13.5px">'+u.name+'</div>'
+      +'<div style="font-size:11px;color:var(--mt)">'+(onl?'● Mtandaoni':'○ Nje ya mtandao')+'</div>'
+      +'</div>'
+      +'<button class="btn bteal bsm" style="padding:7px 13px" data-uid2="'+u.uid+'" onclick="event.stopPropagation();startDM(this.dataset.uid2)">💬 DM</button>'
+      +'</div>';
+  });
+  G('uPickList').innerHTML=html;
 }
+
 
 // ── ADMIN ──
 function openAdm(){if(CU.role!=='admin'){ntf('🚫','Ruhusa Imekatazwa','Huna mamlaka','nr');return;}G('admP').classList.add('on');aTab('ov');}
@@ -831,13 +913,159 @@ async function doBc(){const txt=G('bcmsg').value.trim();if(!txt){ntf('⚠️','H
 async function chkPnd(){if(!CU||CU.role!=='admin')return;try{const d=await dbG('pending');const n=(d&&!d.error)?Object.keys(d).length:0;const b=G('pndBdg');if(b){b.style.display=n>0?'inline-flex':'none';b.textContent=n+' wanaosubiri';}}catch{}}
 
 // ── PROFILE ──
-function openProf(){G('pmcont').innerHTML='<div style="display:flex;justify-content:flex-end;margin-bottom:-5px"><button class="btn bo bsm" onclick="G(\'profM\').classList.remove(\'on\')">✕</button></div><div style="text-align:center;margin-bottom:18px"><div class="pavabig" style="background:'+CU.color+'">'+CU.ava+'</div><div style="font-size:20px;font-weight:800">'+CU.name+'</div><div style="font-size:12px;color:var(--mt);margin-top:3px">'+CU.email+'</div><div class="pbadge">'+(CU.role==='admin'?'👑 Admin':'👤 Mwanachama')+'</div></div><div class="fg"><label>Jina Jipya</label><div class="iw"><span class="ic">👤</span><input type="text" id="pn" value="'+CU.name+'"></div></div><button class="btn bp" onclick="savProf()" style="margin-bottom:15px">💾 Hifadhi</button><div class="invbox"><h4>🔗 Alika Marafiki</h4><div class="invlnk" onclick="cpLnk()">'+location.href+'</div><div style="display:flex;gap:7px"><button class="btn bo bsm" onclick="cpLnk()" style="flex:1;padding:10px">📋 Nakili</button><button class="wabtn" onclick="shaWA()" style="flex:1;font-size:13px">📲 WhatsApp</button></div></div>';G('profM').classList.add('on');}
-async function savProf(){const n=G('pn')?.value.trim();if(!n){ntf('⚠️','Hitilafu','Weka jina','nw');return;}await dbP('users/'+uid,{name:n});CU.name=n;G('myNm').textContent=n;ntf('✅','Imehifadhiwa','Jina limesasishwa','ng');G('profM').classList.remove('on');}
+function openProf(){
+  var photo = CU.photo
+    ? '<img src="'+CU.photo+'" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--vi)">'
+    : '<div style="width:80px;height:80px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;border:3px solid var(--vi);background:'+CU.color+'">'+CU.ava+'</div>';
+  var statusHtml = CU.statusMsg
+    ? '<div class="status-badge">'+CU.statusMsg+'</div>' : '';
+  var roleHtml = CU.role==='admin' ? '👑 Admin' : '👤 Mwanachama';
+  G('pmcont').innerHTML =
+    '<div style="display:flex;justify-content:flex-end;margin-bottom:-5px">'
+    +'<button class="btn bo bsm" onclick="G(\'profM\').classList.remove(\'on\')">✕</button></div>'
+    +'<div style="text-align:center;margin-bottom:18px">'
+    +'<div style="position:relative;display:inline-block;cursor:pointer" onclick="G(\'photoInput\').click()">'
+    +photo
+    +'<div style="position:absolute;bottom:2px;right:2px;width:24px;height:24px;background:var(--vi);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;border:2px solid var(--p1)">📷</div>'
+    +'</div>'
+    +'<div style="font-size:11px;color:var(--mt);margin-top:5px;cursor:pointer" onclick="G(\'photoInput\').click()">Bonyeza kubadilisha picha</div>'
+    +'<div style="font-size:20px;font-weight:800;margin-top:8px">'+CU.name+'</div>'
+    +'<div style="font-size:12px;color:var(--mt);margin-top:2px">'+CU.email+'</div>'
+    +'<div class="pbadge">'+roleHtml+'</div>'
+    +statusHtml
+    +'</div>'
+    +'<div class="fg"><label>Jina Jipya</label>'
+    +'<div class="iw"><span class="ic">👤</span>'
+    +'<input type="text" id="pn" value="'+CU.name.replace(/"/g,'&quot;')+'"></div></div>'
+    +'<div class="fg"><label>Status Yako (hiari)</label>'
+    +'<div class="iw"><span class="ic">💬</span>'
+    +'<input type="text" id="pst" placeholder="Mfano: Hai 😊 au Busy 🔴" value="'+(CU.statusMsg||'').replace(/"/g,'&quot;')+'" maxlength="60"></div></div>'
+    +'<button class="btn bp" onclick="savProf()" style="margin-bottom:15px">💾 Hifadhi Mabadiliko</button>'
+    +'<div class="invbox"><h4>🔗 Alika Marafiki</h4>'
+    +'<div class="invlnk" onclick="cpLnk()">'+location.href+'</div>'
+    +'<div style="display:flex;gap:7px">'
+    +'<button class="btn bo bsm" onclick="cpLnk()" style="flex:1;padding:10px">📋 Nakili</button>'
+    +'<button class="wabtn" onclick="shaWA()" style="flex:1;font-size:13px">📲 WhatsApp</button>'
+    +'</div></div>';
+  G('profM').classList.add('on');
+}
+async function savProf(){
+  const n=G('pn')?.value.trim(),st=G('pst')?.value.trim()||'';
+  if(!n){ntf('⚠️','Hitilafu','Weka jina','nw');return;}
+  await dbP('users/'+uid,{name:n,statusMsg:st});
+  CU.name=n;CU.statusMsg=st;
+  G('myNm').textContent=n;
+  G('myStatus').textContent='● '+(st||'Mtandaoni');
+  ntf('✅','Imehifadhiwa','Maelezo yamehifadhiwa','ng');
+  G('profM').classList.remove('on');
+}
 
 // ── INVITE ──
 function openInv(){G('invLnk').textContent=location.href;G('invM').classList.add('on');}
 function cpLnk(){navigator.clipboard.writeText(location.href).then(()=>ntf('📋','Imenakiliwa','Link imenakiliwa!','ng')).catch(()=>{const t=document.createElement('textarea');t.value=location.href;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();ntf('📋','Imenakiliwa','Link imenakiliwa!','ng');});}
 function shaWA(){window.open('https://wa.me/?text='+encodeURIComponent('🌟 Jiunge na *Zakayo Chat*!\n\n💬 App ya mazungumzo ya kweli — duniani kote, wakati halisi!\n\n👉 '+location.href+'\n\n✨ Jisajili na tuanze kuzungumza sasa hivi!'),'_blank');}
+
+
+// ── PROFILE PHOTO ──
+async function handlePhoto(input){
+  const file=input.files[0];if(!file)return;
+  if(file.size>5*1024*1024){ntf('⚠️','Picha kubwa','Chagua picha chini ya 5MB','nw');return;}
+  ntf('⏳','Inapakia...','Picha inasasishwa...','nw');
+  try{
+    // Compress image using canvas
+    const base64=await compressImg(file,120,120);
+    await dbP('users/'+uid,{photo:base64});
+    CU.photo=base64;
+    // Update avatar display
+    const av=G('myAv');
+    av.innerHTML='<img src="'+base64+'" style="width:100%;height:100%;border-radius:50%;object-fit:cover"><div class="od"></div>';
+    ntf('✅','Picha Imewekwa','Picha ya profaili imesasishwa! 🎉','ng');
+    openProf();
+  }catch(e){ntf('❌','Hitilafu','Imeshindwa kupakia picha','nr');}
+  input.value='';
+}
+
+function compressImg(file,w,h){
+  return new Promise(res=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const img=new Image();
+      img.onload=()=>{
+        const canvas=document.createElement('canvas');
+        canvas.width=w;canvas.height=h;
+        const ctx=canvas.getContext('2d');
+        // Center crop
+        const sc=Math.max(w/img.width,h/img.height);
+        const nw=img.width*sc,nh=img.height*sc;
+        ctx.drawImage(img,(w-nw)/2,(h-nh)/2,nw,nh);
+        res(canvas.toDataURL('image/jpeg',0.75));
+      };
+      img.src=e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ── FILE ATTACHMENT ──
+async function handleAttach(input){
+  const file=input.files[0];if(!file)return;
+  if(file.size>20*1024*1024){ntf('⚠️','Faili kubwa','Faili lazima iwe chini ya 20MB','nw');return;}
+  const path='chat/'+(CR?'rooms/'+CR.id:'dms/'+DM)+'/'+Date.now()+'_'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+  ntf('⏳','Inapakia...','Faili inasasishwa...','nw');
+  try{
+    const url=await uploadToStorage(file,path);
+    const isImg=file.type.startsWith('image/');
+    const isVid=file.type.startsWith('video/');
+    const msgData={
+      uid,name:CU.name,ava:CU.ava||'😊',color:CU.color||'#9333ea',
+      txt:isImg?'📷 Picha':isVid?'🎬 Video':'📎 '+file.name,
+      fileUrl:url,fileType:file.type,fileName:file.name,
+      fileSize:formatSize(file.size),ts:Date.now()
+    };
+    if(DM){
+      await dbA('dms/'+DM+'/messages',msgData);
+      const prev=msgData.txt;
+      await dbP('user_dms/'+uid+'/'+DM,{lastMsg:prev,lastTs:Date.now()});
+      const parts=DM.split('_'),oUid=parts.find(i=>i!==uid);
+      if(oUid){const ex=await dbG('user_dms/'+oUid+'/'+DM);const pu=(ex&&!ex.error&&ex.unread)||0;await dbS('user_dms/'+oUid+'/'+DM,{otherUid:uid,otherName:CU.name,lastMsg:prev,lastTs:Date.now(),unread:pu+1});}
+      fetchDM(DM);
+    }else if(CR){
+      await dbA('messages/'+CR.id,msgData);
+      fetchR(CR.id);
+    }
+    ntf('✅','Imepakiwa','Faili imetumwa! 🎉','ng');
+  }catch(e){ntf('❌','Hitilafu','Imeshindwa kupakia: '+e.message,'nr');}
+  input.value='';
+}
+
+async function uploadToStorage(file,path){
+  const encodedPath=encodeURIComponent(path);
+  const url='https://firebasestorage.googleapis.com/v0/b/'+BUCKET+'/o?uploadType=media&name='+encodedPath;
+  const r=await fetch(url,{
+    method:'POST',
+    headers:{'Authorization':'Bearer '+tok,'Content-Type':file.type},
+    body:file
+  });
+  const d=await r.json();
+  if(d.error)throw new Error(d.error.message);
+  return 'https://firebasestorage.googleapis.com/v0/b/'+BUCKET+'/o/'+encodedPath+'?alt=media&token='+d.downloadTokens;
+}
+
+function formatSize(bytes){
+  if(bytes<1024)return bytes+'B';
+  if(bytes<1024*1024)return (bytes/1024).toFixed(1)+'KB';
+  return (bytes/(1024*1024)).toFixed(1)+'MB';
+}
+
+function openLightbox(url,type){
+  const lb=G('lightbox'),c=G('lbContent');
+  if(type&&type.startsWith('video/')){
+    c.innerHTML='<video src="'+url+'" controls autoplay style="max-width:95vw;max-height:92vh;border-radius:10px"></video>';
+  }else{
+    c.innerHTML='<img src="'+url+'" style="max-width:95vw;max-height:92vh;border-radius:10px;object-fit:contain">';
+  }
+  lb.classList.add('on');
+}
 
 // ── NOTIFICATIONS ──
 function ntf(icon,title,text,cls=''){if(muted&&cls!=='nr')return;const c=G('nc'),n=document.createElement('div');n.className='notif'+(cls?' '+cls:'');n.innerHTML='<div class="ni">'+icon+'</div><div class="nb" style="flex:1"><div class="nt">'+title+'</div><div class="nx">'+text+'</div></div><button class="nclose" onclick="this.parentElement.classList.add(\'out\');setTimeout(()=>this.parentElement&&this.parentElement.remove(),220)">✕</button>';c.appendChild(n);setTimeout(()=>{n.classList.add('out');setTimeout(()=>n.remove(),220);},5000);if('Notification' in window&&Notification.permission==='granted')new Notification('Zakayo Chat',{body:title+': '+text,tag:'zc'+Date.now()}).onclick=()=>window.focus();}
